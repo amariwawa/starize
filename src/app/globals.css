@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+@layer utilities {
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .golden-glow {
+    background: radial-gradient(circle at center, #f2ca50 0%, #d4af37 100%);
+  }
+  .glass-nav {
+    background: rgba(14, 14, 14, 0.7);
+    backdrop-filter: blur(20px);
+  }
+  .liquid-gold-btn {
+    background: linear-gradient(135deg, #f2ca50 0%, #d4af37 100%);
+  }
+  .celestial-bg {
+    background: radial-gradient(circle at 50% -20%, rgba(212, 175, 55, 0.15) 0%, rgba(14, 14, 14, 1) 70%);
+  }
+  .liquid-gold-text {
+    background: linear-gradient(to right, #ffe088, #d4af37, #ffe088);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .gold-shimmer {
+    background: linear-gradient(135deg, #f2ca50 0%, #d4af37 50%, #f2ca50 100%);
+  }
+
+}
+
+:root {
+  --background: #131313;
+  --foreground: #e5e2e1;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #131313; }
+::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 4px; }
