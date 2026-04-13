@@ -50,9 +50,9 @@ const Footer = () => {
               Stay updated with the latest news and stage announcements.
             </p>
             <form className="flex gap-2">
-              <input 
-                type="email" 
-                placeholder="Email Address" 
+              <input
+                type="email"
+                placeholder="Email Address"
                 className="bg-surface-container-high border border-white/10 rounded px-4 py-3 text-sm w-full focus:outline-none focus:border-primary transition-colors"
               />
               <button className="bg-primary text-on-primary px-6 py-3 rounded font-bold text-sm hover:brightness-110 transition-all">

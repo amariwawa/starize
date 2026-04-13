@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "dugite": "^3.2.1"
+    "dugite": "^3.2.1",
+    "isomorphic-git": "^1.37.5"
   }
 }
