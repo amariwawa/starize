@@ -247,9 +247,9 @@ const About = () => {
       <section className="px-8 py-24 bg-surface-dim overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start lg:items-stretch">
-            <motion.div {...visionaryImage.motionProps} className="lg:col-span-5 relative lg:h-full">
-              <span className="pointer-events-none absolute -left-2 -top-2 h-20 w-20 border-l-2 border-t-2 border-primary/60" />
-              <span className="pointer-events-none absolute -right-2 -bottom-2 h-20 w-20 border-r-2 border-b-2 border-primary/60" />
+            <motion.div {...visionaryImage.motionProps} className="lg:col-span-5 relative lg:h-full overflow-hidden">
+              <span className="pointer-events-none absolute -left-2 -top-2 h-20 w-20 border-l-2 border-t-2 border-primary/60 hidden md:block" />
+              <span className="pointer-events-none absolute -right-2 -bottom-2 h-20 w-20 border-r-2 border-b-2 border-primary/60 hidden md:block" />
               <div className="relative z-10 aspect-[4/5] lg:aspect-auto lg:h-full overflow-hidden rounded-3xl border border-white/10 bg-surface-container-low shadow-2xl">
                 <img
                   src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"

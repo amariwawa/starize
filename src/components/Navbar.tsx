@@ -55,7 +55,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 w-full z-50 glass-nav border-b border-white/5 shadow-lg">
+    <nav className="fixed top-0 w-full z-50 glass-nav border-b border-white/5 shadow-lg overflow-hidden max-w-[100vw]">
       <div className="flex items-center justify-between px-6 py-2 max-w-[1920px] mx-auto h-16 md:h-20 relative">
         {/* Left: Logo (Absolute positioned to not push navbar height) */}
         <div className="flex-1 flex items-center h-full">
@@ -63,7 +63,7 @@ const Navbar = () => {
             <img 
               src="/logo.png" 
               alt="STARIZE Logo" 
-              className="h-24 w-auto object-contain transition-transform hover:scale-105 md:h-32 lg:h-44" 
+              className="h-24 w-auto max-w-[120px] object-contain transition-transform hover:scale-105 md:h-32 md:max-w-none lg:h-44" 
             />
           </Link>
         </div>

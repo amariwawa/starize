@@ -38,18 +38,27 @@
 
 html {
   overflow-x: clip !important;
+  overflow-y: scroll;
   max-width: 100% !important;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   overflow-x: clip !important;
   max-width: 100% !important;
-}
-
-body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body);
+  touch-action: pan-y pinch-zoom;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  max-width: 100vw;
 }
 
 ::-webkit-scrollbar { width: 8px; }

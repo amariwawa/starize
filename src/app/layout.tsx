@@ -1,9 +1,16 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "STARIZE — Gospel Talent Hunt Season 7",
   description: "Discovering the next generation of gospel talent.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
 };
 
 export default function RootLayout({
@@ -12,7 +19,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html
+      lang="en"
+      className="dark"
+      style={{ overflowX: 'clip', touchAction: 'pan-y pinch-zoom', overscrollBehaviorX: 'none' }}
+    >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -26,11 +37,18 @@ export default function RootLayout({
         />
         <link rel="preload" as="image" href="/images/hero-bg.jpg" />
       </head>
-      <body className="bg-surface-dim text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container" style={{ overflowX: 'clip' }}>
-        <div style={{ overflowX: 'clip', maxWidth: '100%', width: '100%' }} className="min-h-screen">
+      <body
+        className="bg-surface-dim text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container"
+        style={{ overflowX: 'clip', touchAction: 'pan-y pinch-zoom', overscrollBehaviorX: 'none' }}
+      >
+        <div
+          style={{ overflowX: 'clip', maxWidth: '100%', width: '100%', position: 'relative' }}
+          className="min-h-screen"
+        >
           {children}
         </div>
       </body>
     </html>
   );
 }
+

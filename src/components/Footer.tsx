@@ -49,13 +49,13 @@ const Footer = () => {
             <p className="text-neutral-500 text-sm leading-relaxed">
               Stay updated with the latest news and stage announcements.
             </p>
-            <form className="flex gap-2">
+            <form className="flex flex-col sm:flex-row gap-2 max-w-full">
               <input
                 type="email"
                 placeholder="Email Address"
-                className="bg-surface-container-high border border-white/10 rounded px-4 py-3 text-sm w-full focus:outline-none focus:border-primary transition-colors"
+                className="bg-surface-container-high border border-white/10 rounded px-4 py-3 text-sm w-full min-w-0 focus:outline-none focus:border-primary transition-colors"
               />
-              <button className="bg-primary text-on-primary px-6 py-3 rounded font-bold text-sm hover:brightness-110 transition-all">
+              <button className="bg-primary text-on-primary px-6 py-3 rounded font-bold text-sm hover:brightness-110 transition-all shrink-0">
                 Join
               </button>
             </form>
