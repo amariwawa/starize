@@ -5,9 +5,9 @@ import Footer from "./components/Footer";
 
 const App = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="min-h-screen flex flex-col w-full max-w-full overflow-x-hidden">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden relative">
       <Navbar />
-      <div className="flex-grow w-full max-w-full overflow-x-hidden">{children}</div>
+      <main className="w-full max-w-full overflow-x-hidden">{children}</main>
       <Footer />
     </div>
   );

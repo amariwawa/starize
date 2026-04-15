@@ -38,10 +38,7 @@
 
 html {
   overflow-x: clip !important;
-  overflow-y: auto;
-  width: 100%;
   max-width: 100% !important;
-  height: 100%;
   -webkit-text-size-adjust: 100%;
 }
 
