@@ -29,11 +29,11 @@ const Sponsors = () => {
               key={i}
               className="flex flex-col items-center justify-center group"
             >
-              <div className="relative w-full h-32 bg-white rounded-xl overflow-hidden flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+              <div className="relative w-full h-32 flex items-center justify-center">
                 <img 
-                  src={sponsor.logo} 
+                  src={`/images/sponsors/sponsor-${i+1}-clean.png`} 
                   alt={sponsor.name} 
-                  className="max-w-[85%] max-h-[85%] object-contain mix-blend-multiply transition-all duration-500 scale-95 group-hover:scale-100"
+                  className="max-w-[90%] max-h-[90%] object-contain transition-all duration-500 scale-95 group-hover:scale-100"
                 />
               </div>
               <span className="mt-4 text-[10px] md:text-xs font-headline font-bold text-neutral-500 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
