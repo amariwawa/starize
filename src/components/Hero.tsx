@@ -7,20 +7,20 @@ const smoothEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen w-full max-w-full flex items-center justify-center overflow-hidden bg-black">
+    <section className="relative min-h-screen w-full max-w-full flex items-end justify-center overflow-hidden bg-black pb-20 md:pb-32">
       {/* Background Image */}
       <div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: "url('/images/events/stage-3.jpg')",
+          backgroundImage: "url('/images/hero-home.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
       />
-      {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/20 via-transparent to-black/60" />
-      <div className="relative z-10 max-w-7xl mx-auto px-8 pt-64 text-center">
+      {/* Subtle overlay to help buttons stand out without darkening the main logo */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+      <div className="relative z-10 max-w-7xl mx-auto px-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
