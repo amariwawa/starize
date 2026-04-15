@@ -26,12 +26,14 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: smoothEase }}
-          className="text-6xl md:text-8xl lg:text-9xl font-black font-headline tracking-tighter text-on-surface mb-6 leading-none"
+          className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black font-headline tracking-tighter text-on-surface mb-6 leading-none"
         >
-          STARIZE SEASON{" "}
+          STARIZE{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-b from-primary to-primary-container">
-            SEVEN
+            GOSPEL TALENT HUNT
           </span>
+          <br />
+          <span className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl">SEASON 7</span>
         </motion.h1>
         <motion.p
 

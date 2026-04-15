@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "STARIZE S7",
+  title: "STARIZE — Gospel Talent Hunt Season 7",
   description: "Discovering the next generation of gospel talent.",
 };
 

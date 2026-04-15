@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/lib/useScrollAnimation";
 
@@ -51,9 +51,15 @@ const About = () => {
   const arenaCard = useScrollAnimation("fadeLeft");
   const ctaCard = useScrollAnimation("fadeRight", { delay: 0.15 });
 
+  // Track which image is actively tapped on mobile (for grayscale toggle)
+  const [activeImage, setActiveImage] = useState<string | null>(null);
+  const toggleImage = useCallback((id: string) => {
+    setActiveImage((prev) => (prev === id ? null : id));
+  }, []);
+
   return (
     <>
-      <section className="bg-surface-dim py-24 relative overflow-hidden">
+      <section className="bg-surface-dim py-16 md:py-24 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end mb-24">
             <motion.div {...legacy.motionProps}>
@@ -137,7 +143,7 @@ const About = () => {
       </section>
 
       {/* Content from original About page */}
-      <section id="about" className="relative pt-10 pb-24 px-8 max-w-7xl mx-auto text-center scroll-mt-28">
+      <section id="about" className="relative pt-4 md:pt-10 pb-16 md:pb-24 px-8 max-w-7xl mx-auto text-center scroll-mt-28">
         <motion.div {...celestialHeader.motionProps}>
           <p className="text-primary font-label tracking-[0.3em] uppercase text-xs mb-4">
             Our Legacy &amp; Mission
@@ -194,12 +200,19 @@ const About = () => {
                 </div>
               </div>
             </motion.div>
-            <motion.div {...aboutRight.motionProps} className="grid grid-cols-2 gap-4 h-[600px]">
-              <div className="rounded-2xl overflow-hidden shadow-2xl">
+            <motion.div {...aboutRight.motionProps} className="grid grid-cols-2 gap-4 h-[400px] md:h-[600px]">
+              <div
+                className="rounded-2xl overflow-hidden shadow-2xl cursor-pointer"
+                onClick={() => toggleImage("singer")}
+              >
                 <img
                   src="/images/about/singer-performance.jpg"
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                  className={`w-full h-full object-cover transition-all duration-700 ${
+                    activeImage === "singer" ? "grayscale-0" : "grayscale"
+                  } hover:grayscale-0`}
                   alt="Starize singer performing on stage"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               <div className="space-y-4 pt-12">
@@ -208,13 +221,22 @@ const About = () => {
                     src="/images/about/host-stage.jpg"
                     className="w-full h-full object-cover"
                     alt="Starize host on stage"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
-                <div className="h-1/2 rounded-2xl overflow-hidden shadow-2xl">
+                <div
+                  className="h-1/2 rounded-2xl overflow-hidden shadow-2xl cursor-pointer"
+                  onClick={() => toggleImage("lights")}
+                >
                   <img
                     src="/images/about/stage-lights.jpg"
-                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                    className={`w-full h-full object-cover transition-all duration-700 ${
+                      activeImage === "lights" ? "grayscale-0" : "grayscale"
+                    } hover:grayscale-0`}
                     alt="Starize stage setup with lights"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>
@@ -324,9 +346,11 @@ const About = () => {
             <motion.div {...arenaCard.motionProps} className="relative">
               <Link href="/events" className="block relative group h-[300px] rounded-2xl overflow-hidden border border-white/5 shadow-2xl cursor-pointer">
                 <img
-                  src="/images/about/grand-finale.jpg"
+                  src="/images/hero-bg.jpg"
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   alt="Grand Finale Arena"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 <div className="absolute bottom-0 left-0 p-8 space-y-3">
