@@ -68,8 +68,8 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Links Section - Dead Center Alignment */}
-        <div className="flex-none lg:flex-grow flex items-center justify-center overflow-hidden">
+        {/* Links Section - Shifted very slightly left for visual balance */}
+        <div className="flex-none lg:flex-grow flex items-center justify-center -ml-2 lg:ml-0 overflow-hidden">
           <div className="flex items-center gap-2 sm:gap-4 md:gap-8 lg:gap-8 xl:gap-10">
             {navLinks.map((link, idx) => (
               <Link
