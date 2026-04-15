@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePaystackPayment } from "react-paystack";
 import { saveTicket } from "@/lib/database";
 
@@ -36,6 +36,15 @@ const TicketPanel = () => {
   >("idle");
   const [saveError, setSaveError] = useState(false);
 
+  // Fallback: Reset processing state when window regains focus
+  useEffect(() => {
+    const handleFocus = () => {
+      setPaymentStatus((prev) => (prev === "processing" ? "idle" : prev));
+    };
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, []);
+
   const totalAmount = selectedTier
     ? TICKET_PRICES[selectedTier] * quantity
     : 0;
@@ -56,6 +65,11 @@ const TicketPanel = () => {
           display_name: "Ticket Tier",
           variable_name: "ticket_tier",
           value: selectedTier || "",
+        },
+        {
+          display_name: "Tier Label",
+          variable_name: "tier_label",
+          value: selectedTier ? TICKET_LABELS[selectedTier] : "",
         },
         {
           display_name: "Quantity",
@@ -104,9 +118,7 @@ const TicketPanel = () => {
 
   const onClose = () => {
     console.log("Ticket payment closed");
-    if (paymentStatus !== "success") {
-      setPaymentStatus("idle");
-    }
+    setPaymentStatus((prev) => (prev === "success" ? "success" : "idle"));
   };
 
   const initializePayment = usePaystackPayment(config);

@@ -104,3 +104,26 @@ export async function saveTicket(ticket: TicketRecord) {
 
   return data;
 }
+
+/* ─── Idempotency ─── */
+
+/**
+ * Returns true if the given Paystack payment reference has already been
+ * recorded in either the votes or tickets table.
+ */
+export async function isReferenceDuplicate(reference: string): Promise<boolean> {
+  const [voteCheck, ticketCheck] = await Promise.all([
+    supabase
+      .from("votes")
+      .select("paystack_reference")
+      .eq("paystack_reference", reference)
+      .maybeSingle(),
+    supabase
+      .from("tickets")
+      .select("paystack_reference")
+      .eq("paystack_reference", reference)
+      .maybeSingle(),
+  ]);
+
+  return !!(voteCheck.data || ticketCheck.data);
+}

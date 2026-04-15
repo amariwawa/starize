@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePaystackPayment } from "react-paystack";
 import { useRouter, useSearchParams } from "next/navigation";
 import SelectContestant from "@/components/SelectContestant";
@@ -19,6 +19,15 @@ const VotingPanel = () => {
     "idle" | "processing" | "success" | "error"
   >("idle");
   const [saveError, setSaveError] = useState(false);
+
+  // Fallback: Reset processing state when window regains focus
+  useEffect(() => {
+    const handleFocus = () => {
+      setPaymentStatus((prev) => (prev === "processing" ? "idle" : prev));
+    };
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, []);
 
   const amount = votes * PRICE_PER_VOTE * 100; // Paystack takes amount in kobo
 
@@ -47,6 +56,11 @@ const VotingPanel = () => {
           display_name: "Contestant",
           variable_name: "contestant",
           value: selectedContestant?.name || "",
+        },
+        {
+          display_name: "Contestant Slug",
+          variable_name: "contestant_slug",
+          value: selectedSlug,
         },
         {
           display_name: "Votes",
@@ -91,9 +105,7 @@ const VotingPanel = () => {
 
   const onClose = () => {
     console.log("Vote payment closed");
-    if (paymentStatus !== "success") {
-      setPaymentStatus("idle");
-    }
+    setPaymentStatus((prev) => (prev === "success" ? "success" : "idle"));
   };
 
   const initializePayment = usePaystackPayment(config);
