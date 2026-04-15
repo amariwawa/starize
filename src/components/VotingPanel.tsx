@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { usePaystackPayment } from "react-paystack";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import SelectContestant from "@/components/SelectContestant";
 import { contestants } from "@/lib/contestants";
 import { saveVote } from "@/lib/database";
@@ -12,13 +12,27 @@ const PRICE_PER_VOTE = 50; // ₦50 per vote
 
 const VotingPanel = () => {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const [votes, setVotes] = useState(100);
   const [email, setEmail] = useState("");
   const [paymentStatus, setPaymentStatus] = useState<
     "idle" | "processing" | "success" | "error"
   >("idle");
   const [saveError, setSaveError] = useState(false);
+
+  // Use local state for contestant selection — no router navigation
+  const preselectedContestant = searchParams.get("contestant");
+  const initialSlug =
+    preselectedContestant &&
+    contestants.some((c) => c.slug === preselectedContestant)
+      ? preselectedContestant
+      : contestants[0]?.slug ?? "";
+
+  const [selectedSlug, setSelectedSlug] = useState(initialSlug);
+
+  const selectedContestant = useMemo(
+    () => contestants.find((c) => c.slug === selectedSlug) ?? contestants[0],
+    [selectedSlug],
+  );
 
   // Fallback: Reset processing state when window regains focus
   useEffect(() => {
@@ -31,18 +45,8 @@ const VotingPanel = () => {
 
   const amount = votes * PRICE_PER_VOTE * 100; // Paystack takes amount in kobo
 
-  const preselectedContestant = searchParams.get("contestant");
-  const selectedSlug =
-    preselectedContestant &&
-    contestants.some((c) => c.slug === preselectedContestant)
-      ? preselectedContestant
-      : contestants[0]?.slug ?? "";
-
-  const selectedContestant =
-    contestants.find((c) => c.slug === selectedSlug) ?? contestants[0];
-
   const handleSelectContestant = (slug: string) => {
-    router.replace(`/voting?contestant=${slug}#vote-panel`);
+    setSelectedSlug(slug);
   };
 
   const config = {

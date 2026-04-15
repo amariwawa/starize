@@ -22,6 +22,8 @@ const ContestantCard = ({ contestant, index = 0 }: ContestantCardProps) => {
           <img
             src={contestant.image}
             alt={contestant.name}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
           />
           <Link
