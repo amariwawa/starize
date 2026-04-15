@@ -59,7 +59,7 @@ const About = () => {
 
   return (
     <>
-      <section className="bg-surface-dim py-16 md:py-24 relative overflow-hidden">
+      <section className="bg-surface-dim py-16 md:py-24 relative overflow-hidden w-full max-w-full">
         <div className="max-w-7xl mx-auto px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end mb-24">
             <motion.div {...legacy.motionProps}>
@@ -143,7 +143,7 @@ const About = () => {
       </section>
 
       {/* Content from original About page */}
-      <section id="about" className="relative pt-4 md:pt-10 pb-16 md:pb-24 px-8 max-w-7xl mx-auto text-center scroll-mt-28">
+      <section id="about" className="relative pt-4 md:pt-10 pb-16 md:pb-24 px-8 max-w-full mx-auto text-center scroll-mt-28 overflow-hidden">
         <motion.div {...celestialHeader.motionProps}>
           <p className="text-primary font-label tracking-[0.3em] uppercase text-xs mb-4">
             Our Legacy &amp; Mission
@@ -157,7 +157,7 @@ const About = () => {
           </p>
         </motion.div>
       </section>
-      <section className="px-8 py-24 bg-surface-container-lowest overflow-hidden">
+      <section className="px-8 py-24 bg-surface-container-lowest overflow-hidden w-full max-w-full">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div {...aboutLeft.motionProps} className="space-y-8">
@@ -244,7 +244,7 @@ const About = () => {
           </div>
         </div>
       </section>
-      <section className="px-8 py-24 bg-surface-dim overflow-hidden">
+      <section className="px-8 py-24 bg-surface-dim overflow-hidden w-full max-w-full">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start lg:items-stretch">
             <motion.div {...visionaryImage.motionProps} className="lg:col-span-5 relative lg:h-full overflow-hidden">
@@ -312,7 +312,7 @@ const About = () => {
         </div>
       </section>
 
-      <section className="px-8 py-32 bg-surface-dim overflow-hidden">
+      <section className="px-8 py-32 bg-surface-dim overflow-hidden w-full max-w-full">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16 text-center">
             <motion.div {...pillar1.motionProps} className="space-y-6">
@@ -340,7 +340,7 @@ const About = () => {
         </div>
       </section>
 
-      <section className="px-8 pt-2 pb-24 bg-surface-dim overflow-hidden">
+      <section className="px-8 pt-2 pb-24 bg-surface-dim overflow-hidden w-full max-w-full">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <motion.div {...arenaCard.motionProps} className="relative">

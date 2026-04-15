@@ -38,13 +38,16 @@
 
 html {
   overflow-x: clip !important;
-  overflow-y: scroll;
+  overflow-y: auto;
+  width: 100%;
   max-width: 100% !important;
+  height: 100%;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
   overflow-x: clip !important;
+  width: 100%;
   max-width: 100% !important;
   background: var(--background);
   color: var(--foreground);
@@ -58,7 +61,7 @@ body {
 *::before,
 *::after {
   box-sizing: border-box;
-  max-width: 100vw;
+  max-width: 100%;
 }
 
 ::-webkit-scrollbar { width: 8px; }

@@ -7,7 +7,7 @@ const smoothEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+    <section className="relative min-h-screen w-full max-w-full flex items-center justify-center overflow-hidden bg-black">
       {/* Background Image */}
       <div
         className="absolute inset-0 z-0"
