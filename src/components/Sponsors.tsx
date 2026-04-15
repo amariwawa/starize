@@ -23,19 +23,22 @@ const Sponsors = () => {
             EMPOWERING EXCELLENCE
           </h3>
         </motion.div>
-        <motion.div {...grid.motionProps} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-px bg-outline-variant/10">
+        <motion.div {...grid.motionProps} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
           {sponsors.map((sponsor, i) => (
             <div
               key={i}
-              className="bg-surface-container-lowest p-8 flex items-center justify-center group hover:bg-surface-container-low transition-colors"
+              className="flex flex-col items-center justify-center group"
             >
-              <div className="relative w-full h-24 overflow-hidden flex items-center justify-center">
+              <div className="relative w-full h-32 bg-white rounded-xl overflow-hidden flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
                 <img 
                   src={sponsor.logo} 
                   alt={sponsor.name} 
-                  className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500 scale-90 group-hover:scale-100 opacity-70 group-hover:opacity-100"
+                  className="max-w-[85%] max-h-[85%] object-contain mix-blend-multiply transition-all duration-500 scale-95 group-hover:scale-100"
                 />
               </div>
+              <span className="mt-4 text-[10px] md:text-xs font-headline font-bold text-neutral-500 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                {sponsor.name}
+              </span>
             </div>
           ))}
         </motion.div>

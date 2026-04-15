@@ -7,14 +7,24 @@ const smoothEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen w-full max-w-full flex items-end justify-center overflow-hidden bg-black pb-20 md:pb-32">
-      {/* Background Image */}
+    <section className="relative min-h-screen w-full max-w-full flex items-end justify-center overflow-hidden bg-black pb-24 md:pb-32">
+      {/* Background Image (Desktop) */}
       <div
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 hidden md:block"
         style={{
           backgroundImage: "url('/images/hero-home.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+      {/* Background Image (Mobile - Fully Showing) */}
+      <div
+        className="absolute inset-0 z-0 md:hidden"
+        style={{
+          backgroundImage: "url('/images/hero-home.jpg')",
+          backgroundSize: "contain",
+          backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",
         }}
       />
