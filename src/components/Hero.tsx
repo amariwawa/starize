@@ -18,12 +18,12 @@ const Hero = () => {
           backgroundRepeat: "no-repeat",
         }}
       />
-      {/* Background Image (Mobile - Filling the space & Seen Fully) */}
+      {/* Background Image (Mobile - Full Coverage) */}
       <div
         className="absolute inset-0 z-0 md:hidden"
         style={{
           backgroundImage: "url('/images/hero-home.jpg')",
-          backgroundSize: "contain",
+          backgroundSize: "cover",
           backgroundPosition: "center 40%",
           backgroundRepeat: "no-repeat",
         }}

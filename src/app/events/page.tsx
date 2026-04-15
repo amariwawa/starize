@@ -21,8 +21,6 @@ export default function EventsPage() {
           </h1>
         </section>
         <TicketPanelLoader />
-
-        <Sponsors />
         <Contact />
       </main>
     </App>
