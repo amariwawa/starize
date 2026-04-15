@@ -252,7 +252,7 @@ const About = () => {
               <span className="pointer-events-none absolute -right-2 -bottom-2 h-20 w-20 border-r-2 border-b-2 border-primary/60 hidden md:block" />
               <div className="relative z-10 aspect-[4/5] lg:aspect-auto lg:h-full overflow-hidden rounded-3xl border border-white/10 bg-surface-container-low shadow-2xl">
                 <img
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                  src="/images/about/convener.jpg"
                   className="h-full w-full object-cover"
                   alt="Mrs. Shammah Joshua"
                 />
