@@ -68,16 +68,16 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Center: All 5 links on one line, strict text-sm font size, tight alignment, NO SCROLLING */}
+        {/* Center: Essential mobile links on one line, strict text-sm font size, NO SCROLLING */}
         <div className="flex-grow flex items-center justify-center px-1 overflow-hidden">
-          <div className="flex items-center gap-1.5 sm:gap-4 md:gap-8">
-            {navLinks.slice(0, 5).map((link) => (
+          <div className="flex items-center gap-2 sm:gap-4 md:gap-8">
+            {navLinks.slice(2, 5).map((link) => (
               <Link
                 key={link.name}
                 href={link.path}
                 className={clsx(
                   "font-headline font-black transition-all uppercase whitespace-nowrap",
-                  "text-sm tracking-tighter md:tracking-tight", // Preserved text-sm
+                  "text-sm tracking-tight", // Preserved text-sm
                   isLinkActive(link.path, link.name)
                     ? "text-amber-400"
                     : "text-neutral-400 hover:text-amber-200"
