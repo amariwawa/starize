@@ -56,9 +56,9 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 w-full z-50 glass-nav border-b border-white/5 shadow-lg overflow-hidden max-w-full">
-      <div className="max-w-7xl mx-auto px-2 md:px-10 flex items-center justify-between py-4 md:py-8 h-24 md:h-32 transition-all duration-300">
+      <div className="max-w-7xl mx-auto px-2 md:px-10 flex items-center justify-between py-2 md:py-8 h-20 md:h-32 transition-all duration-300 overflow-hidden">
         {/* Logo Section - Left Aligned */}
-        <div className="flex-none flex items-center h-full pr-2">
+        <div className="flex-none flex items-center h-full pr-1">
           <Link href="/" className="transition-all duration-300 hover:scale-105 active:scale-95">
             <img 
               src="/logo.png" 
@@ -68,16 +68,16 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Links Section - Center Aligned, Single Line on both */}
+        {/* Links Section - Balanced Spacing, Single Line */}
         <div className="flex-grow flex items-center justify-center overflow-hidden">
-          <div className="flex items-center gap-2 sm:gap-4 md:gap-8 lg:gap-8 xl:gap-10">
+          <div className="flex items-center gap-1.5 sm:gap-4 md:gap-8 lg:gap-8 xl:gap-10">
             {navLinks.map((link, idx) => (
               <Link
                 key={link.name}
                 href={link.path}
                 className={clsx(
                   "font-headline font-black transition-all uppercase whitespace-nowrap",
-                  "text-base md:text-lg lg:text-sm xl:text-base tracking-tighter lg:tracking-tight",
+                  "text-sm lg:text-sm xl:text-base tracking-tight lg:tracking-normal", // Returned to pretty/normal text-sm
                   isLinkActive(link.path, link.name)
                     ? "text-amber-400 border-b-2 border-amber-500 pb-0.5"
                     : "text-neutral-400 hover:text-amber-200",
@@ -92,10 +92,10 @@ const Navbar = () => {
         </div>
 
         {/* Action Button - Right Aligned, Single Line */}
-        <div className="flex-none flex items-center pl-2">
+        <div className="flex-none flex items-center pl-1">
           <button
             onClick={() => router.push("/voting")}
-            className="liquid-gold-btn text-on-primary px-4 md:px-8 py-2 md:py-3 rounded-full text-sm md:text-base lg:text-sm font-headline font-black active:scale-95 duration-150 transition-all shadow-xl"
+            className="liquid-gold-btn text-on-primary px-4 md:px-8 py-2 md:py-3 rounded-full text-xs md:text-sm font-headline font-black active:scale-95 duration-150 transition-all shadow-xl"
           >
             Vote Now
           </button>
