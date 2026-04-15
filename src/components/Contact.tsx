@@ -8,7 +8,7 @@ const Contact = () => {
   const right = useScrollAnimation("fadeRight", { delay: 0.15 });
 
   return (
-    <section className="py-24 px-8 max-w-7xl mx-auto">
+    <section className="py-24 px-8 max-w-7xl mx-auto overflow-hidden">
       <div className="grid md:grid-cols-2 gap-16 items-center">
         <motion.div {...left.motionProps} className="space-y-12">
           <h2 className="text-4xl font-headline font-bold text-on-surface">

@@ -26,8 +26,10 @@ export default function RootLayout({
         />
         <link rel="preload" as="image" href="/images/hero-bg.jpg" />
       </head>
-      <body className="bg-surface-dim text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
-        {children}
+      <body className="bg-surface-dim text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+        <div className="overflow-x-hidden w-full min-h-screen">
+          {children}
+        </div>
       </body>
     </html>
   );

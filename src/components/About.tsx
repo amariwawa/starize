@@ -157,7 +157,7 @@ const About = () => {
           </p>
         </motion.div>
       </section>
-      <section className="px-8 py-24 bg-surface-container-lowest">
+      <section className="px-8 py-24 bg-surface-container-lowest overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div {...aboutLeft.motionProps} className="space-y-8">
@@ -312,7 +312,7 @@ const About = () => {
         </div>
       </section>
 
-      <section className="px-8 py-32 bg-surface-dim">
+      <section className="px-8 py-32 bg-surface-dim overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16 text-center">
             <motion.div {...pillar1.motionProps} className="space-y-6">
@@ -340,7 +340,7 @@ const About = () => {
         </div>
       </section>
 
-      <section className="px-8 pt-2 pb-24 bg-surface-dim">
+      <section className="px-8 pt-2 pb-24 bg-surface-dim overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <motion.div {...arenaCard.motionProps} className="relative">
