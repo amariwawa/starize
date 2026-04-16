@@ -220,7 +220,7 @@ const VotingPanel = () => {
                 <label className="block text-xs font-bold uppercase text-primary mb-4">
                   Number of Votes
                 </label>
-                <div className="flex items-center bg-surface-container-lowest rounded-lg overflow-hidden border border-white/10">
+                <div className="flex items-center bg-surface-container-lowest rounded-lg overflow-hidden border border-white/10 mb-4">
                   <button
                     onClick={() => setVotes(Math.max(10, votes - 10))}
                     className="p-4 text-primary hover:bg-surface-container-low transition-colors"
@@ -238,6 +238,18 @@ const VotingPanel = () => {
                   >
                     <span className="material-symbols-outlined">add</span>
                   </button>
+                </div>
+                <div className="flex gap-2">
+                  {[1, 5, 10].map((v) => (
+                    <button
+                      key={v}
+                      type="button"
+                      onClick={() => setVotes(votes + v)}
+                      className="flex-1 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 text-primary text-xs font-black rounded transition-all active:scale-95"
+                    >
+                      +{v}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
