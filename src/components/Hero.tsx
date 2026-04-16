@@ -20,18 +20,13 @@ const Hero = () => {
         }}
       />
 
-      {/* Background Image (Mobile - Once and For All Red-Space Fix) */}
-      <div
-        className="absolute inset-0 z-0 md:hidden"
-        style={{
-          backgroundImage: "url('/images/hero-home.jpg')",
-          // Aggressive zoom (170%) combined with bottom alignment 
-          // to push the blank top red part of the image file out of view.
-          backgroundSize: "170% auto", 
-          backgroundPosition: "center bottom", 
-          backgroundRepeat: "no-repeat",
-        }}
-      />
+      {/* Background Image (Mobile - Absolute Content Window) */}
+      <div className="absolute inset-0 z-0 md:hidden overflow-hidden">
+        <div 
+          className="absolute inset-x-0 -top-40 h-[120%] bg-cover bg-[50%_100%] bg-no-repeat"
+          style={{ backgroundImage: "url('/images/hero-home.jpg')" }}
+        />
+      </div>
       
       {/* Subtle blend overlay */}
       <div className="absolute inset-0 z-[1] bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
