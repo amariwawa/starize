@@ -8,23 +8,38 @@ const smoothEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
 const Hero = () => {
   return (
     <section className="relative min-h-[85vh] md:min-h-screen w-full max-w-full flex items-end justify-center overflow-hidden bg-black pb-12 md:pb-32">
-      {/* Background Image (Desktop - Standard Premium Framing) */}
+      {/* 1. Atmosphere Layer (Blurred Colors to fill empty space horizontally) */}
+      <div
+        className="absolute inset-0 z-0 hidden md:block opacity-30"
+        style={{
+          backgroundImage: "url('/images/hero-home.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          filter: "blur(60px) brightness(0.7)",
+        }}
+      />
+
+      {/* 2. Sharp Poster Layer (Desktop - Perfectly Centered & Undistorted) */}
       <div
         className="absolute inset-0 z-0 hidden md:block"
         style={{
           backgroundImage: "url('/images/hero-home.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center 25%", // Optimized for poster logo and faces
+          backgroundSize: "contain",
+          backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
       />
-      {/* Background Image (Mobile - Full Coverage) */}
+
+      {/* 3. Cinematic Vignette (Blends image edges into atmosphere) */}
+      <div className="absolute inset-0 z-[1] hidden md:block bg-gradient-to-r from-black/40 via-transparent to-black/40 shadow-[inset_0_0_150px_rgba(0,0,0,0.6)]" />
+
+      {/* Mobile Background (Immersive Full-Bleed) */}
       <div
         className="absolute inset-0 z-0 md:hidden"
         style={{
           backgroundImage: "url('/images/hero-home.jpg')",
           backgroundSize: "cover",
-          backgroundPosition: "center 40%", // More head-room on mobile
+          backgroundPosition: "center 40%",
           backgroundRepeat: "no-repeat",
         }}
       />
