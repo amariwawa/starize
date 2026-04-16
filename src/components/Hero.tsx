@@ -8,15 +8,15 @@ const smoothEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
 const Hero = () => {
   return (
     <section className="relative min-h-[85vh] md:min-h-screen w-full max-w-full flex items-end justify-center overflow-hidden bg-black pb-12 md:pb-32">
-      {/* Integrated Hero Background Layer - Final Absolute Coverage Correction */}
+      {/* Integrated Hero Background Layer - Cropped for New Content Focal Point */}
       <div
         className="absolute inset-0 z-0 bg-black"
         style={{
           backgroundImage: "url('/images/hero-home.jpg')",
-          // Using 130% height to 'push' the built-in black bars of the source file off-screen
-          // while keeping the content (100% width) perfectly visible and undistorted.
-          backgroundSize: "100% 130%", 
-          backgroundPosition: "center",
+          backgroundSize: "cover",
+          // Positioned at the bottom (85%) to crop out the blank red top 
+          // and focus on the Season 7 logo and performers.
+          backgroundPosition: "center 85%", 
           backgroundRepeat: "no-repeat",
         }}
       />
