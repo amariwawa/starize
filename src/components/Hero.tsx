@@ -7,7 +7,7 @@ const smoothEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[85vh] md:min-h-screen w-full max-w-full flex items-end justify-center overflow-hidden bg-[#4e0505] pb-12 md:pb-32">
+    <section className="relative min-h-[85vh] md:min-h-screen w-full max-w-full flex items-end justify-center overflow-hidden bg-[#4e0505] pb-12 md:pb-60">
       {/* Background Image (Desktop - Final Logo Clearing) */}
       <div
         className="absolute inset-0 z-0 hidden md:block"
@@ -46,7 +46,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3, ease: smoothEase }}
-          className="flex flex-col md:flex-row items-center justify-center gap-4"
+          className="flex flex-row items-center justify-center gap-2 md:gap-4"
         >
           <Link
             href="/events"
