@@ -8,26 +8,19 @@ const smoothEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
 const Hero = () => {
   return (
     <section className="relative min-h-[85vh] md:min-h-screen w-full max-w-full flex items-end justify-center overflow-hidden bg-black pb-12 md:pb-32">
-      {/* Multi-Layer Harmonious Background */}
-      <div 
-        className="absolute inset-0 z-0 bg-black"
+      {/* Integrated Hero Background Layer - Optimized for New Wide Image */}
+      <div
+        className="absolute inset-0 z-0"
         style={{
-          // Radial gradient matches the sunburst effect in the poster
-          backgroundImage: "radial-gradient(circle at center, #b91c1c 0%, #000000 80%)"
+          backgroundImage: "url('/images/hero-home.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
-      >
-        <div
-          className="absolute inset-0 flex items-center justify-center"
-          style={{
-            backgroundImage: "url('/images/hero-home.jpg')",
-            backgroundSize: "contain",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
-        {/* Cinematic Vignette for seamless edge blending */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
-      </div>
+      />
+      
+      {/* Subtle blend overlay */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center w-full">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
