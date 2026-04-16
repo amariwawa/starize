@@ -13,6 +13,7 @@ const PRICE_PER_VOTE = 50; // ₦50 per vote
 const VotingPanel = () => {
   const searchParams = useSearchParams();
   const [votes, setVotes] = useState(100);
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [paymentStatus, setPaymentStatus] = useState<
     "idle" | "processing" | "success" | "error"
@@ -57,6 +58,11 @@ const VotingPanel = () => {
     metadata: {
       custom_fields: [
         {
+          display_name: "Full Name",
+          variable_name: "full_name",
+          value: fullName,
+        },
+        {
           display_name: "Contestant",
           variable_name: "contestant",
           value: selectedContestant?.name || "",
@@ -91,6 +97,7 @@ const VotingPanel = () => {
     // Save to Supabase
     try {
       await saveVote({
+        full_name: fullName,
         email,
         contestant_slug: selectedSlug,
         contestant_name: selectedContestant?.name || "",
@@ -115,6 +122,10 @@ const VotingPanel = () => {
   const initializePayment = usePaystackPayment(config);
 
   const handlePay = () => {
+    if (!fullName.trim()) {
+      alert("Please enter your full name");
+      return;
+    }
     if (!email) {
       alert("Please enter your email address");
       return;
@@ -151,10 +162,10 @@ const VotingPanel = () => {
             check_circle
           </span>
           <h3 className="text-2xl font-bold text-on-surface mb-2">
-            Vote Submitted!
+            Payment Successful!
           </h3>
           <p className="text-on-surface-variant mb-6">
-            You successfully voted <strong className="text-primary">{votes} times</strong> for{" "}
+            You have successfully purchased <strong className="text-primary">{votes} votes</strong> for{" "}
             <strong className="text-on-surface">{selectedContestant?.name}</strong>.
           </p>
           {saveError && (
@@ -167,6 +178,7 @@ const VotingPanel = () => {
               setPaymentStatus("idle");
               setVotes(100);
               setEmail("");
+              setFullName("");
               setSaveError(false);
             }}
             className="px-8 py-3 bg-primary text-on-primary font-bold rounded-lg"
@@ -178,6 +190,19 @@ const VotingPanel = () => {
         <div className="bg-surface-container-low p-8 md:p-12 rounded-2xl border border-white/5">
           <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
             <div className="space-y-6">
+              <div>
+                <label className="block text-xs font-bold uppercase text-primary mb-4">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  className="w-full bg-surface-container-lowest p-4 rounded border border-white/10 text-on-surface focus:border-primary focus:outline-none transition-colors"
+                  placeholder="John Doe"
+                  required
+                />
+              </div>
               <div>
                 <label className="block text-xs font-bold uppercase text-primary mb-4">
                   Email Address

@@ -3,6 +3,7 @@ import { supabase } from "./supabase";
 /* ─── Types ─── */
 
 export type VoteRecord = {
+  full_name: string;
   email: string;
   contestant_slug: string;
   contestant_name: string;
@@ -27,6 +28,7 @@ export type TicketRecord = {
 export async function saveVote(vote: VoteRecord) {
   const { data, error } = await supabase.from("votes").insert([
     {
+      full_name: vote.full_name,
       email: vote.email,
       contestant_slug: vote.contestant_slug,
       contestant_name: vote.contestant_name,

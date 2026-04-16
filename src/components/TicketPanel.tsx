@@ -156,14 +156,11 @@ const TicketPanel = () => {
             confirmation_number
           </span>
           <h3 className="text-3xl font-black font-headline text-on-surface mb-3">
-            Ticket Confirmed!
+            Payment Successful!
           </h3>
-          <p className="text-on-surface-variant mb-2">
-            <strong className="text-on-surface">{fullName}</strong>, your{" "}
-            <strong className="text-primary">
-              {quantity}x {selectedTier && TICKET_LABELS[selectedTier]}
-            </strong>{" "}
-            ticket{quantity > 1 ? "s have" : " has"} been booked.
+          <p className="text-on-surface-variant mb-2 text-lg">
+            You have successfully purchased <strong className="text-primary">{quantity} {selectedTier && TICKET_LABELS[selectedTier]}</strong> ticket{quantity > 1 ? "s" : ""} for{" "}
+            <strong className="text-on-surface">Stage 3! Knockout Edition</strong>.
           </p>
           <p className="text-on-surface-variant text-sm mb-8">
             A confirmation email will be sent to <strong>{email}</strong>.
