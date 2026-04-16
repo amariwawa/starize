@@ -8,27 +8,27 @@ const smoothEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
 const Hero = () => {
   return (
     <section className="relative min-h-[85vh] md:min-h-screen w-full max-w-full flex items-end justify-center overflow-hidden bg-[#4e0505] pb-12 md:pb-32">
-      {/* Background Image (Desktop - Final Balanced Framing) */}
+      {/* Background Image (Desktop - Final Logo Clearing) */}
       <div
         className="absolute inset-0 z-0 hidden md:block"
         style={{
           backgroundImage: "url('/images/hero-home.jpg')",
           backgroundSize: "cover",
-          // Balanced at 72% to keep logo as focus but show more singers
-          backgroundPosition: "center 72%", 
+          // Fine-tuned to 67% (Shifted down from 72%) to clear the navbar perfectly
+          backgroundPosition: "center 67%", 
           backgroundRepeat: "no-repeat",
         }}
       />
 
-      {/* Background Image (Mobile - Full Content Fill) */}
+      {/* Background Image (Mobile - Once and For All Red-Space Fix) */}
       <div
         className="absolute inset-0 z-0 md:hidden"
         style={{
           backgroundImage: "url('/images/hero-home.jpg')",
-          backgroundSize: "cover",
-          // Anchored to bottom (95%) to completely cut out the blank red top 
-          // and fill the hero section with logo and singers.
-          backgroundPosition: "center 95%", 
+          // Aggressive zoom (170%) combined with bottom alignment 
+          // to push the blank top red part of the image file out of view.
+          backgroundSize: "170% auto", 
+          backgroundPosition: "center bottom", 
           backgroundRepeat: "no-repeat",
         }}
       />
