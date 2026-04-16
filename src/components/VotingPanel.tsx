@@ -7,10 +7,11 @@ import SelectContestant from "@/components/SelectContestant";
 import { contestants } from "@/lib/contestants";
 import { saveVote } from "@/lib/database";
 
-const PAYSTACK_PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!;
 const PRICE_PER_VOTE = 50; // ₦50 per vote
+const DEFAULT_PAYSTACK_KEY = "pk_test_placeholder"; // Fallback for build time
 
 const VotingPanel = () => {
+  const PAYSTACK_PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || DEFAULT_PAYSTACK_KEY;
   const searchParams = useSearchParams();
   const [votes, setVotes] = useState(20);
   const [fullName, setFullName] = useState("");

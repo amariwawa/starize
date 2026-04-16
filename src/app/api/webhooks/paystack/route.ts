@@ -2,14 +2,21 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { createClient } from "@supabase/supabase-js";
 
-// Use service role key to bypass RLS for webhook operations
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY!;
-const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY!;
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
-
 export async function POST(req: Request) {
+  const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+  const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
+
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY || !PAYSTACK_SECRET_KEY) {
+    console.error("Webhook: Missing environment variables");
+    return NextResponse.json(
+      { message: "Server configuration error" },
+      { status: 500 }
+    );
+  }
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+
   try {
     const rawBody = await req.text();
     const signature = req.headers.get("x-paystack-signature");

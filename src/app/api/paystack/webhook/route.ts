@@ -6,9 +6,17 @@ import {
   isReferenceDuplicate,
 } from "@/lib/database";
 
-const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY!;
-
 export async function POST(req: Request) {
+  const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
+
+  if (!PAYSTACK_SECRET_KEY) {
+    console.error("Webhook: Missing PAYSTACK_SECRET_KEY");
+    return NextResponse.json(
+      { message: "Server configuration error" },
+      { status: 500 }
+    );
+  }
+
   try {
     /* ── 1. Read the raw body for signature verification ── */
     const rawBody = await req.text();

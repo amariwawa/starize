@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { usePaystackPayment } from "react-paystack";
 import { saveTicket } from "@/lib/database";
 
-const PAYSTACK_PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!;
+const DEFAULT_PAYSTACK_KEY = "pk_test_placeholder"; // Fallback for build time
 
 type TicketTier = "regular" | "vip" | "vip_table";
 
@@ -27,6 +27,7 @@ const TICKET_DESCRIPTIONS: Record<TicketTier, string> = {
 };
 
 const TicketPanel = () => {
+  const PAYSTACK_PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || DEFAULT_PAYSTACK_KEY;
   const [selectedTier, setSelectedTier] = useState<TicketTier | null>(null);
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
