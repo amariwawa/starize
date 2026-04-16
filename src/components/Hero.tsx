@@ -42,21 +42,33 @@ const Hero = () => {
       {/* Subtle blend overlay */}
       <div className="absolute inset-0 z-[1] bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center w-full">
+        {/* Desktop-only Reminder Block (Tight Cluster) */}
+        <motion.div 
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.4, ease: smoothEase }}
+          className="hidden md:block mb-8"
+        >
+          <p className="text-secondary font-headline font-black text-xs tracking-[0.2em] mb-1">NEXT EVENT</p>
+          <h2 className="liquid-gold-text text-3xl font-headline font-black tracking-tight leading-tight mb-2">STAGE 3! KNOCKOUT EDITION</h2>
+          <p className="text-on-surface/80 text-sm font-bold uppercase tracking-widest">Saturday, 18th April • 10 AM</p>
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3, ease: smoothEase }}
-          className="flex flex-row items-center justify-center gap-2 md:gap-4"
+          className="flex flex-row items-center justify-center gap-3 md:gap-4 w-full"
         >
           <Link
             href="/events"
-            className="liquid-gold-btn text-on-primary px-10 py-4 rounded text-lg font-bold w-full md:w-auto hover:shadow-[0_0_30px_rgba(242,202,80,0.3)] transition-all active:scale-95 shadow-2xl"
+            className="flex-1 max-w-[160px] md:max-w-none md:flex-none liquid-gold-btn text-on-primary px-0 md:px-10 py-3.5 md:py-4 rounded text-xs md:text-lg font-bold hover:shadow-[0_0_30px_rgba(242,202,80,0.3)] transition-all active:scale-95 shadow-2xl text-center"
           >
             Buy Tickets
           </Link>
           <Link
             href="/voting"
-            className="bg-white/10 backdrop-blur-md text-on-surface border border-white/20 px-10 py-4 rounded text-lg font-bold w-full md:w-auto hover:bg-white/20 transition-all active:scale-95 shadow-2xl"
+            className="flex-1 max-w-[160px] md:max-w-none md:flex-none bg-white/10 backdrop-blur-md text-on-surface border border-white/20 px-0 md:px-10 py-3.5 md:py-4 rounded text-xs md:text-lg font-bold hover:bg-white/20 transition-all active:scale-95 shadow-2xl text-center"
           >
             Vote Now
           </Link>
