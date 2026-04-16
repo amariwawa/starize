@@ -9,9 +9,9 @@ const PAYSTACK_PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!;
 type TicketTier = "regular" | "vip" | "vip_table";
 
 const TICKET_PRICES: Record<TicketTier, number> = {
-  regular: 500,
+  regular: 1000,
   vip: 3500,
-  vip_table: 20000,
+  vip_table: 25000,
 };
 
 const TICKET_LABELS: Record<TicketTier, string> = {

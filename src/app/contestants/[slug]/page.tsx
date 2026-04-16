@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import App from "@/App";
 import { contestants, getContestantBySlug } from "@/lib/contestants";
+import LiveVoteCount from "@/components/LiveVoteCount";
 
 type ContestantDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -53,6 +54,7 @@ export default async function ContestantDetailPage({
             <h1 className="text-5xl md:text-6xl font-headline font-black tracking-tighter text-on-surface">
               {contestant.name}
             </h1>
+            <LiveVoteCount contestantSlug={slug} />
             <p className="text-on-surface-variant text-lg">{contestant.category}</p>
             <p className="text-on-surface-variant text-lg leading-relaxed">
               {contestant.writeUp}

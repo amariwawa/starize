@@ -10,6 +10,7 @@ export type VoteRecord = {
   votes: number;
   amount_naira: number;
   paystack_reference: string;
+  payment_channel?: string;
 };
 
 export type TicketRecord = {
@@ -21,6 +22,7 @@ export type TicketRecord = {
   unit_price_naira: number;
   total_amount_naira: number;
   paystack_reference: string;
+  payment_channel?: string;
 };
 
 /* ─── Votes ─── */
@@ -35,6 +37,7 @@ export async function saveVote(vote: VoteRecord) {
       votes: vote.votes,
       amount_naira: vote.amount_naira,
       paystack_reference: vote.paystack_reference,
+      payment_channel: vote.payment_channel,
     },
   ]);
 
@@ -96,6 +99,7 @@ export async function saveTicket(ticket: TicketRecord) {
       unit_price_naira: ticket.unit_price_naira,
       total_amount_naira: ticket.total_amount_naira,
       paystack_reference: ticket.paystack_reference,
+      payment_channel: ticket.payment_channel,
     },
   ]);
 
