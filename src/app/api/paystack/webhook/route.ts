@@ -69,6 +69,7 @@ export async function POST(req: Request) {
 
     if (paymentType === "voting") {
       await saveVote({
+        full_name: field("full_name") || "Unknown",
         email,
         contestant_slug: field("contestant_slug") || "unknown",
         contestant_name: field("contestant") || "Unknown",
