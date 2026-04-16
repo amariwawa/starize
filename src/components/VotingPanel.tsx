@@ -12,7 +12,7 @@ const PRICE_PER_VOTE = 50; // ₦50 per vote
 
 const VotingPanel = () => {
   const searchParams = useSearchParams();
-  const [votes, setVotes] = useState(100);
+  const [votes, setVotes] = useState(20);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [paymentStatus, setPaymentStatus] = useState<
@@ -176,7 +176,7 @@ const VotingPanel = () => {
           <button
             onClick={() => {
               setPaymentStatus("idle");
-              setVotes(100);
+              setVotes(20);
               setEmail("");
               setFullName("");
               setSaveError(false);
@@ -222,7 +222,7 @@ const VotingPanel = () => {
                 </label>
                 <div className="flex items-center bg-surface-container-lowest rounded-lg overflow-hidden border border-white/10 mb-4">
                   <button
-                    onClick={() => setVotes(Math.max(10, votes - 10))}
+                    onClick={() => setVotes(Math.max(1, votes - 1))}
                     className="p-4 text-primary hover:bg-surface-container-low transition-colors"
                   >
                     <span className="material-symbols-outlined">remove</span>
@@ -233,7 +233,7 @@ const VotingPanel = () => {
                     className="w-full bg-transparent border-none text-center text-3xl font-black text-on-surface"
                   />
                   <button
-                    onClick={() => setVotes(votes + 10)}
+                    onClick={() => setVotes(votes + 1)}
                     className="p-4 text-primary hover:bg-surface-container-low transition-colors"
                   >
                     <span className="material-symbols-outlined">add</span>

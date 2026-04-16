@@ -59,10 +59,10 @@ const Navbar = () => {
         {/* Left: Logo (h-20 on Mobile, h-36/44 on Desktop) */}
         <div className="flex items-center h-full flex-1 md:flex-none">
           <Link href="/" className="transition-all duration-300 hover:scale-105 active:scale-95">
-            <img 
-              src="/logo.png" 
-              alt="STARIZE Logo" 
-              className="h-20 w-auto md:h-36 lg:h-44 object-contain" 
+            <img
+              src="/logo.png"
+              alt="STARIZE Logo"
+              className="h-20 w-auto md:h-36 lg:h-44 object-contain"
             />
           </Link>
         </div>
