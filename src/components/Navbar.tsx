@@ -79,7 +79,9 @@ const Navbar = () => {
                   "text-xs lg:text-sm xl:text-base tracking-tight",
                   isLinkActive(link.path, link.name)
                     ? "text-amber-400 border-b-2 border-amber-500 pb-0.5"
-                  (idx === 0 || idx === 1) ? "hidden lg:flex" : "flex"
+                    : "text-neutral-400 hover:text-amber-200",
+                  // Show About, Contestants, Voting, Events on mobile. Hide Home.
+                  (idx === 0) ? "hidden lg:flex" : "flex"
                 )}
               >
                 {link.name}
@@ -88,8 +90,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Right: Button */}
-        <div className="ml-auto flex items-center z-10">
+        <div className="ml-auto flex items-center z-10 hidden md:flex">
           <button
             onClick={() => router.push("/voting")}
             className="liquid-gold-btn text-on-primary px-4 md:px-8 py-2 md:py-3 rounded-full text-xs md:text-sm font-headline font-black active:scale-95 shadow-xl"

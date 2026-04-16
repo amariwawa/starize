@@ -20,12 +20,23 @@ const Hero = () => {
         }}
       />
 
-      {/* Background Image (Mobile - Absolute Content Window) */}
+      {/* Background Image (Mobile - Integrated Focal Point) */}
       <div className="absolute inset-0 z-0 md:hidden overflow-hidden">
         <div 
-          className="absolute inset-x-0 -top-40 h-[120%] bg-cover bg-[50%_100%] bg-no-repeat"
+          className="absolute inset-x-0 top-0 h-full bg-cover bg-[50%_100%] bg-no-repeat"
           style={{ backgroundImage: "url('/images/hero-home.jpg')" }}
         />
+        {/* Next Event Reminder (Mobile Only) */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5, ease: smoothEase }}
+          className="absolute top-28 left-0 w-full px-6 text-center"
+        >
+          <p className="text-secondary font-headline font-black text-sm tracking-[0.2em] mb-1">NEXT EVENT</p>
+          <h2 className="liquid-gold-text text-2xl font-headline font-black tracking-tight leading-tight mb-1">STAGE 3: KNOCKOUT EDITION</h2>
+          <p className="text-on-surface/60 text-xs font-bold uppercase tracking-widest">Saturday, 18th April • 10 AM</p>
+        </motion.div>
       </div>
       
       {/* Subtle blend overlay */}

@@ -8,12 +8,12 @@ const Events = () => {
   const card = useScrollAnimation("fadeUp");
 
   return (
-    <section className="px-8 py-12 max-w-7xl mx-auto space-y-8" id="events">
+    <section className="px-8 pt-4 pb-12 md:py-12 max-w-7xl mx-auto space-y-8" id="events">
       <motion.div
         {...card.motionProps}
         className="group rounded-xl bg-surface-container-low transition-colors duration-500 hover:bg-surface-container-high overflow-hidden flex flex-col md:flex-row"
       >
-        <div className="md:w-1/3 h-64 md:h-auto overflow-hidden">
+        <div className="md:w-1/3 h-[480px] md:h-auto overflow-hidden">
           <img
             src="/images/events/stage-3.jpg"
             alt="Stage 3! Knockout Edition"
