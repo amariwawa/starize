@@ -8,43 +8,26 @@ const smoothEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
 const Hero = () => {
   return (
     <section className="relative min-h-[85vh] md:min-h-screen w-full max-w-full flex items-end justify-center overflow-hidden bg-black pb-12 md:pb-32">
-      {/* 1. Atmosphere Layer (Blurred Colors to fill empty space horizontally) */}
-      <div
-        className="absolute inset-0 z-0 hidden md:block opacity-30"
+      {/* Multi-Layer Harmonious Background */}
+      <div 
+        className="absolute inset-0 z-0 bg-black"
         style={{
-          backgroundImage: "url('/images/hero-home.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          filter: "blur(60px) brightness(0.7)",
+          // Radial gradient matches the sunburst effect in the poster
+          backgroundImage: "radial-gradient(circle at center, #b91c1c 0%, #000000 80%)"
         }}
-      />
-
-      {/* 2. Sharp Poster Layer (Desktop - Perfectly Centered & Undistorted) */}
-      <div
-        className="absolute inset-0 z-0 hidden md:block"
-        style={{
-          backgroundImage: "url('/images/hero-home.jpg')",
-          backgroundSize: "contain",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      />
-
-      {/* 3. Cinematic Vignette (Blends image edges into atmosphere) */}
-      <div className="absolute inset-0 z-[1] hidden md:block bg-gradient-to-r from-black/40 via-transparent to-black/40 shadow-[inset_0_0_150px_rgba(0,0,0,0.6)]" />
-
-      {/* Mobile Background (Immersive Full-Bleed) */}
-      <div
-        className="absolute inset-0 z-0 md:hidden"
-        style={{
-          backgroundImage: "url('/images/hero-home.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center 40%",
-          backgroundRepeat: "no-repeat",
-        }}
-      />
-      {/* Subtle overlay to help buttons stand out without darkening the main logo */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+      >
+        <div
+          className="absolute inset-0 flex items-center justify-center"
+          style={{
+            backgroundImage: "url('/images/hero-home.jpg')",
+            backgroundSize: "contain",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+        {/* Cinematic Vignette for seamless edge blending */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+      </div>
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center w-full">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
