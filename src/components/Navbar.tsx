@@ -76,12 +76,12 @@ const Navbar = () => {
                 href={link.path}
                 className={clsx(
                   "font-headline font-black transition-all uppercase whitespace-nowrap",
-                  "text-xs lg:text-sm xl:text-base tracking-tight",
+                  "text-sm lg:text-base xl:text-lg tracking-tight",
                   isLinkActive(link.path, link.name)
                     ? "text-amber-400 border-b-2 border-amber-500 pb-0.5"
                     : "text-neutral-400 hover:text-amber-200",
-                  // Hide Home and About on mobile to maintain spread symmetry
-                  (idx === 0 || idx === 1) ? "hidden lg:flex" : "flex"
+                  // Show About, Contestants, Voting, Events on mobile. Hide Home.
+                  (idx === 0) ? "hidden lg:flex" : "flex"
                 )}
               >
                 {link.name}
