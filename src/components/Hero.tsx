@@ -8,25 +8,11 @@ const smoothEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
 const Hero = () => {
   return (
     <section className="relative min-h-[85vh] md:min-h-screen w-full max-w-full flex items-end justify-center overflow-hidden bg-black pb-12 md:pb-32">
-      {/* Layer 1: Blurred Background (Fills the entire screen) */}
-      <div
-        className="absolute inset-0 z-0 hidden md:block opacity-40"
-        style={{
-          backgroundImage: "url('/images/hero-home.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          filter: "blur(40px) brightness(0.6)",
-        }}
-      />
-      {/* Layer 2: Main Image (Desktop - Full Image Visibility) */}
-      <div
-        className="absolute inset-0 z-0 hidden md:block"
-        style={{
-          backgroundImage: "url('/images/hero-home.jpg')",
-          backgroundSize: "contain",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
+      {/* Background Image (Desktop - Forced Stretch Fullscreen) */}
+      <img
+        src="/images/hero-home.jpg"
+        alt="Starize Hero"
+        className="absolute inset-0 z-0 hidden md:block w-full h-full object-fill"
       />
       {/* Background Image (Mobile - Full Coverage) */}
       <div
