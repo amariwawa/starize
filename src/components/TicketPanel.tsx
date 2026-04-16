@@ -221,7 +221,7 @@ const TicketPanel = () => {
                     Regular
                   </h3>
                 </div>
-                <span className="text-2xl font-black text-primary">₦500</span>
+                <span className="text-2xl font-black text-primary">₦{TICKET_PRICES.regular.toLocaleString()}</span>
               </div>
               <p className="text-on-surface-variant text-sm">
                 {TICKET_DESCRIPTIONS.regular}
@@ -284,7 +284,7 @@ const TicketPanel = () => {
                   </h3>
                 </div>
                 <span className="text-2xl font-black text-primary">
-                  ₦20,000
+                  ₦{TICKET_PRICES.vip_table.toLocaleString()}
                 </span>
               </div>
               <p className="text-on-surface-variant text-sm">
