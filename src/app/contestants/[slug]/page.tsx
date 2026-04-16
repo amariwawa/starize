@@ -76,7 +76,7 @@ export default async function ContestantDetailPage({
 
         <section className="bg-surface-container-low border border-white/5 rounded-2xl p-6 md:p-10">
           <h2 className="text-3xl md:text-4xl font-headline font-black text-on-surface mb-6">
-            Performance Rewind
+            Performance Video
           </h2>
           <div className="rounded-xl overflow-hidden border border-white/10 bg-black/40 aspect-video flex flex-col items-center justify-center p-8 text-center">
             <span className="material-symbols-outlined text-primary text-6xl mb-4 opacity-50">

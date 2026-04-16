@@ -13,11 +13,11 @@ const Events = () => {
         {...card.motionProps}
         className="group rounded-xl bg-surface-container-low transition-colors duration-500 hover:bg-surface-container-high overflow-hidden flex flex-col md:flex-row"
       >
-        <div className="md:w-1/3 h-auto md:h-auto overflow-hidden">
+        <div className="md:w-1/3 w-full h-auto overflow-hidden">
           <img
             src="/images/events/stage-3.jpg"
             alt="Stage 3! Knockout Edition"
-            className="w-full h-auto object-contain md:object-cover"
+            className="w-full h-auto block"
           />
         </div>
         <div className="md:w-2/3 p-8 flex flex-col justify-between">
