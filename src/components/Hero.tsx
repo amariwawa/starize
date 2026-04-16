@@ -8,15 +8,15 @@ const smoothEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
 const Hero = () => {
   return (
     <section className="relative min-h-[85vh] md:min-h-screen w-full max-w-full flex items-end justify-center overflow-hidden bg-[#4e0505] pb-12 md:pb-32">
-      {/* Integrated Hero Background Layer - Cropped for New Content Focal Point */}
+      {/* Integrated Hero Background Layer - Fine-tuned for Logo Visibility */}
       <div
         className="absolute inset-0 z-0 bg-black"
         style={{
           backgroundImage: "url('/images/hero-home.jpg')",
           backgroundSize: "cover",
-          // Positioned at the bottom (85%) to crop out the blank red top 
-          // and focus on the Season 7 logo and performers.
-          backgroundPosition: "center 85%", 
+          // Fine-tuned to 75% to bring the Starize logo into full view
+          // while keeping all singers clearly in frame.
+          backgroundPosition: "center 75%", 
           backgroundRepeat: "no-repeat",
         }}
       />
