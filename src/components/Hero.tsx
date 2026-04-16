@@ -8,11 +8,15 @@ const smoothEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
 const Hero = () => {
   return (
     <section className="relative min-h-[85vh] md:min-h-screen w-full max-w-full flex items-end justify-center overflow-hidden bg-black pb-12 md:pb-32">
-      {/* Background Image (Desktop - Forced Stretch Fullscreen) */}
-      <img
-        src="/images/hero-home.jpg"
-        alt="Starize Hero"
-        className="absolute inset-0 z-0 hidden md:block w-full h-full object-fill"
+      {/* Background Image (Desktop - Standard Premium Framing) */}
+      <div
+        className="absolute inset-0 z-0 hidden md:block"
+        style={{
+          backgroundImage: "url('/images/hero-home.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center 25%", // Optimized for poster logo and faces
+          backgroundRepeat: "no-repeat",
+        }}
       />
       {/* Background Image (Mobile - Full Coverage) */}
       <div
