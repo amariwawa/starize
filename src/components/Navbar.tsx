@@ -55,45 +55,44 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 w-full z-50 glass-nav border-b border-white/5 shadow-lg overflow-hidden max-w-full">
-      <div className="max-w-7xl mx-auto px-4 md:px-10 flex items-center h-20 md:h-32 transition-all duration-300 relative">
-        {/* Left: Logo */}
-        <div className="flex items-center h-full z-10">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center h-20 md:h-32 transition-all duration-300">
+        {/* Left: Logo - Scaled up for Premium Presence */}
+        <div className="flex items-center h-full mr-auto">
           <Link href="/" className="transition-all duration-300 hover:scale-105 active:scale-95">
             <img 
               src="/logo.png" 
               alt="STARIZE Logo" 
-              className="h-14 w-auto md:h-36 lg:h-44 object-contain" 
+              className="h-20 w-auto md:h-36 lg:h-44 object-contain" 
             />
           </Link>
         </div>
 
-        {/* Middle: Links (Absolute Geometric Center) */}
-        <div className="absolute left-1/2 -translate-x-1/2 z-0 flex whitespace-nowrap">
-          <div className="flex items-center gap-2 sm:gap-4 md:gap-8 transition-all">
-            {navLinks.map((link, idx) => (
-              <Link
-                key={link.name}
-                href={link.path}
-                className={clsx(
-                  "font-headline font-black transition-all uppercase whitespace-nowrap",
-                  "text-xs lg:text-sm xl:text-base tracking-tight",
-                  isLinkActive(link.path, link.name)
-                    ? "text-amber-400 border-b-2 border-amber-500 pb-0.5"
-                    : "text-neutral-400 hover:text-amber-200",
-                  // Show About, Contestants, Voting, Events on mobile. Hide Home.
-                  (idx === 0) ? "hidden lg:flex" : "flex"
-                )}
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
+        {/* Right: Links - Spread Left-to-Right and Scaled up */}
+        <div className="flex items-center gap-4 lg:gap-8 transition-all">
+          {navLinks.map((link, idx) => (
+            <Link
+              key={link.name}
+              href={link.path}
+              className={clsx(
+                "font-headline font-black transition-all uppercase whitespace-nowrap",
+                "text-sm lg:text-sm xl:text-base tracking-tight",
+                isLinkActive(link.path, link.name)
+                  ? "text-amber-400 border-b-2 border-amber-500 pb-0.5"
+                  : "text-neutral-400 hover:text-amber-200",
+                // Show About, Contestants, Voting, Events on mobile. Hide Home.
+                (idx === 0) ? "hidden lg:flex" : "flex"
+              )}
+            >
+              {link.name}
+            </Link>
+          ))}
         </div>
 
-        <div className="ml-auto flex items-center z-10 hidden md:flex">
+        {/* Desktop-only Vote Now Button (Hidden on Mobile) */}
+        <div className="ml-8 hidden md:flex items-center">
           <button
             onClick={() => router.push("/voting")}
-            className="liquid-gold-btn text-on-primary px-4 md:px-8 py-2 md:py-3 rounded-full text-xs md:text-sm font-headline font-black active:scale-95 shadow-xl"
+            className="liquid-gold-btn text-on-primary px-8 py-3 rounded-full text-sm font-headline font-black active:scale-95 shadow-xl"
           >
             Vote Now
           </button>
