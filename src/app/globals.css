@@ -11,7 +11,7 @@
     background: radial-gradient(circle at center, #f2ca50 0%, #d4af37 100%);
   }
   .glass-nav {
-    background: rgba(14, 14, 14, 0.7);
+    background: rgba(14, 14, 14, 0.5); /* Shaved off some opacity to ensure branding is visible underneath */
     backdrop-filter: blur(20px);
   }
   .liquid-gold-btn {
