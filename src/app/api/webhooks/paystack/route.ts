@@ -81,6 +81,7 @@ export async function POST(req: Request) {
     };
 
     const type = metadata.type || getMetaField("payment_type");
+    console.log(`Webhook: Processing event ${event} for ${reference} (type: ${type})`);
 
     if (type === "vote" || type === "voting") {
       const voteData = {
@@ -94,6 +95,7 @@ export async function POST(req: Request) {
         payment_channel: data.channel,
       };
 
+      console.log(`Webhook: Upserting vote for ${voteData.contestant_slug}: ${voteData.votes} votes`);
       const { error: voteError } = await supabase
         .from("votes")
         .upsert(voteData, { onConflict: 'paystack_reference' });
@@ -101,7 +103,7 @@ export async function POST(req: Request) {
       if (voteError) {
         console.error(`Webhook: Failed to upsert vote for ${reference}:`, voteError.message);
       } else {
-        console.log(`Webhook: Successfully recorded vote for ${reference}`);
+        console.log(`Webhook: Successfully recorded vote for ${reference} (${voteData.votes} votes for ${voteData.contestant_slug})`);
       }
     } else if (type === "ticket") {
       const qty = parseInt(getMetaField("quantity") || "1", 10);

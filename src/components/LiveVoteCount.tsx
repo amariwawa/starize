@@ -39,22 +39,29 @@ const LiveVoteCount = ({ contestantSlug }: LiveVoteCountProps) => {
       .on(
         "postgres_changes",
         {
-          event: "INSERT",
+          event: "*", // Listen to all events (INSERT, UPDATE)
           schema: "public",
           table: "votes",
           filter: `contestant_slug=eq.${contestantSlug}`,
         },
-        (payload) => {
-          console.log("New vote received!", payload);
-          const newVotes = (payload.new as { votes: number }).votes || 0;
-          setVotes((prev) => (prev !== null ? prev + newVotes : newVotes));
+        async (payload) => {
+          console.log("Vote change detected!", payload);
+          
+          // Re-fetch the total from the DB to be 100% accurate
+          // rather than manually adding (which might be prone to race conditions or partial data)
+          const dbVotes = await getContestantVotes(contestantSlug);
+          setVotes(dbVotes);
           
           // Trigger animation
           setIsUpdating(true);
           setTimeout(() => setIsUpdating(false), 1000);
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        if (status !== "SUBSCRIBED") {
+          console.error("Supabase subscription status:", status);
+        }
+      });
 
     return () => {
       supabase.removeChannel(channel);

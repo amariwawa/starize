@@ -10,9 +10,9 @@ import { getContestantVotes } from "@/lib/database";
  */
 export async function syncVotesAction(contestantSlug: string) {
   try {
-    // 1. Sync the last 50 transactions to ensure absolute accuracy
-    // (This usually takes < 500ms and covers any missed webhooks)
-    await syncPaystackTransactions(50);
+    // 1. Sync the last 150 transactions to ensure absolute accuracy
+    // (This covers recent surges and missed webhooks)
+    await syncPaystackTransactions(150);
 
     // 2. Fetch the updated count from our fast database mirror
     const updatedVotes = await getContestantVotes(contestantSlug);
