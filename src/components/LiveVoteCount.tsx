@@ -24,7 +24,6 @@ const LiveVoteCount = ({ contestantSlug, variant = "default" }: LiveVoteCountPro
       setVotes(dbVotes);
 
       // Then trigger background sync for "Direct from Paystack" accuracy
-      // This fills any gaps from missed webhooks
       setIsSyncing(true);
       try {
         const result = await syncVotesAction(contestantSlug);
@@ -41,41 +40,62 @@ const LiveVoteCount = ({ contestantSlug, variant = "default" }: LiveVoteCountPro
     refreshData();
 
     // 2. Subscribe to real-time changes
-    const channel = supabase
+    // Layer A: Watch the votes table for direct inserts
+    const votesChannel = supabase
       .channel(`live-votes-${contestantSlug}`)
       .on(
         "postgres_changes",
         {
-          event: "*", // Listen to all events (INSERT, UPDATE)
+          event: "*",
           schema: "public",
           table: "votes",
           filter: `contestant_slug=eq.${contestantSlug}`,
         },
-        async (payload) => {
-          console.log("Vote change detected!", payload);
-          
-          // Re-fetch the total from the DB to be 100% accurate
+        async () => {
           const dbVotes = await getContestantVotes(contestantSlug);
           setVotes(dbVotes);
-          
-          // Trigger animation
           setIsUpdating(true);
           setTimeout(() => setIsUpdating(false), 1000);
         }
       )
       .subscribe();
 
-    // 3. Fallback Polling every 45s
-    // (This ensures the UI never stays stale even if real-time subscriptions fail)
-    const pollInterval = setInterval(refreshData, 45000);
+    // Layer B: Watch the transactions table for status transitions (e.g., ongoing -> success)
+    const txChannel = supabase
+       .channel(`tx-sync-${contestantSlug}`)
+       .on(
+         "postgres_changes",
+         {
+            event: "UPDATE",
+            schema: "public",
+            table: "transactions",
+         },
+         async (payload: any) => {
+            // If any transaction becomes success, trigger a sync to be safe
+            if (payload.new?.status === "success") {
+               console.log("Transaction success detected, syncing...");
+               refreshData();
+            }
+         }
+       )
+       .subscribe();
 
-    // 4. Re-sync on tab focus
+    // 3. Fallback Polling every 20s (Aggressive fallback)
+    const pollInterval = setInterval(refreshData, 20000);
+
+    // 4. Re-sync on focus/visibility change
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") refreshData();
+    };
     window.addEventListener("focus", refreshData);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      supabase.removeChannel(channel);
+      supabase.removeChannel(votesChannel);
+      supabase.removeChannel(txChannel);
       clearInterval(pollInterval);
       window.removeEventListener("focus", refreshData);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [contestantSlug]);
 
