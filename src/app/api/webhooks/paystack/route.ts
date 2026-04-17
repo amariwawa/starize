@@ -81,36 +81,59 @@ export async function POST(req: Request) {
     };
 
     const type = metadata.type || getMetaField("payment_type");
-    console.log(`Webhook: Processing event ${event} for ${reference} (type: ${type})`);
+    const isVotePattern = reference.startsWith("vote_");
+    const isTicketPattern = reference.startsWith("ticket_");
 
-    if (type === "vote" || type === "voting") {
-      const voteData = {
-        full_name: getMetaField("full_name") || "Unknown",
-        email: email,
-        contestant_slug: getMetaField("contestant_slug") || "unknown",
-        contestant_name: getMetaField("contestant") || "Unknown",
-        votes: parseInt(getMetaField("votes") || "0", 10),
-        amount_naira: amount,
-        paystack_reference: reference,
-        payment_channel: data.channel,
-      };
+    console.log(`Webhook: Processing event ${event} for ${reference} (type: ${type}, patternMatch: ${isVotePattern})`);
 
-      console.log(`Webhook: Upserting vote for ${voteData.contestant_slug}: ${voteData.votes} votes`);
-      const { error: voteError } = await supabase
-        .from("votes")
-        .upsert(voteData, { onConflict: 'paystack_reference' });
+    if (type === "vote" || type === "voting" || isVotePattern) {
+      // Identify contestant slug via metadata or reference parsing
+      let contestantSlug = getMetaField("contestant_slug") || getMetaField("slug");
       
-      if (voteError) {
-        console.error(`Webhook: Failed to upsert vote for ${reference}:`, voteError.message);
-      } else {
-        console.log(`Webhook: Successfully recorded vote for ${reference} (${voteData.votes} votes for ${voteData.contestant_slug})`);
+      if (!contestantSlug && isVotePattern) {
+        const parts = reference.split("_");
+        if (parts.length >= 2) {
+          contestantSlug = parts[1];
+        }
       }
-    } else if (type === "ticket") {
+
+      if (contestantSlug) {
+        const voteData = {
+          full_name: getMetaField("full_name") || "Unknown",
+          email: email,
+          contestant_slug: contestantSlug,
+          contestant_name: getMetaField("contestant") || "Unknown",
+          votes: parseInt(getMetaField("votes") || "0", 10) || Math.floor(amount / 50),
+          amount_naira: amount,
+          paystack_reference: reference,
+          payment_channel: data.channel,
+        };
+
+        console.log(`Webhook: Upserting vote for ${voteData.contestant_slug}: ${voteData.votes} votes`);
+        const { error: voteError } = await supabase
+          .from("votes")
+          .upsert(voteData, { onConflict: 'paystack_reference' });
+        
+        if (voteError) {
+          console.error(`Webhook: Failed to upsert vote for ${reference}:`, voteError.message);
+        } else {
+          console.log(`Webhook: Successfully recorded vote for ${reference} (${voteData.votes} votes for ${voteData.contestant_slug})`);
+        }
+      } else {
+        console.warn(`Webhook: Failed to identify contestant for vote ref: ${reference}`);
+      }
+    } else if (type === "ticket" || isTicketPattern) {
+      let tier = getMetaField("ticket_tier") || "unknown";
+      if (tier === "unknown" && isTicketPattern) {
+        const parts = reference.split("_");
+        if (parts.length >= 2) tier = parts[1];
+      }
+
       const qty = parseInt(getMetaField("quantity") || "1", 10);
       const ticketData = {
         full_name: getMetaField("full_name") || "Unknown",
         email: email,
-        tier: getMetaField("ticket_tier") || "unknown",
+        tier: tier,
         tier_label: getMetaField("tier_label") || "Unknown",
         quantity: qty,
         unit_price_naira: amount / qty,

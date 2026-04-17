@@ -85,37 +85,73 @@ async function backfill() {
       if (tx.status === 'success') {
         const metadata = tx.metadata || {};
         const paymentType = getField(metadata, 'payment_type') || metadata.type;
+        const reference = tx.reference || "";
+        const email = tx.customer.email;
+        const amountNaira = tx.amount / 100;
 
-        if (paymentType === 'voting' || paymentType === 'vote') {
-          const voteData = {
-            full_name: getField(metadata, 'full_name') || 'Unknown',
-            email: tx.customer.email,
-            contestant_slug: getField(metadata, 'contestant_slug') || 'unknown',
-            contestant_name: getField(metadata, 'contestant') || 'Unknown',
-            votes: parseInt(getField(metadata, 'votes') || '0', 10),
-            amount_naira: tx.amount / 100,
-            paystack_reference: tx.reference,
-            payment_channel: tx.channel,
-          };
+        // MULTI-LAYERED IDENTIFICATION:
+        // Layer 1: Explicit metadata
+        let isVote = paymentType === "voting" || paymentType === "vote";
+        
+        // Layer 2: Reference pattern (starts with vote_)
+        if (!isVote && reference.startsWith("vote_")) {
+          isVote = true;
+          console.log(`Backfill: Identified vote by reference pattern: ${reference}`);
+        }
 
-          const { error: voteError } = await supabase
-            .from('votes')
-            .upsert(voteData, { onConflict: 'paystack_reference' });
+        if (isVote) {
+          // Identify contestant slug via metadata or reference parsing
+          let contestantSlug = getField(metadata, "contestant_slug") || getField(metadata, "slug");
           
-          if (voteError) {
-             console.error(`Failed to upsert vote ${tx.reference}:`, voteError.message);
+          if (!contestantSlug && reference.startsWith("vote_")) {
+            // Extract from vote_SLUG_TIMESTAMP
+            const parts = reference.split("_");
+            if (parts.length >= 2) {
+              contestantSlug = parts[1];
+            }
           }
-        } else if (paymentType === 'ticket') {
+
+          if (contestantSlug) {
+            const voteData = {
+              full_name: getField(metadata, "full_name") || "Unknown",
+              email,
+              contestant_slug: contestantSlug,
+              contestant_name: getField(metadata, "contestant") || "Unknown",
+              votes: parseInt(getField(metadata, "votes") || "0", 10) || Math.floor(amountNaira / 50),
+              amount_naira: amountNaira,
+              paystack_reference: reference,
+              payment_channel: tx.channel,
+            };
+
+            const { error: voteError } = await supabase
+              .from('votes')
+              .upsert(voteData, { onConflict: 'paystack_reference' });
+            
+            if (voteError) {
+               console.error(`Backfill: Failed to upsert vote ${reference}:`, voteError.message);
+            } else {
+               console.log(`Backfill: Recorded ${voteData.votes} votes for ${contestantSlug}`);
+            }
+          } else {
+            console.warn(`Backfill: Failed to identify contestant for vote ref: ${reference}`);
+          }
+        } else if (paymentType === 'ticket' || reference.startsWith("ticket_")) {
+          let tier = getField(metadata, "ticket_tier") || "unknown";
+          if (tier === "unknown" && reference.startsWith("ticket_")) {
+             const parts = reference.split("_");
+             if (parts.length >= 2) tier = parts[1];
+          }
+
           const qty = parseInt(getField(metadata, 'quantity') || '1', 10);
           const ticketData = {
             full_name: getField(metadata, 'full_name') || 'Unknown',
-            email: tx.customer.email,
-            tier: getField(metadata, 'ticket_tier') || 'unknown',
+            email,
+            tier,
             tier_label: getField(metadata, 'tier_label') || 'Unknown',
             quantity: qty,
-            unit_price_naira: (tx.amount / 100) / qty,
-            total_amount_naira: tx.amount / 100,
-            paystack_reference: tx.reference,
+            unit_price_naira: amountNaira / qty,
+            total_amount_naira: amountNaira,
+            paystack_reference: reference,
             payment_channel: tx.channel,
           };
 
@@ -124,7 +160,7 @@ async function backfill() {
             .upsert(ticketData, { onConflict: 'paystack_reference' });
           
           if (ticketError) {
-            console.error(`Failed to upsert ticket ${tx.reference}:`, ticketError.message);
+            console.error(`Backfill: Failed to upsert ticket ${reference}:`, ticketError.message);
           }
         }
       }
