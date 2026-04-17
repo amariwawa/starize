@@ -17,7 +17,7 @@ export default function EventsPage() {
 
         <section id="tickets" className="max-w-7xl mx-auto px-8 pt-16 md:pt-24 text-center">
           <h1 className="text-5xl md:text-7xl font-black font-headline tracking-tighter mb-4 text-on-surface">
-            CLAIM YOUR <span className="text-primary">SPOT</span>
+            GRAND <span className="text-primary">FINALE</span>
           </h1>
         </section>
         <TicketPanelLoader />

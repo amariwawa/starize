@@ -24,7 +24,7 @@ const Events = () => {
           <div className="space-y-4">
             <div>
               <h3 className="text-3xl md:text-4xl font-headline font-bold text-on-surface mb-2">
-                Stage 3! Knockout Edition
+                GRAND <span className="text-primary">FINALE</span>
               </h3>
               <p className="text-secondary font-bold tracking-widest uppercase text-sm">
                 Saturday, 18th April, 2026 • 10 AM
@@ -38,10 +38,9 @@ const Events = () => {
               Maye Hall, Adedoyin Way, Obalufe, Parakin, Ile-Ife
             </p>
           </div>
-          <Link href="#tickets" className="text-primary font-bold flex items-center gap-2 mt-8 inline-flex w-fit bg-primary/10 px-6 py-3 rounded-full hover:bg-primary/20 transition-all">
-            Get Tickets{" "}
-            <span className="material-symbols-outlined">arrow_forward</span>
-          </Link>
+          <div className="text-secondary font-bold flex items-center gap-2 mt-8 inline-flex w-fit bg-secondary/10 px-6 py-3 rounded-full">
+            Free Event
+          </div>
         </div>
       </motion.div>
     </section>

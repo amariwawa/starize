@@ -8,9 +8,10 @@ import { motion, AnimatePresence } from "framer-motion";
 
 type LiveVoteCountProps = {
   contestantSlug: string;
+  variant?: "default" | "compact";
 };
 
-const LiveVoteCount = ({ contestantSlug }: LiveVoteCountProps) => {
+const LiveVoteCount = ({ contestantSlug, variant = "default" }: LiveVoteCountProps) => {
   const [votes, setVotes] = useState<number | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
@@ -97,11 +98,11 @@ const LiveVoteCount = ({ contestantSlug }: LiveVoteCountProps) => {
           star
         </span>
         <span className="text-primary font-black text-sm tracking-tight">
-          {votes.toLocaleString()} <span className="font-normal opacity-60 ml-0.5">VOTES</span>
+          {votes.toLocaleString()} {variant !== "compact" && <span className="font-normal opacity-60 ml-0.5">VOTES</span>}
         </span>
       </motion.div>
       
-      {isSyncing && (
+      {isSyncing && variant !== "compact" && (
         <span className="text-[10px] text-primary/60 font-medium uppercase tracking-tighter animate-pulse">
            Direct Syncing...
         </span>

@@ -46,7 +46,7 @@ const ContestantCard = ({ contestant, index = 0 }: ContestantCardProps) => {
               <p className="text-on-surface-variant text-sm">{contestant.category}</p>
             </div>
             <div className="flex-shrink-0">
-               <LiveVoteCount contestantSlug={contestant.slug} />
+               <LiveVoteCount contestantSlug={contestant.slug} variant="compact" />
             </div>
           </div>
 
