@@ -204,11 +204,10 @@ const TicketPanel = () => {
             {/* Regular Ticket */}
             <button
               onClick={() => setSelectedTier("regular")}
-              className={`w-full text-left bg-surface-container p-6 rounded-lg border-2 transition-colors ${
-                selectedTier === "regular"
+              className={`w-full text-left bg-surface-container p-6 rounded-lg border-2 transition-colors ${selectedTier === "regular"
                   ? "border-primary shadow-lg shadow-primary/10"
                   : "border-white/10 hover:border-white/20"
-              }`}
+                }`}
             >
               <div className="flex justify-between items-start mb-2">
                 <div className="flex items-center gap-3">
@@ -231,11 +230,10 @@ const TicketPanel = () => {
             {/* VIP Ticket */}
             <button
               onClick={() => setSelectedTier("vip")}
-              className={`w-full text-left bg-surface-container-high p-6 rounded-lg border-2 relative overflow-hidden transition-colors ${
-                selectedTier === "vip"
+              className={`w-full text-left bg-surface-container-high p-6 rounded-lg border-2 relative overflow-hidden transition-colors ${selectedTier === "vip"
                   ? "border-primary shadow-lg shadow-primary/10"
                   : "border-white/10 hover:border-white/20"
-              }`}
+                }`}
             >
               <div className="absolute top-0 right-0 bg-primary text-on-primary px-3 py-1 text-[10px] font-bold uppercase rounded-bl">
                 Popular
@@ -263,11 +261,10 @@ const TicketPanel = () => {
             {/* VIP Table Ticket */}
             <button
               onClick={() => setSelectedTier("vip_table")}
-              className={`w-full text-left p-6 rounded-lg border-2 relative overflow-hidden transition-colors ${
-                selectedTier === "vip_table"
+              className={`w-full text-left p-6 rounded-lg border-2 relative overflow-hidden transition-colors ${selectedTier === "vip_table"
                   ? "border-primary shadow-lg shadow-primary/10 bg-gradient-to-br from-surface-container-high to-surface-container-highest"
                   : "border-white/10 hover:border-white/20 bg-gradient-to-br from-surface-container-high to-surface-container-highest"
-              }`}
+                }`}
             >
               <div className="absolute top-0 right-0 golden-glow text-on-primary px-3 py-1 text-[10px] font-bold uppercase rounded-bl">
                 Premium
@@ -396,8 +393,8 @@ const TicketPanel = () => {
               {paymentStatus === "processing"
                 ? "Processing..."
                 : selectedTier
-                ? `Pay ₦${totalAmount.toLocaleString()}`
-                : "Select a Tier"}
+                  ? `Pay ₦${totalAmount.toLocaleString()}`
+                  : "Select a Tier"}
             </button>
             <p className="text-[10px] text-on-surface-variant text-center">
               Secured by Paystack • SSL Encrypted
