@@ -23,12 +23,18 @@ const LiveVoteCount = ({ contestantSlug }: LiveVoteCountProps) => {
       setVotes(dbVotes);
 
       // Then trigger background sync for "Direct from Paystack" accuracy
+      // This fills any gaps from missed webhooks
       setIsSyncing(true);
-      const result = await syncVotesAction(contestantSlug);
-      if (result.success) {
-        setVotes(result.votes);
+      try {
+        const result = await syncVotesAction(contestantSlug);
+        if (result.success) {
+          setVotes(result.votes);
+        }
+      } catch (error) {
+        console.error("Sync failed:", error);
+      } finally {
+        setIsSyncing(false);
       }
-      setIsSyncing(false);
     };
 
     refreshData();
@@ -48,7 +54,6 @@ const LiveVoteCount = ({ contestantSlug }: LiveVoteCountProps) => {
           console.log("Vote change detected!", payload);
           
           // Re-fetch the total from the DB to be 100% accurate
-          // rather than manually adding (which might be prone to race conditions or partial data)
           const dbVotes = await getContestantVotes(contestantSlug);
           setVotes(dbVotes);
           
@@ -57,14 +62,19 @@ const LiveVoteCount = ({ contestantSlug }: LiveVoteCountProps) => {
           setTimeout(() => setIsUpdating(false), 1000);
         }
       )
-      .subscribe((status) => {
-        if (status !== "SUBSCRIBED") {
-          console.error("Supabase subscription status:", status);
-        }
-      });
+      .subscribe();
+
+    // 3. Fallback Polling every 45s
+    // (This ensures the UI never stays stale even if real-time subscriptions fail)
+    const pollInterval = setInterval(refreshData, 45000);
+
+    // 4. Re-sync on tab focus
+    window.addEventListener("focus", refreshData);
 
     return () => {
       supabase.removeChannel(channel);
+      clearInterval(pollInterval);
+      window.removeEventListener("focus", refreshData);
     };
   }, [contestantSlug]);
 

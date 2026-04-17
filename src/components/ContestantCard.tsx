@@ -5,6 +5,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/lib/useScrollAnimation";
 import type { Contestant } from "@/lib/contestants";
+import LiveVoteCount from "@/components/LiveVoteCount";
 
 type ContestantCardProps = {
   contestant: Contestant;
@@ -37,11 +38,16 @@ const ContestantCard = ({ contestant, index = 0 }: ContestantCardProps) => {
           </Link>
         </div>
         <div className="p-6 space-y-4">
-          <div>
-            <h3 className="text-2xl font-headline font-bold text-on-surface">
-              {contestant.name}
-            </h3>
-            <p className="text-on-surface-variant text-sm">{contestant.category}</p>
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+            <div>
+              <h3 className="text-2xl font-headline font-bold text-on-surface">
+                {contestant.name}
+              </h3>
+              <p className="text-on-surface-variant text-sm">{contestant.category}</p>
+            </div>
+            <div className="flex-shrink-0">
+               <LiveVoteCount contestantSlug={contestant.slug} />
+            </div>
           </div>
 
           <p className="text-on-surface-variant text-sm leading-relaxed min-h-[64px]">
