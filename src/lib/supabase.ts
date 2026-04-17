@@ -24,3 +24,28 @@ export const supabase: SupabaseClient = new Proxy({} as SupabaseClient, {
     return (_supabase as unknown as Record<string | symbol, unknown>)[prop];
   },
 });
+
+let _supabaseAdmin: SupabaseClient | null = null;
+
+/**
+ * Lazily initialised Supabase client with Service Role Key.
+ * For use in server-side contexts only (API routes, Server Actions).
+ * Bypasses Row Level Security (RLS).
+ */
+export const supabaseAdmin: SupabaseClient = new Proxy({} as SupabaseClient, {
+  get(_target, prop) {
+    if (!_supabaseAdmin) {
+      const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const key = process.env.SUPABASE_SERVICE_KEY;
+
+      if (!url || !key) {
+        throw new Error(
+          "Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_KEY env vars",
+        );
+      }
+
+      _supabaseAdmin = createClient(url, key);
+    }
+    return (_supabaseAdmin as unknown as Record<string | symbol, unknown>)[prop];
+  },
+});

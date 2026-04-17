@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { getContestantVotes } from "@/lib/database";
+import { syncVotesAction } from "@/app/actions/votes";
 import { motion, AnimatePresence } from "framer-motion";
 
 type LiveVoteCountProps = {
@@ -12,15 +13,25 @@ type LiveVoteCountProps = {
 const LiveVoteCount = ({ contestantSlug }: LiveVoteCountProps) => {
   const [votes, setVotes] = useState<number | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
 
   useEffect(() => {
-    // 1. Fetch initial vote count
-    const fetchInitialVotes = async () => {
-      const initialVotes = await getContestantVotes(contestantSlug);
-      setVotes(initialVotes);
+    // 1. Fetch initial vote count and sync from Paystack
+    const refreshData = async () => {
+      // First get what we have in DB instantly
+      const dbVotes = await getContestantVotes(contestantSlug);
+      setVotes(dbVotes);
+
+      // Then trigger background sync for "Direct from Paystack" accuracy
+      setIsSyncing(true);
+      const result = await syncVotesAction(contestantSlug);
+      if (result.success) {
+        setVotes(result.votes);
+      }
+      setIsSyncing(false);
     };
 
-    fetchInitialVotes();
+    refreshData();
 
     // 2. Subscribe to real-time changes
     const channel = supabase
@@ -72,6 +83,12 @@ const LiveVoteCount = ({ contestantSlug }: LiveVoteCountProps) => {
           {votes.toLocaleString()} <span className="font-normal opacity-60 ml-0.5">VOTES</span>
         </span>
       </motion.div>
+      
+      {isSyncing && (
+        <span className="text-[10px] text-primary/60 font-medium uppercase tracking-tighter animate-pulse">
+           Direct Syncing...
+        </span>
+      )}
       
       <AnimatePresence>
         {isUpdating && (
