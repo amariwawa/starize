@@ -28,10 +28,10 @@ export type TicketRecord = {
 /* ─── Constants ─── */
 
 /**
- * Cut-off for the "Clean Scale" reset on April 18, 2026, at 3:13 PM GMT+1.
+ * Cut-off for the "Clean Scale" reset on April 18, 2026, at 3:12 PM GMT+1.
  * Votes before this time for specific finalists will be ignored in the totals.
  */
-const VOTE_RESET_TIMESTAMP = "2026-04-18T14:13:00.000Z";
+const VOTE_RESET_TIMESTAMP = "2026-04-18T14:12:00.000Z";
 
 const RESET_CONTESTANT_SLUGS = [
   "rotimi-john-olufela",
