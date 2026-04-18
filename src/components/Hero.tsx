@@ -49,9 +49,9 @@ const Hero = () => {
           transition={{ duration: 0.7, delay: 0.4, ease: smoothEase }}
           className="hidden md:block mb-8"
         >
-          <p className="text-secondary font-headline font-black text-xs tracking-[0.2em] mb-1">MAIN EVENT</p>
-          <h2 className="liquid-gold-text text-3xl font-headline font-black tracking-tight leading-tight mb-2">GRAND FINALE</h2>
-          <p className="text-on-surface/80 text-sm font-bold uppercase tracking-widest">Saturday, 9th May • 2 PM</p>
+          <p className="text-secondary font-headline font-black text-sm tracking-[0.2em] mb-1">MAIN EVENT</p>
+          <h2 className="liquid-gold-text text-5xl font-headline font-black tracking-tight leading-tight mb-2">GRAND FINALE</h2>
+          <p className="text-on-surface/80 text-base font-bold uppercase tracking-widest">Saturday, 9th May • 2 PM</p>
         </motion.div>
 
         <motion.div
