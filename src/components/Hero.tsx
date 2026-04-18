@@ -33,9 +33,9 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.5, ease: smoothEase }}
           className="absolute top-24 left-0 w-full px-6 text-center"
         >
-          <p className="text-secondary font-headline font-black text-[10px] tracking-[0.2em] mb-1">NEXT EVENT</p>
-          <h2 className="liquid-gold-text text-xl font-headline font-black tracking-tight leading-tight mb-1">STAGE 3: KNOCKOUT EDITION</h2>
-          <p className="text-on-surface/60 text-[10px] font-bold uppercase tracking-widest leading-none">Saturday, 18th April • 10 AM</p>
+          <p className="text-secondary font-headline font-black text-[10px] tracking-[0.2em] mb-1">MAIN EVENT</p>
+          <h2 className="liquid-gold-text text-xl font-headline font-black tracking-tight leading-tight mb-1">GRAND FINALE</h2>
+          <p className="text-on-surface/60 text-[10px] font-bold uppercase tracking-widest leading-none">Saturday, 9th May • 2 PM</p>
         </motion.div>
       </div>
       
@@ -49,9 +49,9 @@ const Hero = () => {
           transition={{ duration: 0.7, delay: 0.4, ease: smoothEase }}
           className="hidden md:block mb-8"
         >
-          <p className="text-secondary font-headline font-black text-xs tracking-[0.2em] mb-1">NEXT EVENT</p>
-          <h2 className="liquid-gold-text text-3xl font-headline font-black tracking-tight leading-tight mb-2">STAGE 3! KNOCKOUT EDITION</h2>
-          <p className="text-on-surface/80 text-sm font-bold uppercase tracking-widest">Saturday, 18th April • 10 AM</p>
+          <p className="text-secondary font-headline font-black text-xs tracking-[0.2em] mb-1">MAIN EVENT</p>
+          <h2 className="liquid-gold-text text-3xl font-headline font-black tracking-tight leading-tight mb-2">GRAND FINALE</h2>
+          <p className="text-on-surface/80 text-sm font-bold uppercase tracking-widest">Saturday, 9th May • 2 PM</p>
         </motion.div>
 
         <motion.div
