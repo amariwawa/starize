@@ -94,6 +94,7 @@ const VotingPanel = () => {
         : config.reference;
 
     console.log("Vote payment successful", ref);
+    setPaymentStatus("success");
 
     // Save to Supabase
     try {
@@ -111,8 +112,6 @@ const VotingPanel = () => {
       console.error("Failed to save vote to database:", err);
       setSaveError(true);
     }
-
-    setPaymentStatus("success");
   };
 
   const onClose = () => {

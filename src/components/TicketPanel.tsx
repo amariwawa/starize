@@ -93,6 +93,7 @@ const TicketPanel = () => {
         : config.reference;
 
     console.log("Ticket payment successful", ref);
+    setPaymentStatus("success");
 
     // Save to Supabase
     if (selectedTier) {
@@ -113,8 +114,6 @@ const TicketPanel = () => {
         setSaveError(true);
       }
     }
-
-    setPaymentStatus("success");
   };
 
   const onClose = () => {

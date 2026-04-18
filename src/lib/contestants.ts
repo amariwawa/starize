@@ -45,15 +45,7 @@ const baseContestants = [
     writeUp:
       "I am Babalola Ayomide, an Economics Education graduate from Obafemi Awolowo University and the firstborn in a family of five. My passion for God and singing started early. I joined children choir at age 12 and have served in groups like Harmony Music Group, Mass Worshippers, and NTMC. I am committed to learning, sharing, and inspiring.",
   },
-  {
-    name: "Ashola Matthew Ayomide",
-    category: "Nazarene - Anendlessocean",
-    image: "/images/contestants/Contestant pictures/Matthew Ayomide.jpg",
-    shortBio:
-      "Ashola Matthew Ayomide is a Part 2 Architecture student who has loved singing since childhood.",
-    writeUp:
-      "My name is Ashola Matthew Ayomide, a Part 2 Architecture student at Obafemi Awolowo University. Since I was little, I have always loved singing and listening to music. Music has helped shape my life, and I desire to make my voice heard around the world.",
-  },
+
   {
     name: "Precious Ikechukwu",
     category: "Lovin' me - Jonathan McReynolds",
@@ -63,15 +55,7 @@ const baseContestants = [
     writeUp:
       "I am Precious Ikechukwu, a Broadcast Journalism student at Obafemi Awolowo University. Singing is how I express what I feel and experience. Beyond expression, my goal is to help people encounter the warmth and love of Christ through every song. I see singing as a gift entrusted to me for others.",
   },
-  {
-    name: "Daniel Eyo",
-    category: "All Glory - Sunmisola Agbebi",
-    image: "/images/contestants/Contestant pictures/Daniel Eyo.jpg",
-    shortBio:
-      "Daniel Eyo is a Dramatic Arts student whose love for singing and composing began in primary school.",
-    writeUp:
-      "My name is Eyo Daniel, a Dramatic Arts student at Obafemi Awolowo University. Music has been my comfort and passion from a very young age. I discovered my talent for singing and composing early, and with support from my mum and friends, I have continued to grow with confidence.",
-  },
+
   {
     name: "Bikom Helen",
     category: "So Will I - Hillsong United",
@@ -117,24 +101,8 @@ const baseContestants = [
     writeUp:
       "My name is Precious Chinaza Okafor, a Microbiology graduate of OAU. Music has been part of me for as long as I can remember, from choir as a little girl to where I am now. It has become my second language for expressing emotions and connecting with something greater. Through singing, I hope to share something real and inspiring with everyone who listens.",
   },
-  {
-    name: "Aina Olajumoke",
-    category: "Rescue Story - Zach Williams",
-    image: "/images/contestants/Contestant pictures/Aina Jumoke.jpg",
-    shortBio:
-      "Aina Olajumoke is a chemistry student and believer who embraces music as worship and lifestyle.",
-    writeUp:
-      "I am Aina Olajumoke, a Chemistry student of Obafemi Awolowo University. I am a believer and a passionate lover of music as both worship and lifestyle. I also explore shoemaking as a creative interest. Through this music journey, I am open to sharing my voice, growing, and connecting.",
-  },
-  {
-    name: "Temiloluwa Aribatise",
-    category: "What a Beautiful Name - Hillsong Worship",
-    image: "/images/contestants/Contestant pictures/Temiloluwa .jpg",
-    shortBio:
-      "Temiloluwa Aribatise loves using music for joyful worship and is eager to grow through gospel competition.",
-    writeUp:
-      "I am Temiloluwa Aribatise, a student in the Faculty of Education at Obafemi Awolowo University. I have loved music for as long as I can remember, and singing brings me joy and fulfillment. It is one of my deepest ways of expression through worship, and I am excited to grow through this gospel competition experience.",
-  },
+
+
   {
     name: "Owofadeju Mayowa",
     category: "You Are The Reason I Live - Chimdi Ochei",
@@ -180,15 +148,7 @@ const baseContestants = [
     writeUp:
       "I am Adebajo Busayo Eniola, a Music student of Obafemi Awolowo University. Music has been woven into my life for as long as I can remember. To me, music is not just melody, it is connection. It shapes how I think, feel, and relate with others, and it is where I feel most at home.",
   },
-  {
-    name: "Olaniyi Precious",
-    category: "No Fear - Madison Ryann Ward",
-    image: "/images/contestants/Contestant pictures/Olaniyi Precious.jpg",
-    shortBio:
-      "Olaniyi Precious is a passionate singer and music student committed to growth and vocal depth.",
-    writeUp:
-      "I am Olaniyi Precious, a passionate singer and music student with deep love for vocal expression. Music has shaped my journey and given me confidence to express emotion with depth. This competition is an opportunity for me to challenge myself, grow, and share my voice with a wider audience.",
-  },
+
   {
     name: "Deborah Olaoye",
     category: "Alabaster Box - Kim Burrell",
