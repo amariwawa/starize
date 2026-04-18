@@ -51,21 +51,33 @@ export default async function ContestantDetailPage({
             <p className="text-primary text-sm font-bold uppercase tracking-widest">
               Contestant Profile
             </p>
-            <h1 className="text-5xl md:text-6xl font-headline font-black tracking-tighter text-on-surface">
-              {contestant.name}
-            </h1>
+            <div className="flex items-center gap-4">
+              <h1 className="text-5xl md:text-6xl font-headline font-black tracking-tighter text-on-surface">
+                {contestant.name}
+              </h1>
+              {contestant.isQualified && (
+                <span className="bg-primary text-on-primary text-[10px] font-black uppercase tracking-[0.2em] px-4 py-1.5 rounded-full shadow-lg flex items-center gap-2 shadow-primary/20">
+                  <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    verified
+                  </span>
+                  Qualified
+                </span>
+              )}
+            </div>
             <LiveVoteCount contestantSlug={slug} />
             <p className="text-on-surface-variant text-lg">{contestant.category}</p>
             <p className="text-on-surface-variant text-lg leading-relaxed">
               {contestant.writeUp}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link
-                href={`/voting?contestant=${contestant.slug}#vote-panel`}
-                className="gold-shimmer text-on-primary font-bold py-3 px-7 rounded-lg text-sm uppercase tracking-wider text-center"
-              >
-                Vote Now
-              </Link>
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              {!contestant.isQualified && (
+                <Link
+                  href={`/voting?contestant=${contestant.slug}#vote-panel`}
+                  className="gold-shimmer text-on-primary font-bold py-3 px-7 rounded-lg text-sm uppercase tracking-wider text-center"
+                >
+                  Vote Now
+                </Link>
+              )}
               <Link
                 href="/contestants"
                 className="bg-surface-container-high border border-white/10 text-on-surface font-bold py-3 px-7 rounded-lg text-sm uppercase tracking-wider text-center"

@@ -1,0 +1,1563 @@
+◇ injected env (5) from .env.local // tip: ◈ encrypted .env [www.dotenvx.com]
+--- Diagnostics for adekoya ---
+MATCH FOUND:
+{
+  "id": 6046967963,
+  "domain": "live",
+  "status": "success",
+  "reference": "vote_adekoya-oluwanishola_1776410770528",
+  "amount": 20000,
+  "message": null,
+  "gateway_response": "Approved",
+  "paid_at": "2026-04-17T07:28:27.000Z",
+  "created_at": "2026-04-17T07:26:17.000Z",
+  "channel": "bank_transfer",
+  "currency": "NGN",
+  "ip_address": "102.89.69.72",
+  "metadata": {
+    "custom_fields": [
+      {
+        "display_name": "Full Name",
+        "variable_name": "full_name",
+        "value": "Adejulo Joseph"
+      },
+      {
+        "display_name": "Contestant",
+        "variable_name": "contestant",
+        "value": "Adekoya Oluwanishola"
+      },
+      {
+        "display_name": "Contestant Slug",
+        "variable_name": "contestant_slug",
+        "value": "adekoya-oluwanishola"
+      },
+      {
+        "display_name": "Votes",
+        "variable_name": "votes",
+        "value": "4"
+      },
+      {
+        "display_name": "Type",
+        "variable_name": "payment_type",
+        "value": "voting"
+      }
+    ],
+    "referrer": "https://starize.site/voting?contestant=adekoya-oluwanishola#vote-panel"
+  },
+  "log": {
+    "start_time": 1776410777,
+    "time_spent": 10,
+    "attempts": 0,
+    "errors": 0,
+    "success": false,
+    "mobile": true,
+    "input": [],
+    "history": [
+      {
+        "type": "action",
+        "message": "Set payment method to: bank_transfer",
+        "time": 10
+      }
+    ]
+  },
+  "fees": 300,
+  "fees_split": null,
+  "customer": {
+    "id": 356522190,
+    "first_name": "",
+    "last_name": "",
+    "email": "adejulojoseph@gmail.com",
+    "phone": "",
+    "metadata": null,
+    "customer_code": "CUS_y33dql90subjqwr",
+    "risk_action": "default"
+  },
+  "authorization": {
+    "authorization_code": "AUTH_mu8axcwg01",
+    "bin": "906XXX",
+    "last4": "X053",
+    "exp_month": "04",
+    "exp_year": "2026",
+    "channel": "bank_transfer",
+    "card_type": "transfer",
+    "bank": "OPay Digital Services Limited (OPay)",
+    "country_code": "NG",
+    "brand": "Managed Account",
+    "reusable": false,
+    "signature": null,
+    "account_name": null
+  },
+  "plan": {},
+  "split": {},
+  "subaccount": {},
+  "order_id": null,
+  "paidAt": "2026-04-17T07:28:27.000Z",
+  "createdAt": "2026-04-17T07:26:17.000Z",
+  "requested_amount": 20000,
+  "source": {
+    "source": "checkout",
+    "type": "web",
+    "identifier": null,
+    "entry_point": "request_inline"
+  },
+  "connect": null,
+  "pos_transaction_data": null
+}
+MATCH FOUND:
+{
+  "id": 6046931216,
+  "domain": "live",
+  "status": "success",
+  "reference": "vote_adekoya-oluwanishola_1776408999537",
+  "amount": 50000,
+  "message": "madePayment",
+  "gateway_response": "Approved",
+  "paid_at": "2026-04-17T07:15:49.000Z",
+  "created_at": "2026-04-17T07:14:43.000Z",
+  "channel": "bank",
+  "currency": "NGN",
+  "ip_address": "197.211.63.24",
+  "metadata": {
+    "custom_fields": [
+      {
+        "display_name": "Full Name",
+        "variable_name": "full_name",
+        "value": "Adewumi Olaoluwakiitan Blessed "
+      },
+      {
+        "display_name": "Contestant",
+        "variable_name": "contestant",
+        "value": "Adekoya Oluwanishola"
+      },
+      {
+        "display_name": "Contestant Slug",
+        "variable_name": "contestant_slug",
+        "value": "adekoya-oluwanishola"
+      },
+      {
+        "display_name": "Votes",
+        "variable_name": "votes",
+        "value": "10"
+      },
+      {
+        "display_name": "Type",
+        "variable_name": "payment_type",
+        "value": "voting"
+      }
+    ],
+    "referrer": "https://starize.site/voting"
+  },
+  "log": {
+    "start_time": 1776410084,
+    "time_spent": 76,
+    "attempts": 0,
+    "errors": 0,
+    "success": true,
+    "mobile": true,
+    "input": [],
+    "history": [
+      {
+        "type": "action",
+        "message": "Set payment method to: opay",
+        "time": 35
+      },
+      {
+        "type": "action",
+        "message": "Third-party authentication window opened",
+        "time": 38
+      },
+      {
+        "type": "success",
+        "message": "Successfully paid with ibank",
+        "time": 66
+      },
+      {
+        "type": "action",
+        "message": "Third-party authentication window closed",
+        "time": 76
+      }
+    ]
+  },
+  "fees": 750,
+  "fees_split": null,
+  "customer": {
+    "id": 356520093,
+    "first_name": "",
+    "last_name": "",
+    "email": "kiitanadewumi@gmail.com",
+    "phone": "",
+    "metadata": null,
+    "customer_code": "CUS_hihl08kea7jubpf",
+    "risk_action": "default"
+  },
+  "authorization": {
+    "authorization_code": "AUTH_de8hw5kxw2",
+    "bin": "",
+    "last4": "",
+    "exp_month": "04",
+    "exp_year": "2026",
+    "channel": "bank",
+    "card_type": "IBANK_OPAY",
+    "bank": "OPay Digital Services Limited (OPay)",
+    "country_code": "NG",
+    "brand": "IBANK_OPAY",
+    "reusable": false,
+    "signature": null,
+    "account_name": null
+  },
+  "plan": {},
+  "split": {},
+  "subaccount": {},
+  "order_id": null,
+  "paidAt": "2026-04-17T07:15:49.000Z",
+  "createdAt": "2026-04-17T07:14:43.000Z",
+  "requested_amount": 50000,
+  "source": {
+    "source": "checkout",
+    "type": "web",
+    "identifier": null,
+    "entry_point": "request_inline"
+  },
+  "connect": null,
+  "pos_transaction_data": null
+}
+MATCH FOUND:
+{
+  "id": 6046882487,
+  "domain": "live",
+  "status": "abandoned",
+  "reference": "vote_adekoya-oluwanishola_1776409146351",
+  "amount": 50000,
+  "message": null,
+  "gateway_response": "The transaction was not completed",
+  "paid_at": null,
+  "created_at": "2026-04-17T06:59:10.000Z",
+  "channel": "card",
+  "currency": "NGN",
+  "ip_address": "105.113.128.217",
+  "metadata": {
+    "custom_fields": [
+      {
+        "display_name": "Full Name",
+        "variable_name": "full_name",
+        "value": "Olorunfemi David "
+      },
+      {
+        "display_name": "Contestant",
+        "variable_name": "contestant",
+        "value": "Adekoya Oluwanishola"
+      },
+      {
+        "display_name": "Contestant Slug",
+        "variable_name": "contestant_slug",
+        "value": "adekoya-oluwanishola"
+      },
+      {
+        "display_name": "Votes",
+        "variable_name": "votes",
+        "value": "10"
+      },
+      {
+        "display_name": "Type",
+        "variable_name": "payment_type",
+        "value": "voting"
+      }
+    ],
+    "referrer": "https://starize.site/voting"
+  },
+  "log": null,
+  "fees": null,
+  "fees_split": null,
+  "customer": {
+    "id": 356516687,
+    "first_name": "",
+    "last_name": "",
+    "email": "olorunfemid0@gmail.com",
+    "phone": "",
+    "metadata": null,
+    "customer_code": "CUS_46xspkobjdhziwm",
+    "risk_action": "default"
+  },
+  "authorization": {
+    "authorization_code": null,
+    "bin": null,
+    "last4": null,
+    "exp_month": null,
+    "exp_year": null,
+    "channel": null,
+    "card_type": null,
+    "bank": null,
+    "country_code": null,
+    "brand": null,
+    "reusable": false,
+    "signature": null,
+    "account_name": null
+  },
+  "plan": {},
+  "split": {},
+  "subaccount": {},
+  "order_id": null,
+  "paidAt": null,
+  "createdAt": "2026-04-17T06:59:10.000Z",
+  "requested_amount": 50000,
+  "source": {
+    "source": "checkout",
+    "type": "web",
+    "identifier": null,
+    "entry_point": "request_inline"
+  },
+  "connect": null,
+  "pos_transaction_data": null
+}
+MATCH FOUND:
+{
+  "id": 6046878673,
+  "domain": "live",
+  "status": "success",
+  "reference": "vote_adekoya-oluwanishola_1776409061584",
+  "amount": 50000,
+  "message": null,
+  "gateway_response": "Approved",
+  "paid_at": "2026-04-17T06:58:20.000Z",
+  "created_at": "2026-04-17T06:57:47.000Z",
+  "channel": "bank_transfer",
+  "currency": "NGN",
+  "ip_address": "105.113.128.217",
+  "metadata": {
+    "custom_fields": [
+      {
+        "display_name": "Full Name",
+        "variable_name": "full_name",
+        "value": "Olorunfemi David "
+      },
+      {
+        "display_name": "Contestant",
+        "variable_name": "contestant",
+        "value": "Adekoya Oluwanishola"
+      },
+      {
+        "display_name": "Contestant Slug",
+        "variable_name": "contestant_slug",
+        "value": "adekoya-oluwanishola"
+      },
+      {
+        "display_name": "Votes",
+        "variable_name": "votes",
+        "value": "10"
+      },
+      {
+        "display_name": "Type",
+        "variable_name": "payment_type",
+        "value": "voting"
+      }
+    ],
+    "referrer": "https://starize.site/voting"
+  },
+  "log": {
+    "start_time": 1776409066,
+    "time_spent": 33,
+    "attempts": 0,
+    "errors": 0,
+    "success": true,
+    "mobile": true,
+    "input": [],
+    "history": [
+      {
+        "type": "action",
+        "message": "Set payment method to: bank_transfer",
+        "time": 1
+      },
+      {
+        "type": "success",
+        "message": "Successfully paid with bank_transfer",
+        "time": 33
+      }
+    ]
+  },
+  "fees": 750,
+  "fees_split": null,
+  "customer": {
+    "id": 356516687,
+    "first_name": "",
+    "last_name": "",
+    "email": "olorunfemid0@gmail.com",
+    "phone": "",
+    "metadata": null,
+    "customer_code": "CUS_46xspkobjdhziwm",
+    "risk_action": "default"
+  },
+  "authorization": {
+    "authorization_code": "AUTH_9i47dkurlz",
+    "bin": "901XXX",
+    "last4": "X159",
+    "exp_month": "04",
+    "exp_year": "2026",
+    "channel": "bank_transfer",
+    "card_type": "transfer",
+    "bank": "PalmPay",
+    "country_code": "NG",
+    "brand": "Managed Account",
+    "reusable": false,
+    "signature": null,
+    "account_name": null
+  },
+  "plan": {},
+  "split": {},
+  "subaccount": {},
+  "order_id": null,
+  "paidAt": "2026-04-17T06:58:20.000Z",
+  "createdAt": "2026-04-17T06:57:47.000Z",
+  "requested_amount": 50000,
+  "source": {
+    "source": "checkout",
+    "type": "web",
+    "identifier": null,
+    "entry_point": "request_inline"
+  },
+  "connect": null,
+  "pos_transaction_data": null
+}
+MATCH FOUND:
+{
+  "id": 6046873944,
+  "domain": "live",
+  "status": "abandoned",
+  "reference": "vote_adekoya-oluwanishola_1776408962300",
+  "amount": 50000,
+  "message": "Awaiting Transfer",
+  "gateway_response": "Awaiting Transfer",
+  "paid_at": null,
+  "created_at": "2026-04-17T06:56:08.000Z",
+  "channel": "bank_transfer",
+  "currency": "NGN",
+  "ip_address": "105.113.128.217",
+  "metadata": {
+    "custom_fields": [
+      {
+        "display_name": "Full Name",
+        "variable_name": "full_name",
+        "value": "Olorunfemi David "
+      },
+      {
+        "display_name": "Contestant",
+        "variable_name": "contestant",
+        "value": "Adekoya Oluwanishola"
+      },
+      {
+        "display_name": "Contestant Slug",
+        "variable_name": "contestant_slug",
+        "value": "adekoya-oluwanishola"
+      },
+      {
+        "display_name": "Votes",
+        "variable_name": "votes",
+        "value": "10"
+      },
+      {
+        "display_name": "Type",
+        "variable_name": "payment_type",
+        "value": "voting"
+      }
+    ],
+    "referrer": "https://starize.site/voting"
+  },
+  "log": {
+    "start_time": 1776408967,
+    "time_spent": 2,
+    "attempts": 0,
+    "errors": 0,
+    "success": false,
+    "mobile": true,
+    "input": [],
+    "history": [
+      {
+        "type": "action",
+        "message": "Set payment method to: bank_transfer",
+        "time": 2
+      }
+    ]
+  },
+  "fees": null,
+  "fees_split": null,
+  "customer": {
+    "id": 356516687,
+    "first_name": "",
+    "last_name": "",
+    "email": "olorunfemid0@gmail.com",
+    "phone": "",
+    "metadata": null,
+    "customer_code": "CUS_46xspkobjdhziwm",
+    "risk_action": "default"
+  },
+  "authorization": {
+    "authorization_code": null,
+    "bin": null,
+    "last4": null,
+    "exp_month": null,
+    "exp_year": null,
+    "channel": null,
+    "card_type": null,
+    "bank": null,
+    "country_code": null,
+    "brand": null,
+    "reusable": false,
+    "signature": null,
+    "account_name": null
+  },
+  "plan": {},
+  "split": {},
+  "subaccount": {},
+  "order_id": null,
+  "paidAt": null,
+  "createdAt": "2026-04-17T06:56:08.000Z",
+  "requested_amount": 50000,
+  "source": {
+    "source": "checkout",
+    "type": "web",
+    "identifier": null,
+    "entry_point": "request_inline"
+  },
+  "connect": null,
+  "pos_transaction_data": null
+}
+MATCH FOUND:
+{
+  "id": 6046870439,
+  "domain": "live",
+  "status": "abandoned",
+  "reference": "vote_adekoya-oluwanishola_1776408887708",
+  "amount": 30000,
+  "message": "Awaiting Transfer",
+  "gateway_response": "Awaiting Transfer",
+  "paid_at": null,
+  "created_at": "2026-04-17T06:54:55.000Z",
+  "channel": "bank_transfer",
+  "currency": "NGN",
+  "ip_address": "105.113.128.217",
+  "metadata": {
+    "custom_fields": [
+      {
+        "display_name": "Full Name",
+        "variable_name": "full_name",
+        "value": "Olorunfemi David "
+      },
+      {
+        "display_name": "Contestant",
+        "variable_name": "contestant",
+        "value": "Adekoya Oluwanishola"
+      },
+      {
+        "display_name": "Contestant Slug",
+        "variable_name": "contestant_slug",
+        "value": "adekoya-oluwanishola"
+      },
+      {
+        "display_name": "Votes",
+        "variable_name": "votes",
+        "value": "6"
+      },
+      {
+        "display_name": "Type",
+        "variable_name": "payment_type",
+        "value": "voting"
+      }
+    ],
+    "referrer": "https://starize.site/voting"
+  },
+  "log": {
+    "start_time": 1776408894,
+    "time_spent": 3,
+    "attempts": 0,
+    "errors": 0,
+    "success": false,
+    "mobile": true,
+    "input": [],
+    "history": [
+      {
+        "type": "action",
+        "message": "Set payment method to: bank_transfer",
+        "time": 3
+      }
+    ]
+  },
+  "fees": null,
+  "fees_split": null,
+  "customer": {
+    "id": 356516687,
+    "first_name": "",
+    "last_name": "",
+    "email": "olorunfemid0@gmail.com",
+    "phone": "",
+    "metadata": null,
+    "customer_code": "CUS_46xspkobjdhziwm",
+    "risk_action": "default"
+  },
+  "authorization": {
+    "authorization_code": null,
+    "bin": null,
+    "last4": null,
+    "exp_month": null,
+    "exp_year": null,
+    "channel": null,
+    "card_type": null,
+    "bank": null,
+    "country_code": null,
+    "brand": null,
+    "reusable": false,
+    "signature": null,
+    "account_name": null
+  },
+  "plan": {},
+  "split": {},
+  "subaccount": {},
+  "order_id": null,
+  "paidAt": null,
+  "createdAt": "2026-04-17T06:54:55.000Z",
+  "requested_amount": 30000,
+  "source": {
+    "source": "checkout",
+    "type": "web",
+    "identifier": null,
+    "entry_point": "request_inline"
+  },
+  "connect": null,
+  "pos_transaction_data": null
+}
+MATCH FOUND:
+{
+  "id": 6046783926,
+  "domain": "live",
+  "status": "success",
+  "reference": "vote_adekoya-oluwanishola_1776407092129",
+  "amount": 200000,
+  "message": null,
+  "gateway_response": "Approved",
+  "paid_at": "2026-04-17T06:26:25.000Z",
+  "created_at": "2026-04-17T06:25:10.000Z",
+  "channel": "bank_transfer",
+  "currency": "NGN",
+  "ip_address": "197.211.63.82",
+  "metadata": {
+    "custom_fields": [
+      {
+        "display_name": "Full Name",
+        "variable_name": "full_name",
+        "value": "Blessing Ayo"
+      },
+      {
+        "display_name": "Contestant",
+        "variable_name": "contestant",
+        "value": "Adekoya Oluwanishola"
+      },
+      {
+        "display_name": "Contestant Slug",
+        "variable_name": "contestant_slug",
+        "value": "adekoya-oluwanishola"
+      },
+      {
+        "display_name": "Votes",
+        "variable_name": "votes",
+        "value": "40"
+      },
+      {
+        "display_name": "Type",
+        "variable_name": "payment_type",
+        "value": "voting"
+      }
+    ],
+    "referrer": "https://starize.site/voting"
+  },
+  "log": {
+    "start_time": 1776407110,
+    "time_spent": 75,
+    "attempts": 0,
+    "errors": 0,
+    "success": true,
+    "mobile": false,
+    "input": [],
+    "history": [
+      {
+        "type": "pending",
+        "message": "Payment in progress with bank",
+        "time": 2
+      },
+      {
+        "type": "action",
+        "message": "Set payment method to: bank",
+        "time": 15
+      },
+      {
+        "type": "action",
+        "message": "Set payment method to: bank_transfer",
+        "time": 19
+      },
+      {
+        "type": "success",
+        "message": "Successfully paid with bank_transfer",
+        "time": 75
+      }
+    ]
+  },
+  "fees": 3000,
+  "fees_split": null,
+  "customer": {
+    "id": 356512435,
+    "first_name": "",
+    "last_name": "",
+    "email": "iwolowayomide@gmail.com",
+    "phone": "",
+    "metadata": null,
+    "customer_code": "CUS_xqlpeuv9u6bxaug",
+    "risk_action": "default"
+  },
+  "authorization": {
+    "authorization_code": "AUTH_jjcuoehx4i",
+    "bin": "803XXX",
+    "last4": "X204",
+    "exp_month": "04",
+    "exp_year": "2026",
+    "channel": "bank_transfer",
+    "card_type": "transfer",
+    "bank": "OPay Digital Services Limited (OPay)",
+    "country_code": "NG",
+    "brand": "Managed Account",
+    "reusable": false,
+    "signature": null,
+    "account_name": null
+  },
+  "plan": {},
+  "split": {},
+  "subaccount": {},
+  "order_id": null,
+  "paidAt": "2026-04-17T06:26:25.000Z",
+  "createdAt": "2026-04-17T06:25:10.000Z",
+  "requested_amount": 200000,
+  "source": {
+    "source": "checkout",
+    "type": "web",
+    "identifier": null,
+    "entry_point": "request_inline"
+  },
+  "connect": null,
+  "pos_transaction_data": null
+}
+MATCH FOUND:
+{
+  "id": 6046694613,
+  "domain": "live",
+  "status": "abandoned",
+  "reference": "vote_adekoya-oluwanishola_1776405150975",
+  "amount": 15000,
+  "message": null,
+  "gateway_response": "The transaction was not completed",
+  "paid_at": null,
+  "created_at": "2026-04-17T05:52:34.000Z",
+  "channel": "card",
+  "currency": "NGN",
+  "ip_address": "197.211.63.20",
+  "metadata": {
+    "custom_fields": [
+      {
+        "display_name": "Full Name",
+        "variable_name": "full_name",
+        "value": "Adetunji Oluwatunmise "
+      },
+      {
+        "display_name": "Contestant",
+        "variable_name": "contestant",
+        "value": "Adekoya Oluwanishola"
+      },
+      {
+        "display_name": "Contestant Slug",
+        "variable_name": "contestant_slug",
+        "value": "adekoya-oluwanishola"
+      },
+      {
+        "display_name": "Votes",
+        "variable_name": "votes",
+        "value": "3"
+      },
+      {
+        "display_name": "Type",
+        "variable_name": "payment_type",
+        "value": "voting"
+      }
+    ],
+    "referrer": "https://starize.site/voting"
+  },
+  "log": null,
+  "fees": null,
+  "fees_split": null,
+  "customer": {
+    "id": 356508536,
+    "first_name": "",
+    "last_name": "",
+    "email": "oluwatunmiseadetunji69@gmail.com",
+    "phone": "",
+    "metadata": null,
+    "customer_code": "CUS_4cdg6pbzj0zr3hv",
+    "risk_action": "default"
+  },
+  "authorization": {
+    "authorization_code": null,
+    "bin": null,
+    "last4": null,
+    "exp_month": null,
+    "exp_year": null,
+    "channel": null,
+    "card_type": null,
+    "bank": null,
+    "country_code": null,
+    "brand": null,
+    "reusable": false,
+    "signature": null,
+    "account_name": null
+  },
+  "plan": {},
+  "split": {},
+  "subaccount": {},
+  "order_id": null,
+  "paidAt": null,
+  "createdAt": "2026-04-17T05:52:34.000Z",
+  "requested_amount": 15000,
+  "source": {
+    "source": "checkout",
+    "type": "web",
+    "identifier": null,
+    "entry_point": "request_inline"
+  },
+  "connect": null,
+  "pos_transaction_data": null
+}
+MATCH FOUND:
+{
+  "id": 6046690550,
+  "domain": "live",
+  "status": "success",
+  "reference": "vote_adekoya-oluwanishola_1776405025908",
+  "amount": 15000,
+  "message": null,
+  "gateway_response": "Approved",
+  "paid_at": "2026-04-17T05:51:23.000Z",
+  "created_at": "2026-04-17T05:50:51.000Z",
+  "channel": "bank_transfer",
+  "currency": "NGN",
+  "ip_address": "197.211.63.20",
+  "metadata": {
+    "custom_fields": [
+      {
+        "display_name": "Full Name",
+        "variable_name": "full_name",
+        "value": "Adetunji Oluwatunmise "
+      },
+      {
+        "display_name": "Contestant",
+        "variable_name": "contestant",
+        "value": "Adekoya Oluwanishola"
+      },
+      {
+        "display_name": "Contestant Slug",
+        "variable_name": "contestant_slug",
+        "value": "adekoya-oluwanishola"
+      },
+      {
+        "display_name": "Votes",
+        "variable_name": "votes",
+        "value": "3"
+      },
+      {
+        "display_name": "Type",
+        "variable_name": "payment_type",
+        "value": "voting"
+      }
+    ],
+    "referrer": "https://starize.site/voting"
+  },
+  "log": {
+    "start_time": 1776405050,
+    "time_spent": 32,
+    "attempts": 0,
+    "errors": 0,
+    "success": true,
+    "mobile": true,
+    "input": [],
+    "history": [
+      {
+        "type": "action",
+        "message": "Set payment method to: bank_transfer",
+        "time": 3
+      },
+      {
+        "type": "success",
+        "message": "Successfully paid with bank_transfer",
+        "time": 32
+      }
+    ]
+  },
+  "fees": 225,
+  "fees_split": null,
+  "customer": {
+    "id": 356508536,
+    "first_name": "",
+    "last_name": "",
+    "email": "oluwatunmiseadetunji69@gmail.com",
+    "phone": "",
+    "metadata": null,
+    "customer_code": "CUS_4cdg6pbzj0zr3hv",
+    "risk_action": "default"
+  },
+  "authorization": {
+    "authorization_code": "AUTH_b713bwj8bt",
+    "bin": "808XXX",
+    "last4": "X206",
+    "exp_month": "04",
+    "exp_year": "2026",
+    "channel": "bank_transfer",
+    "card_type": "transfer",
+    "bank": "OPay Digital Services Limited (OPay)",
+    "country_code": "NG",
+    "brand": "Managed Account",
+    "reusable": false,
+    "signature": null,
+    "account_name": null
+  },
+  "plan": {},
+  "split": {},
+  "subaccount": {},
+  "order_id": null,
+  "paidAt": "2026-04-17T05:51:23.000Z",
+  "createdAt": "2026-04-17T05:50:51.000Z",
+  "requested_amount": 15000,
+  "source": {
+    "source": "checkout",
+    "type": "web",
+    "identifier": null,
+    "entry_point": "request_inline"
+  },
+  "connect": null,
+  "pos_transaction_data": null
+}
+MATCH FOUND:
+{
+  "id": 6046676222,
+  "domain": "live",
+  "status": "abandoned",
+  "reference": "vote_adekoya-oluwanishola_1776404696200",
+  "amount": 50000,
+  "message": null,
+  "gateway_response": "The transaction was not completed",
+  "paid_at": null,
+  "created_at": "2026-04-17T05:45:09.000Z",
+  "channel": "card",
+  "currency": "NGN",
+  "ip_address": "102.89.84.200",
+  "metadata": {
+    "custom_fields": [
+      {
+        "display_name": "Full Name",
+        "variable_name": "full_name",
+        "value": "Oluwawunmi Ifedayo Sarah "
+      },
+      {
+        "display_name": "Contestant",
+        "variable_name": "contestant",
+        "value": "Adekoya Oluwanishola"
+      },
+      {
+        "display_name": "Contestant Slug",
+        "variable_name": "contestant_slug",
+        "value": "adekoya-oluwanishola"
+      },
+      {
+        "display_name": "Votes",
+        "variable_name": "votes",
+        "value": "10"
+      },
+      {
+        "display_name": "Type",
+        "variable_name": "payment_type",
+        "value": "voting"
+      }
+    ],
+    "referrer": "https://starize.site/voting"
+  },
+  "log": null,
+  "fees": null,
+  "fees_split": null,
+  "customer": {
+    "id": 356508031,
+    "first_name": "",
+    "last_name": "",
+    "email": "ifedayooluwawunmi1@gmail.com",
+    "phone": "",
+    "metadata": null,
+    "customer_code": "CUS_7m7egafptodiaa6",
+    "risk_action": "default"
+  },
+  "authorization": {
+    "authorization_code": null,
+    "bin": null,
+    "last4": null,
+    "exp_month": null,
+    "exp_year": null,
+    "channel": null,
+    "card_type": null,
+    "bank": null,
+    "country_code": null,
+    "brand": null,
+    "reusable": false,
+    "signature": null,
+    "account_name": null
+  },
+  "plan": {},
+  "split": {},
+  "subaccount": {},
+  "order_id": null,
+  "paidAt": null,
+  "createdAt": "2026-04-17T05:45:09.000Z",
+  "requested_amount": 50000,
+  "source": {
+    "source": "checkout",
+    "type": "web",
+    "identifier": null,
+    "entry_point": "request_inline"
+  },
+  "connect": null,
+  "pos_transaction_data": null
+}
+MATCH FOUND:
+{
+  "id": 6046676075,
+  "domain": "live",
+  "status": "abandoned",
+  "reference": "vote_adekoya-oluwanishola_1776404697432",
+  "amount": 75000,
+  "message": null,
+  "gateway_response": "The transaction was not completed",
+  "paid_at": null,
+  "created_at": "2026-04-17T05:45:04.000Z",
+  "channel": "card",
+  "currency": "NGN",
+  "ip_address": "102.89.46.39",
+  "metadata": {
+    "custom_fields": [
+      {
+        "display_name": "Full Name",
+        "variable_name": "full_name",
+        "value": "Tobi"
+      },
+      {
+        "display_name": "Contestant",
+        "variable_name": "contestant",
+        "value": "Adekoya Oluwanishola"
+      },
+      {
+        "display_name": "Contestant Slug",
+        "variable_name": "contestant_slug",
+        "value": "adekoya-oluwanishola"
+      },
+      {
+        "display_name": "Votes",
+        "variable_name": "votes",
+        "value": "15"
+      },
+      {
+        "display_name": "Type",
+        "variable_name": "payment_type",
+        "value": "voting"
+      }
+    ],
+    "referrer": "https://starize.site/voting"
+  },
+  "log": {
+    "start_time": 1776404710,
+    "time_spent": 11,
+    "attempts": 0,
+    "errors": 0,
+    "success": false,
+    "mobile": true,
+    "input": [],
+    "history": [
+      {
+        "type": "action",
+        "message": "Set payment method to: bank",
+        "time": 11
+      }
+    ]
+  },
+  "fees": null,
+  "fees_split": null,
+  "customer": {
+    "id": 356508026,
+    "first_name": "",
+    "last_name": "",
+    "email": "oluwatobilobaopeyemi2018@gmail.com",
+    "phone": "",
+    "metadata": null,
+    "customer_code": "CUS_ssm2ins25kt40kh",
+    "risk_action": "default"
+  },
+  "authorization": {
+    "authorization_code": null,
+    "bin": null,
+    "last4": null,
+    "exp_month": null,
+    "exp_year": null,
+    "channel": null,
+    "card_type": null,
+    "bank": null,
+    "country_code": null,
+    "brand": null,
+    "reusable": false,
+    "signature": null,
+    "account_name": null
+  },
+  "plan": {},
+  "split": {},
+  "subaccount": {},
+  "order_id": null,
+  "paidAt": null,
+  "createdAt": "2026-04-17T05:45:04.000Z",
+  "requested_amount": 75000,
+  "source": {
+    "source": "checkout",
+    "type": "web",
+    "identifier": null,
+    "entry_point": "request_inline"
+  },
+  "connect": null,
+  "pos_transaction_data": null
+}
+MATCH FOUND:
+{
+  "id": 6046665362,
+  "domain": "live",
+  "status": "success",
+  "reference": "vote_adekoya-oluwanishola_1776404427558",
+  "amount": 100000,
+  "message": "madePayment",
+  "gateway_response": "Approved",
+  "paid_at": "2026-04-17T05:41:06.000Z",
+  "created_at": "2026-04-17T05:40:35.000Z",
+  "channel": "bank",
+  "currency": "NGN",
+  "ip_address": "197.211.63.109",
+  "metadata": {
+    "custom_fields": [
+      {
+        "display_name": "Full Name",
+        "variable_name": "full_name",
+        "value": "Adeoye Comfort "
+      },
+      {
+        "display_name": "Contestant",
+        "variable_name": "contestant",
+        "value": "Adekoya Oluwanishola"
+      },
+      {
+        "display_name": "Contestant Slug",
+        "variable_name": "contestant_slug",
+        "value": "adekoya-oluwanishola"
+      },
+      {
+        "display_name": "Votes",
+        "variable_name": "votes",
+        "value": "20"
+      },
+      {
+        "display_name": "Type",
+        "variable_name": "payment_type",
+        "value": "voting"
+      }
+    ],
+    "referrer": "https://starize.site/voting"
+  },
+  "log": {
+    "start_time": 1776404435,
+    "time_spent": 6,
+    "attempts": 0,
+    "errors": 0,
+    "success": false,
+    "mobile": true,
+    "input": [],
+    "history": [
+      {
+        "type": "action",
+        "message": "Set payment method to: opay",
+        "time": 2
+      },
+      {
+        "type": "action",
+        "message": "Third-party authentication window opened",
+        "time": 6
+      }
+    ]
+  },
+  "fees": 1500,
+  "fees_split": null,
+  "customer": {
+    "id": 356507408,
+    "first_name": "",
+    "last_name": "",
+    "email": "comfortadeoye2003@gmail.com",
+    "phone": "",
+    "metadata": null,
+    "customer_code": "CUS_8fdg99bbmwcvr0a",
+    "risk_action": "default"
+  },
+  "authorization": {
+    "authorization_code": "AUTH_zlpcmfv6v6",
+    "bin": "",
+    "last4": "",
+    "exp_month": "04",
+    "exp_year": "2026",
+    "channel": "bank",
+    "card_type": "IBANK_OPAY",
+    "bank": "OPay Digital Services Limited (OPay)",
+    "country_code": "NG",
+    "brand": "IBANK_OPAY",
+    "reusable": false,
+    "signature": null,
+    "account_name": null
+  },
+  "plan": {},
+  "split": {},
+  "subaccount": {},
+  "order_id": null,
+  "paidAt": "2026-04-17T05:41:06.000Z",
+  "createdAt": "2026-04-17T05:40:35.000Z",
+  "requested_amount": 100000,
+  "source": {
+    "source": "checkout",
+    "type": "web",
+    "identifier": null,
+    "entry_point": "request_inline"
+  },
+  "connect": null,
+  "pos_transaction_data": null
+}
+MATCH FOUND:
+{
+  "id": 6046660791,
+  "domain": "live",
+  "status": "success",
+  "reference": "vote_adekoya-oluwanishola_1776404307128",
+  "amount": 20000,
+  "message": "madePayment",
+  "gateway_response": "Approved",
+  "paid_at": "2026-04-17T05:39:08.000Z",
+  "created_at": "2026-04-17T05:38:37.000Z",
+  "channel": "bank",
+  "currency": "NGN",
+  "ip_address": "197.211.57.9",
+  "metadata": {
+    "custom_fields": [
+      {
+        "display_name": "Full Name",
+        "variable_name": "full_name",
+        "value": "Isijola favour "
+      },
+      {
+        "display_name": "Contestant",
+        "variable_name": "contestant",
+        "value": "Adekoya Oluwanishola"
+      },
+      {
+        "display_name": "Contestant Slug",
+        "variable_name": "contestant_slug",
+        "value": "adekoya-oluwanishola"
+      },
+      {
+        "display_name": "Votes",
+        "variable_name": "votes",
+        "value": "4"
+      },
+      {
+        "display_name": "Type",
+        "variable_name": "payment_type",
+        "value": "voting"
+      }
+    ],
+    "referrer": "https://starize.site/voting"
+  },
+  "log": {
+    "start_time": 1776404316,
+    "time_spent": 36,
+    "attempts": 0,
+    "errors": 0,
+    "success": true,
+    "mobile": true,
+    "input": [],
+    "history": [
+      {
+        "type": "action",
+        "message": "Set payment method to: opay",
+        "time": 3
+      },
+      {
+        "type": "action",
+        "message": "Third-party authentication window opened",
+        "time": 5
+      },
+      {
+        "type": "success",
+        "message": "Successfully paid with ibank",
+        "time": 31
+      },
+      {
+        "type": "action",
+        "message": "Third-party authentication window closed",
+        "time": 36
+      }
+    ]
+  },
+  "fees": 300,
+  "fees_split": null,
+  "customer": {
+    "id": 356507539,
+    "first_name": "",
+    "last_name": "",
+    "email": "isijolaoluwaniphemy@gmail.com",
+    "phone": "",
+    "metadata": null,
+    "customer_code": "CUS_1vq9zlakoesc33r",
+    "risk_action": "default"
+  },
+  "authorization": {
+    "authorization_code": "AUTH_ofj1bacg09",
+    "bin": "",
+    "last4": "",
+    "exp_month": "04",
+    "exp_year": "2026",
+    "channel": "bank",
+    "card_type": "IBANK_OPAY",
+    "bank": "OPay Digital Services Limited (OPay)",
+    "country_code": "NG",
+    "brand": "IBANK_OPAY",
+    "reusable": false,
+    "signature": null,
+    "account_name": null
+  },
+  "plan": {},
+  "split": {},
+  "subaccount": {},
+  "order_id": null,
+  "paidAt": "2026-04-17T05:39:08.000Z",
+  "createdAt": "2026-04-17T05:38:37.000Z",
+  "requested_amount": 20000,
+  "source": {
+    "source": "checkout",
+    "type": "web",
+    "identifier": null,
+    "entry_point": "request_inline"
+  },
+  "connect": null,
+  "pos_transaction_data": null
+}
+MATCH FOUND:
+{
+  "id": 6046656509,
+  "domain": "live",
+  "status": "abandoned",
+  "reference": "vote_adekoya-oluwanishola_1776404195780",
+  "amount": 100000,
+  "message": "Awaiting Transfer",
+  "gateway_response": "Awaiting Transfer",
+  "paid_at": null,
+  "created_at": "2026-04-17T05:36:43.000Z",
+  "channel": "bank_transfer",
+  "currency": "NGN",
+  "ip_address": "197.211.63.109",
+  "metadata": {
+    "custom_fields": [
+      {
+        "display_name": "Full Name",
+        "variable_name": "full_name",
+        "value": "Adeoye Comfort "
+      },
+      {
+        "display_name": "Contestant",
+        "variable_name": "contestant",
+        "value": "Adekoya Oluwanishola"
+      },
+      {
+        "display_name": "Contestant Slug",
+        "variable_name": "contestant_slug",
+        "value": "adekoya-oluwanishola"
+      },
+      {
+        "display_name": "Votes",
+        "variable_name": "votes",
+        "value": "20"
+      },
+      {
+        "display_name": "Type",
+        "variable_name": "payment_type",
+        "value": "voting"
+      }
+    ],
+    "referrer": "https://starize.site/voting"
+  },
+  "log": {
+    "start_time": 1776404204,
+    "time_spent": 5,
+    "attempts": 0,
+    "errors": 0,
+    "success": false,
+    "mobile": true,
+    "input": [],
+    "history": [
+      {
+        "type": "action",
+        "message": "Set payment method to: bank_transfer",
+        "time": 5
+      }
+    ]
+  },
+  "fees": null,
+  "fees_split": null,
+  "customer": {
+    "id": 356507408,
+    "first_name": "",
+    "last_name": "",
+    "email": "comfortadeoye2003@gmail.com",
+    "phone": "",
+    "metadata": null,
+    "customer_code": "CUS_8fdg99bbmwcvr0a",
+    "risk_action": "default"
+  },
+  "authorization": {
+    "authorization_code": null,
+    "bin": null,
+    "last4": null,
+    "exp_month": null,
+    "exp_year": null,
+    "channel": null,
+    "card_type": null,
+    "bank": null,
+    "country_code": null,
+    "brand": null,
+    "reusable": false,
+    "signature": null,
+    "account_name": null
+  },
+  "plan": {},
+  "split": {},
+  "subaccount": {},
+  "order_id": null,
+  "paidAt": null,
+  "createdAt": "2026-04-17T05:36:43.000Z",
+  "requested_amount": 100000,
+  "source": {
+    "source": "checkout",
+    "type": "web",
+    "identifier": null,
+    "entry_point": "request_inline"
+  },
+  "connect": null,
+  "pos_transaction_data": null
+}
+MATCH FOUND:
+{
+  "id": 6046610732,
+  "domain": "live",
+  "status": "success",
+  "reference": "vote_adekoya-oluwanishola_1776402872429",
+  "amount": 100000,
+  "message": null,
+  "gateway_response": "Approved",
+  "paid_at": "2026-04-17T05:15:35.000Z",
+  "created_at": "2026-04-17T05:14:44.000Z",
+  "channel": "bank_transfer",
+  "currency": "NGN",
+  "ip_address": "105.113.99.243",
+  "metadata": {
+    "custom_fields": [
+      {
+        "display_name": "Full Name",
+        "variable_name": "full_name",
+        "value": "Adekoya Oluwanishola "
+      },
+      {
+        "display_name": "Contestant",
+        "variable_name": "contestant",
+        "value": "Adekoya Oluwanishola"
+      },
+      {
+        "display_name": "Contestant Slug",
+        "variable_name": "contestant_slug",
+        "value": "adekoya-oluwanishola"
+      },
+      {
+        "display_name": "Votes",
+        "variable_name": "votes",
+        "value": "20"
+      },
+      {
+        "display_name": "Type",
+        "variable_name": "payment_type",
+        "value": "voting"
+      }
+    ],
+    "referrer": "https://starize.site/voting"
+  },
+  "log": {
+    "start_time": 1776402884,
+    "time_spent": 3,
+    "attempts": 0,
+    "errors": 0,
+    "success": false,
+    "mobile": true,
+    "input": [],
+    "history": [
+      {
+        "type": "action",
+        "message": "Set payment method to: bank_transfer",
+        "time": 3
+      }
+    ]
+  },
+  "fees": 1500,
+  "fees_split": null,
+  "customer": {
+    "id": 356505906,
+    "first_name": "",
+    "last_name": "",
+    "email": "editmotions.agency@gmail.com",
+    "phone": "",
+    "metadata": null,
+    "customer_code": "CUS_btibhuerm2a1pfk",
+    "risk_action": "default"
+  },
+  "authorization": {
+    "authorization_code": "AUTH_qgd9ybd0q3",
+    "bin": "901XXX",
+    "last4": "X085",
+    "exp_month": "04",
+    "exp_year": "2026",
+    "channel": "bank_transfer",
+    "card_type": "transfer",
+    "bank": "OPay Digital Services Limited (OPay)",
+    "country_code": "NG",
+    "brand": "Managed Account",
+    "reusable": false,
+    "signature": null,
+    "account_name": null
+  },
+  "plan": {},
+  "split": {},
+  "subaccount": {},
+  "order_id": null,
+  "paidAt": "2026-04-17T05:15:35.000Z",
+  "createdAt": "2026-04-17T05:14:44.000Z",
+  "requested_amount": 100000,
+  "source": {
+    "source": "checkout",
+    "type": "web",
+    "identifier": null,
+    "entry_point": "request_inline"
+  },
+  "connect": null,
+  "pos_transaction_data": null
+}
+Total matches for "adekoya": 15

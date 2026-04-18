@@ -21,19 +21,22 @@ const VotingPanel = () => {
   >("idle");
   const [saveError, setSaveError] = useState(false);
 
+  // Filter out qualified contestants from voting
+  const votingContestants = useMemo(() => contestants.filter(c => !c.isQualified), []);
+
   // Use local state for contestant selection — no router navigation
   const preselectedContestant = searchParams.get("contestant");
   const initialSlug =
     preselectedContestant &&
-    contestants.some((c) => c.slug === preselectedContestant)
+    votingContestants.some((c) => c.slug === preselectedContestant)
       ? preselectedContestant
-      : contestants[0]?.slug ?? "";
+      : votingContestants[0]?.slug ?? "";
 
   const [selectedSlug, setSelectedSlug] = useState(initialSlug);
 
   const selectedContestant = useMemo(
-    () => contestants.find((c) => c.slug === selectedSlug) ?? contestants[0],
-    [selectedSlug],
+    () => votingContestants.find((c) => c.slug === selectedSlug) ?? votingContestants[0],
+    [selectedSlug, votingContestants],
   );
 
   // Fallback: Reset processing state when window regains focus
@@ -151,7 +154,7 @@ const VotingPanel = () => {
       </div>
 
       <SelectContestant
-        contestants={contestants}
+        contestants={votingContestants}
         selectedSlug={selectedSlug}
         onSelect={handleSelectContestant}
       />

@@ -27,6 +27,16 @@ const ContestantCard = ({ contestant, index = 0 }: ContestantCardProps) => {
             decoding="async"
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
           />
+          {contestant.isQualified && (
+            <div className="absolute top-4 left-4 z-20">
+              <span className="bg-primary text-on-primary text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 shadow-primary/20">
+                <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
+                  verified
+                </span>
+                Qualified
+              </span>
+            </div>
+          )}
           <Link
             href={`/contestants/${contestant.slug}`}
             className="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4"
@@ -62,19 +72,21 @@ const ContestantCard = ({ contestant, index = 0 }: ContestantCardProps) => {
             {expanded ? "Read Less" : "Read More"}
           </button>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className={contestant.isQualified ? "block" : "grid grid-cols-2 gap-3"}>
             <Link
               href={`/contestants/${contestant.slug}`}
-              className="w-full text-center bg-surface-container-high text-on-surface font-bold py-3 rounded-lg text-sm border border-white/10"
+              className={`w-full text-center bg-surface-container-high text-on-surface font-bold py-3 rounded-lg text-sm border border-white/10 flex items-center justify-center gap-2 ${contestant.isQualified ? "py-4" : ""}`}
             >
               Full Profile
             </Link>
-            <Link
-              href={`/voting?contestant=${contestant.slug}#vote-panel`}
-              className="w-full text-center gold-shimmer text-on-primary font-bold py-3 rounded-lg text-sm"
-            >
-              Vote Now
-            </Link>
+            {!contestant.isQualified && (
+              <Link
+                href={`/voting?contestant=${contestant.slug}#vote-panel`}
+                className="w-full text-center gold-shimmer text-on-primary font-bold py-3 rounded-lg text-sm"
+              >
+                Vote Now
+              </Link>
+            )}
           </div>
         </div>
       </article>
