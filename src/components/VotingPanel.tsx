@@ -90,53 +90,61 @@ const VotingPanel = () => {
     },
   };
 
-  const onSuccess = async (reference: { reference: string } | unknown) => {
+  const onSuccess = (reference: { reference: string } | unknown) => {
+    // 1. Immediately transition to success state to satisfy the user
+    setPaymentStatus("success");
+    
     const ref =
       typeof reference === "object" && reference !== null && "reference" in reference
         ? (reference as { reference: string }).reference
         : config.reference;
 
     console.log("Vote payment successful", ref);
-    setPaymentStatus("success");
 
-    // Save to Supabase
-    try {
-      await saveVote({
-        full_name: fullName,
-        email,
-        contestant_slug: selectedSlug,
-        contestant_name: selectedContestant?.name || "",
-        votes,
-        amount_naira: votes * PRICE_PER_VOTE,
-        paystack_reference: ref,
-      });
-      setSaveError(false);
-    } catch (err) {
-      console.error("Failed to save vote to database:", err);
-      setSaveError(true);
-    }
+    // 2. Perform database synchronization in the background (non-blocking for UI)
+    const syncToDatabase = async () => {
+      try {
+        await saveVote({
+          full_name: fullName,
+          email,
+          contestant_slug: selectedSlug,
+          contestant_name: selectedContestant?.name || "",
+          votes,
+          amount_naira: votes * PRICE_PER_VOTE,
+          paystack_reference: ref,
+        });
+        setSaveError(false);
+      } catch (err) {
+        console.error("Failed to save vote to database:", err);
+        setSaveError(true);
+      }
+    };
+
+    syncToDatabase();
   };
 
   const onClose = () => {
     console.log("Vote payment closed");
+    // Ensure we don't reset to idle if we've already transitioned to success
     setPaymentStatus((prev) => (prev === "success" ? "success" : "idle"));
   };
 
   const initializePayment = usePaystackPayment(config);
 
   const handlePay = () => {
-    if (!fullName.trim()) {
-      alert("Please enter your full name");
+    if (!fullName.trim() || fullName.length < 3) {
+      alert("Please enter a valid full name");
       return;
     }
-    if (!email) {
-      alert("Please enter your email address");
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       alert("Please enter a valid email address");
       return;
     }
+    if (votes < 1) {
+      alert("Please select at least 1 vote");
+      return;
+    }
+
     setPaymentStatus("processing");
     // @ts-expect-error: react-paystack types are not fully compatible with React 19
     initializePayment(onSuccess, onClose);

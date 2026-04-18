@@ -86,53 +86,56 @@ const TicketPanel = () => {
     },
   };
 
-  const onSuccess = async (reference: { reference: string } | unknown) => {
+  const onSuccess = (reference: { reference: string } | unknown) => {
+    // 1. Immediately transition to success state to satisfy the user
+    setPaymentStatus("success");
+
     const ref =
       typeof reference === "object" && reference !== null && "reference" in reference
         ? (reference as { reference: string }).reference
         : config.reference;
 
     console.log("Ticket payment successful", ref);
-    setPaymentStatus("success");
 
-    // Save to Supabase
-    if (selectedTier) {
-      try {
-        await saveTicket({
-          full_name: fullName,
-          email,
-          tier: selectedTier,
-          tier_label: TICKET_LABELS[selectedTier],
-          quantity,
-          unit_price_naira: TICKET_PRICES[selectedTier],
-          total_amount_naira: totalAmount,
-          paystack_reference: ref,
-        });
-        setSaveError(false);
-      } catch (err) {
-        console.error("Failed to save ticket to database:", err);
-        setSaveError(true);
+    // 2. Perform database synchronization in the background (non-blocking for UI)
+    const syncToDatabase = async () => {
+      if (selectedTier) {
+        try {
+          await saveTicket({
+            full_name: fullName,
+            email,
+            tier: selectedTier,
+            tier_label: TICKET_LABELS[selectedTier],
+            quantity,
+            unit_price_naira: TICKET_PRICES[selectedTier],
+            total_amount_naira: totalAmount,
+            paystack_reference: ref,
+          });
+          setSaveError(false);
+        } catch (err) {
+          console.error("Failed to save ticket to database:", err);
+          setSaveError(true);
+        }
       }
-    }
+    };
+
+    syncToDatabase();
   };
 
   const onClose = () => {
     console.log("Ticket payment closed");
+    // Ensure we don't reset to idle if we've already transitioned to success
     setPaymentStatus((prev) => (prev === "success" ? "success" : "idle"));
   };
 
   const initializePayment = usePaystackPayment(config);
 
   const handlePay = () => {
-    if (!fullName.trim()) {
-      alert("Please enter your full name");
+    if (!fullName.trim() || fullName.length < 3) {
+      alert("Please enter a valid full name");
       return;
     }
-    if (!email) {
-      alert("Please enter your email address");
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       alert("Please enter a valid email address");
       return;
     }
@@ -140,6 +143,11 @@ const TicketPanel = () => {
       alert("Please select a ticket tier");
       return;
     }
+    if (quantity < 1) {
+      alert("Please select at least 1 ticket");
+      return;
+    }
+
     setPaymentStatus("processing");
     // @ts-expect-error: react-paystack types are not fully compatible with React 19
     initializePayment(onSuccess, onClose);
