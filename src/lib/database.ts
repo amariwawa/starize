@@ -25,6 +25,23 @@ export type TicketRecord = {
   payment_channel?: string;
 };
 
+/* ─── Constants ─── */
+
+/**
+ * Cut-off for the "Clean Scale" reset on April 18, 2026, at 3:13 PM GMT+1.
+ * Votes before this time for specific finalists will be ignored in the totals.
+ */
+const VOTE_RESET_TIMESTAMP = "2026-04-18T14:13:00.000Z";
+
+const RESET_CONTESTANT_SLUGS = [
+  "rotimi-john-olufela",
+  "nisola",
+  "owofadeju-mayowa",
+  "bikom-helen",
+  "eniola-busayo",
+  "olutoki-oyinkansola",
+];
+
 /* ─── Votes ─── */
 
 export async function saveVote(vote: VoteRecord) {
@@ -50,10 +67,17 @@ export async function saveVote(vote: VoteRecord) {
 }
 
 export async function getContestantVotes(contestantSlug: string) {
-  const { data, error } = await supabase
+  const query = supabase
     .from("votes")
-    .select("votes")
+    .select("votes, created_at")
     .eq("contestant_slug", contestantSlug);
+
+  // Apply reset filter for designated contestants
+  if (RESET_CONTESTANT_SLUGS.includes(contestantSlug)) {
+    query.gte("created_at", VOTE_RESET_TIMESTAMP);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     console.error("Failed to fetch votes:", error);
@@ -66,7 +90,7 @@ export async function getContestantVotes(contestantSlug: string) {
 export async function getAllVoteTotals() {
   const { data, error } = await supabase
     .from("votes")
-    .select("contestant_slug, contestant_name, votes");
+    .select("contestant_slug, contestant_name, votes, created_at");
 
   if (error) {
     console.error("Failed to fetch vote totals:", error);
@@ -74,7 +98,17 @@ export async function getAllVoteTotals() {
   }
 
   const totals: Record<string, { name: string; votes: number }> = {};
+  const resetCutoff = Date.parse(VOTE_RESET_TIMESTAMP);
+
   for (const row of data) {
+    const isResetContestant = RESET_CONTESTANT_SLUGS.includes(row.contestant_slug);
+    
+    // Filter out historical votes for reset contestants
+    if (isResetContestant && row.created_at) {
+      const voteTime = Date.parse(row.created_at);
+      if (voteTime < resetCutoff) continue;
+    }
+
     if (!totals[row.contestant_slug]) {
       totals[row.contestant_slug] = { name: row.contestant_name, votes: 0 };
     }
