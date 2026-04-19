@@ -32,23 +32,41 @@ const CUTOFF_DATE = '2026-04-18T14:13:00Z';
 
 async function fetchPaystackTransactions() {
   console.log(`Fetching Paystack transactions since ${CUTOFF_DATE}...`);
-  // Paystack API endpoint for listing transactions
-  // https://paystack.com/docs/api/transaction/#list
-  const url = `https://api.paystack.co/transaction?from=${encodeURIComponent(CUTOFF_DATE)}&status=success&perPage=100`;
-  
-  const response = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
-    },
-  });
+  let allTransactions: any[] = [];
+  let page = 1;
+  let hasMore = true;
 
-  if (!response.ok) {
-    const err = await response.text();
-    throw new Error(`Paystack API error: ${err}`);
+  while (hasMore) {
+    console.log(`Fetching page ${page}...`);
+    const url = `https://api.paystack.co/transaction?from=${encodeURIComponent(CUTOFF_DATE)}&status=success&perPage=100&page=${page}`;
+    
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
+      },
+    });
+
+    if (!response.ok) {
+      const err = await response.text();
+      throw new Error(`Paystack API error: ${err}`);
+    }
+
+    const result = await response.json();
+    const transactions = result.data || [];
+    allTransactions = allTransactions.concat(transactions);
+    
+    // Check if we hit the limit of this page
+    if (transactions.length < 100) {
+      hasMore = false;
+    } else {
+      page++;
+    }
+    
+    // Safety limit to avoid infinite loops
+    if (page > 10) hasMore = false;
   }
 
-  const result = await response.json();
-  return result.data;
+  return allTransactions;
 }
 
 function extractVoteData(tx: any) {
@@ -109,7 +127,11 @@ async function sync() {
       const voteData = extractVoteData(tx);
       if (!voteData) continue;
 
-      // Removed TARGET_CONTESTANTS filter to sync all contestants as requested
+      // Filter for target contestants
+      if (!TARGET_CONTESTANTS.includes(voteData.contestant_slug)) {
+          // console.log(`Skipping vote for other contestant: ${voteData.contestant_slug}`);
+          continue;
+      }
 
       // 1. Upsert transaction log
       await supabase.from('transactions').upsert({
