@@ -109,11 +109,7 @@ async function sync() {
       const voteData = extractVoteData(tx);
       if (!voteData) continue;
 
-      // Filter for target contestants
-      if (!TARGET_CONTESTANTS.includes(voteData.contestant_slug)) {
-          // console.log(`Skipping vote for other contestant: ${voteData.contestant_slug}`);
-          continue;
-      }
+      // Removed TARGET_CONTESTANTS filter to sync all contestants as requested
 
       // 1. Upsert transaction log
       await supabase.from('transactions').upsert({
