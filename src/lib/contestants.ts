@@ -27,16 +27,9 @@ const baseContestants = [
       "Rotimi-John Olufela is a music student at OAU who treats music as both lifestyle and identity.",
     writeUp:
       "I am Rotimi-John Olufela, a music student at Obafemi Awolowo University. Music has always been a big part of who I am, not just something I do. Whether I am creating, performing, or exploring new sounds, I love turning ideas into melody and rhythm that people can feel and connect with.",
+    isQualified: true,
   },
-  {
-    name: "Nisola",
-    category: "Redeemer - Nicole C. Mullen",
-    image: "/images/contestants/Contestant pictures/Bosewuoluwanisola.jpg",
-    shortBio:
-      "Bosewuoluwanisola (Nisola), a microbiology student at OAU, sees music as a language of the soul.",
-    writeUp:
-      "I am Bosewuoluwanisola, a microbiology student of Obafemi Awolowo University. Music is not just something I enjoy, it is part of who I am. It shapes my moods and moments, and every genre carries a message that speaks deeply to me. For me, music is felt, lived, and loved.",
-  },
+
   {
     name: "Ayomide Babalola",
     category: "Amazing - Sunmisola Agbebi",
@@ -59,15 +52,7 @@ const baseContestants = [
     isQualified: true,
   },
 
-  {
-    name: "Bikom Helen",
-    category: "So Will I - Hillsong United",
-    image: "/images/contestants/Contestant pictures/Bikom Helen.jpg",
-    shortBio:
-      "Bikom Helen Jabi is an OAU student who finds deep fulfillment in singing and has now stepped into competition.",
-    writeUp:
-      "I am Bikom Helen Jabi, a student of Obafemi Awolowo University. I have loved music for as long as I can remember, and I have always taken every opportunity to sing. Singing brings me fulfillment, and I am excited to finally push myself by joining a competition like this.",
-  },
+
   {
     name: "Success Iyayi",
     category: "My Help - Grace Charles",
@@ -110,15 +95,7 @@ const baseContestants = [
   },
 
 
-  {
-    name: "Owofadeju Mayowa",
-    category: "You Are The Reason I Live - Chimdi Ochei",
-    image: "/images/contestants/Contestant pictures/Mayowa.jpg",
-    shortBio:
-      "Owofadeju Mayowa, a 400-level OAU student, has loved singing from childhood and enjoys creating beautiful music.",
-    writeUp:
-      "I am Owofadeju Mayowa, a 400-level student of Obafemi Awolowo University. I have loved singing from a young age, and I am grateful for the people God has used to support my passion. I enjoy listening to beautiful music and even more, contributing to the creation of it.",
-  },
+
   {
     name: "Godswill Etete",
     category: "For Your Name Is Holy - Paul Wilbur",
@@ -157,6 +134,7 @@ const baseContestants = [
       "Adebajo Busayo Eniola sees music as connection, structure, and the place where she feels most at home.",
     writeUp:
       "I am Adebajo Busayo Eniola, a Music student of Obafemi Awolowo University. Music has been woven into my life for as long as I can remember. To me, music is not just melody, it is connection. It shapes how I think, feel, and relate with others, and it is where I feel most at home.",
+    isQualified: true,
   },
 
   {
@@ -169,15 +147,7 @@ const baseContestants = [
       "My name is Deborah Olaoye, a student of Business Administration at UoPeople. I believe music is an explosive expression of beautiful sounds, and it carries healing. Music remains one of my strongest personal languages of expression.",
     isQualified: true,
   },
-  {
-    name: "Olutoki Oyinkansola",
-    category: "Yahweh Will Manifest Himself - Oasis Ministry",
-    image: "/images/contestants/Contestant pictures/Oyinkansola .jpg",
-    shortBio:
-      "Olutoki Oyinkansola uses singing, songwriting, and creativity to worship and express her God-given purpose.",
-    writeUp:
-      "I am Olutoki Oyinkansola, currently studying International Relations at Obafemi Awolowo University. I love Jesus, and I love singing, songwriting, fashion, and creative expression. My walk with God has helped me discover my calling and purpose: to worship Him through music.",
-  },
+
 ];
 
 export const contestants: Contestant[] = baseContestants.map((contestant) => ({
