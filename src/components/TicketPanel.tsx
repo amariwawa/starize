@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { usePaystackPayment } from "react-paystack";
 import { saveTicket } from "@/lib/database";
+import { contestants, type Contestant } from "@/lib/contestants";
+import SelectContestant from "@/components/SelectContestant";
 
 const DEFAULT_PAYSTACK_KEY = "pk_test_placeholder"; // Fallback for build time
 
@@ -27,8 +29,12 @@ const TICKET_DESCRIPTIONS: Record<TicketTier, string> = {
 };
 
 const TicketPanel = () => {
-  const PAYSTACK_PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || DEFAULT_PAYSTACK_KEY;
+  const PAYSTACK_PUBLIC_KEY =
+    process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || DEFAULT_PAYSTACK_KEY;
   const [selectedTier, setSelectedTier] = useState<TicketTier | null>(null);
+  const [selectedContestantSlug, setSelectedContestantSlug] = useState<string>(
+    contestants[0]?.slug || "",
+  );
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
   const [quantity, setQuantity] = useState(1);
@@ -36,6 +42,12 @@ const TicketPanel = () => {
     "idle" | "processing" | "success"
   >("idle");
   const [saveError, setSaveError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+
+  const selectedContestant =
+    contestants.find(
+      (contestant) => contestant.slug === selectedContestantSlug,
+    ) || contestants[0];
 
   // Fallback: Reset processing state when window regains focus
   useEffect(() => {
@@ -46,12 +58,10 @@ const TicketPanel = () => {
     return () => window.removeEventListener("focus", handleFocus);
   }, []);
 
-  const totalAmount = selectedTier
-    ? TICKET_PRICES[selectedTier] * quantity
-    : 0;
+  const totalAmount = selectedTier ? TICKET_PRICES[selectedTier] * quantity : 0;
 
   const config = {
-    reference: `ticket_${selectedTier}_${Date.now()}`,
+    reference: `ticket_${selectedTier}_${selectedContestantSlug}_${Date.now()}`,
     email: email,
     amount: totalAmount * 100, // kobo
     publicKey: PAYSTACK_PUBLIC_KEY,
@@ -78,6 +88,16 @@ const TicketPanel = () => {
           value: quantity.toString(),
         },
         {
+          display_name: "Contestant",
+          variable_name: "contestant_name",
+          value: selectedContestant?.name || "",
+        },
+        {
+          display_name: "Contestant Slug",
+          variable_name: "contestant_slug",
+          value: selectedContestant?.slug || "",
+        },
+        {
           display_name: "Type",
           variable_name: "payment_type",
           value: "ticket",
@@ -91,7 +111,9 @@ const TicketPanel = () => {
     setPaymentStatus("success");
 
     const ref =
-      typeof reference === "object" && reference !== null && "reference" in reference
+      typeof reference === "object" &&
+      reference !== null &&
+      "reference" in reference
         ? (reference as { reference: string }).reference
         : config.reference;
 
@@ -116,10 +138,55 @@ const TicketPanel = () => {
           console.error("Failed to save ticket to database:", err);
           setSaveError(true);
         }
+
+        await sendVirtualTicketEmail({
+          full_name: fullName,
+          email,
+          tier: selectedTier,
+          tier_label: TICKET_LABELS[selectedTier],
+          quantity,
+          total_amount_naira: totalAmount,
+          contestant_slug: selectedContestant.slug,
+          contestant_name: selectedContestant.name,
+          paystack_reference: ref,
+        });
       }
     };
 
     syncToDatabase();
+  };
+
+  const sendVirtualTicketEmail = async (ticket: {
+    full_name: string;
+    email: string;
+    tier: TicketTier;
+    tier_label: string;
+    quantity: number;
+    total_amount_naira: number;
+    contestant_slug: string;
+    contestant_name: string;
+    paystack_reference: string;
+  }) => {
+    try {
+      const response = await fetch("/api/tickets/send-virtual", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(ticket),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Virtual ticket email failed:", errorText);
+        setEmailError(true);
+      } else {
+        setEmailError(false);
+      }
+    } catch (error) {
+      console.error("Virtual ticket email failed:", error);
+      setEmailError(true);
+    }
   };
 
   const onClose = () => {
@@ -167,15 +234,33 @@ const TicketPanel = () => {
             Payment Successful!
           </h3>
           <p className="text-on-surface-variant mb-2 text-lg">
-            You have successfully purchased <strong className="text-primary">{quantity} {selectedTier && TICKET_LABELS[selectedTier]}</strong> ticket{quantity > 1 ? "s" : ""} for{" "}
-            <strong className="text-on-surface">Stage 3! Knockout Edition</strong>.
+            You have successfully purchased{" "}
+            <strong className="text-primary">
+              {quantity} {selectedTier && TICKET_LABELS[selectedTier]}
+            </strong>{" "}
+            ticket{quantity > 1 ? "s" : ""} for{" "}
+            <strong className="text-on-surface">
+              Stage 3! Knockout Edition
+            </strong>
+            .
+          </p>
+          <p className="text-on-surface-variant mb-2 text-lg">
+            This ticket supports{" "}
+            <strong className="text-primary">{selectedContestant.name}</strong>.
           </p>
           <p className="text-on-surface-variant text-sm mb-8">
-            A confirmation email will be sent to <strong>{email}</strong>.
+            A virtual ticket will be sent to <strong>{email}</strong> shortly.
           </p>
+          {emailError && (
+            <p className="text-red-400 text-sm mb-4">
+              We could not send the virtual ticket email. Please check your
+              email address or contact support.
+            </p>
+          )}
           {saveError && (
             <p className="text-red-400 text-sm mb-4">
-              Payment was successful but there was an issue saving your ticket details. Please contact support with your payment reference.
+              Payment was successful but there was an issue saving your ticket
+              details. Please contact support with your payment reference.
             </p>
           )}
           <button
@@ -211,15 +296,19 @@ const TicketPanel = () => {
             {/* Regular Ticket */}
             <button
               onClick={() => setSelectedTier("regular")}
-              className={`w-full text-left bg-surface-container p-6 rounded-lg border-2 transition-colors ${selectedTier === "regular"
+              className={`w-full text-left bg-surface-container p-6 rounded-lg border-2 transition-colors ${
+                selectedTier === "regular"
                   ? "border-primary shadow-lg shadow-primary/10"
                   : "border-white/10 hover:border-white/20"
-                }`}
+              }`}
             >
               <div className="flex justify-between items-start mb-2">
                 <div className="flex items-center gap-3">
                   {selectedTier === "regular" && (
-                    <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    <span
+                      className="material-symbols-outlined text-primary"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
                       check_circle
                     </span>
                   )}
@@ -227,7 +316,9 @@ const TicketPanel = () => {
                     Regular
                   </h3>
                 </div>
-                <span className="text-2xl font-black text-primary">₦{TICKET_PRICES.regular.toLocaleString()}</span>
+                <span className="text-2xl font-black text-primary">
+                  ₦{TICKET_PRICES.regular.toLocaleString()}
+                </span>
               </div>
               <p className="text-on-surface-variant text-sm">
                 {TICKET_DESCRIPTIONS.regular}
@@ -237,10 +328,11 @@ const TicketPanel = () => {
             {/* VIP Ticket */}
             <button
               onClick={() => setSelectedTier("vip")}
-              className={`w-full text-left bg-surface-container-high p-6 rounded-lg border-2 relative overflow-hidden transition-colors ${selectedTier === "vip"
+              className={`w-full text-left bg-surface-container-high p-6 rounded-lg border-2 relative overflow-hidden transition-colors ${
+                selectedTier === "vip"
                   ? "border-primary shadow-lg shadow-primary/10"
                   : "border-white/10 hover:border-white/20"
-                }`}
+              }`}
             >
               <div className="absolute top-0 right-0 bg-primary text-on-primary px-3 py-1 text-[10px] font-bold uppercase rounded-bl">
                 Popular
@@ -248,7 +340,10 @@ const TicketPanel = () => {
               <div className="flex justify-between items-start mb-2">
                 <div className="flex items-center gap-3">
                   {selectedTier === "vip" && (
-                    <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    <span
+                      className="material-symbols-outlined text-primary"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
                       check_circle
                     </span>
                   )}
@@ -256,9 +351,7 @@ const TicketPanel = () => {
                     VIP
                   </h3>
                 </div>
-                <span className="text-2xl font-black text-primary">
-                  ₦3,500
-                </span>
+                <span className="text-2xl font-black text-primary">₦3,500</span>
               </div>
               <p className="text-on-surface-variant text-sm">
                 {TICKET_DESCRIPTIONS.vip}
@@ -268,10 +361,11 @@ const TicketPanel = () => {
             {/* VIP Table Ticket */}
             <button
               onClick={() => setSelectedTier("vip_table")}
-              className={`w-full text-left p-6 rounded-lg border-2 relative overflow-hidden transition-colors ${selectedTier === "vip_table"
+              className={`w-full text-left p-6 rounded-lg border-2 relative overflow-hidden transition-colors ${
+                selectedTier === "vip_table"
                   ? "border-primary shadow-lg shadow-primary/10 bg-gradient-to-br from-surface-container-high to-surface-container-highest"
                   : "border-white/10 hover:border-white/20 bg-gradient-to-br from-surface-container-high to-surface-container-highest"
-                }`}
+              }`}
             >
               <div className="absolute top-0 right-0 golden-glow text-on-primary px-3 py-1 text-[10px] font-bold uppercase rounded-bl">
                 Premium
@@ -279,7 +373,10 @@ const TicketPanel = () => {
               <div className="flex justify-between items-start mb-2">
                 <div className="flex items-center gap-3">
                   {selectedTier === "vip_table" && (
-                    <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    <span
+                      className="material-symbols-outlined text-primary"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
                       check_circle
                     </span>
                   )}
@@ -335,6 +432,33 @@ const TicketPanel = () => {
             Checkout
           </h2>
           <div className="space-y-6">
+            <SelectContestant
+              contestants={contestants}
+              selectedSlug={selectedContestantSlug}
+              onSelect={setSelectedContestantSlug}
+            />
+            <div className="rounded-2xl border border-white/10 bg-surface-container p-5 flex items-center gap-4">
+              <div className="w-20 h-20 rounded-xl overflow-hidden border border-white/10">
+                <img
+                  src={selectedContestant.image}
+                  alt={selectedContestant.name}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.25em] text-primary mb-1">
+                  Ticket supports
+                </p>
+                <h3 className="text-xl font-black text-on-surface">
+                  {selectedContestant.name}
+                </h3>
+                <p className="text-on-surface-variant text-sm">
+                  {selectedContestant.category}
+                </p>
+              </div>
+            </div>
             <div>
               <label className="block text-xs font-bold uppercase text-primary mb-2">
                 Full Name
