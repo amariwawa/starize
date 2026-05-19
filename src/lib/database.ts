@@ -23,6 +23,7 @@ export type TicketRecord = {
   total_amount_naira: number;
   paystack_reference: string;
   payment_channel?: string;
+  referral?: string;
 };
 
 /* ─── Constants ─── */
@@ -123,26 +124,53 @@ export async function getAllVoteTotals() {
 /* ─── Tickets ─── */
 
 export async function saveTicket(ticket: TicketRecord) {
-  const { data, error } = await supabase.from("tickets").insert([
-    {
-      full_name: ticket.full_name,
-      email: ticket.email,
-      tier: ticket.tier,
-      tier_label: ticket.tier_label,
-      quantity: ticket.quantity,
-      unit_price_naira: ticket.unit_price_naira,
-      total_amount_naira: ticket.total_amount_naira,
-      paystack_reference: ticket.paystack_reference,
-      payment_channel: ticket.payment_channel,
-    },
-  ]);
+  const payload: any = {
+    full_name: ticket.full_name,
+    email: ticket.email,
+    tier: ticket.tier,
+    tier_label: ticket.tier_label,
+    quantity: ticket.quantity,
+    unit_price_naira: ticket.unit_price_naira,
+    total_amount_naira: ticket.total_amount_naira,
+    paystack_reference: ticket.paystack_reference,
+    payment_channel: ticket.payment_channel,
+  };
 
-  if (error) {
-    console.error("Failed to save ticket:", error);
-    throw error;
+  try {
+    const { data, error } = await supabase.from("tickets").insert([
+      {
+        ...payload,
+        referral: ticket.referral,
+      },
+    ]);
+
+    if (error) {
+      // If the referral column doesn't exist, fall back to saving without it
+      if (
+        error.code === "PGRST104" ||
+        error.message.includes('column "referral" of relation "tickets" does not exist') ||
+        error.message.includes('column "referral" does not exist')
+      ) {
+        console.warn("Database 'tickets' table does not have 'referral' column. Saving without it.");
+        const { data: fallbackData, error: fallbackError } = await supabase
+          .from("tickets")
+          .insert([payload]);
+
+        if (fallbackError) {
+          console.error("Failed to save ticket in fallback insert:", fallbackError);
+          throw fallbackError;
+        }
+        return fallbackData;
+      }
+      console.error("Failed to save ticket:", error);
+      throw error;
+    }
+
+    return data;
+  } catch (err: any) {
+    console.error("Error in saveTicket insertion:", err);
+    throw err;
   }
-
-  return data;
 }
 
 /* ─── Idempotency ─── */

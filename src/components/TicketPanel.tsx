@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { usePaystackPayment } from "react-paystack";
 import { saveTicket } from "@/lib/database";
+import { contestants } from "@/lib/contestants";
 
 const DEFAULT_PAYSTACK_KEY = "pk_test_placeholder"; // Fallback for build time
 
@@ -32,6 +33,7 @@ const TicketPanel = () => {
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [referral, setReferral] = useState("");
   const [paymentStatus, setPaymentStatus] = useState<
     "idle" | "processing" | "success"
   >("idle");
@@ -82,6 +84,11 @@ const TicketPanel = () => {
           variable_name: "payment_type",
           value: "ticket",
         },
+        {
+          display_name: "Referral",
+          variable_name: "referral",
+          value: referral || "Nil",
+        },
       ],
     },
   };
@@ -110,6 +117,7 @@ const TicketPanel = () => {
             unit_price_naira: TICKET_PRICES[selectedTier],
             total_amount_naira: totalAmount,
             paystack_reference: ref,
+            referral: referral || "Nil",
           });
           setSaveError(false);
         } catch (err) {
@@ -185,6 +193,7 @@ const TicketPanel = () => {
               setEmail("");
               setFullName("");
               setQuantity(1);
+              setReferral("");
               setSaveError(false);
             }}
             className="px-8 py-3 bg-primary text-on-primary font-bold rounded-lg"
@@ -357,6 +366,28 @@ const TicketPanel = () => {
                 className="w-full bg-surface-container p-4 rounded border border-white/10 text-on-surface focus:border-primary focus:outline-none transition-colors"
                 placeholder="your@email.com"
               />
+            </div>
+            <div>
+              <label className="block text-xs font-bold uppercase text-primary mb-2">
+                Referral
+              </label>
+              <div className="relative">
+                <select
+                  value={referral}
+                  onChange={(e) => setReferral(e.target.value)}
+                  className="w-full bg-surface-container p-4 pr-12 rounded border border-white/10 text-on-surface focus:border-primary focus:outline-none transition-colors appearance-none cursor-pointer font-medium"
+                >
+                  <option value="" className="bg-surface-container-high text-on-surface">No one (Nil)</option>
+                  {contestants.map((c) => (
+                    <option key={c.slug} value={c.name} className="bg-surface-container-high text-on-surface">
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-primary">
+                  <span className="material-symbols-outlined">arrow_drop_down</span>
+                </div>
+              </div>
             </div>
 
             {/* Order summary */}

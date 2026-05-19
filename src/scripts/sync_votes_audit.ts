@@ -159,6 +159,7 @@ async function sync() {
             amount_naira: voteData.amount_naira,
             paystack_reference: voteData.paystack_reference,
             payment_channel: voteData.payment_channel,
+            created_at: voteData.paid_at, // Ensure the timestamp counts toward the current period
         }, { onConflict: 'paystack_reference' });
 
       if (error) {

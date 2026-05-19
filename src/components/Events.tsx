@@ -27,7 +27,7 @@ const Events = () => {
                 GRAND <span className="text-primary">FINALE</span>
               </h3>
               <p className="text-secondary font-bold tracking-widest uppercase text-sm">
-                Saturday, 18th April, 2026 • 10 AM
+                Saturday, 30th May, 2026 • 10 AM
               </p>
               <p className="text-on-surface-variant text-sm mt-1">21 Contestants. Only 10 will advance.</p>
             </div>

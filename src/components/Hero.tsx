@@ -35,7 +35,7 @@ const Hero = () => {
         >
           <p className="text-secondary font-headline font-black text-[10px] tracking-[0.2em] mb-1">MAIN EVENT</p>
           <h2 className="liquid-gold-text text-xl font-headline font-black tracking-tight leading-tight mb-1">GRAND FINALE</h2>
-          <p className="text-on-surface/60 text-[10px] font-bold uppercase tracking-widest leading-none">Saturday, 9th May • 2 PM</p>
+          <p className="text-on-surface/60 text-[10px] font-bold uppercase tracking-widest leading-none">Saturday, 30th May • 2 PM</p>
         </motion.div>
       </div>
       
@@ -51,7 +51,7 @@ const Hero = () => {
         >
           <p className="text-secondary font-headline font-black text-sm tracking-[0.2em] mb-1">MAIN EVENT</p>
           <h2 className="liquid-gold-text text-5xl font-headline font-black tracking-tight leading-tight mb-2">GRAND FINALE</h2>
-          <p className="text-on-surface/80 text-base font-bold uppercase tracking-widest">Saturday, 9th May • 2 PM</p>
+          <p className="text-on-surface/80 text-base font-bold uppercase tracking-widest">Saturday, 30th May • 2 PM</p>
         </motion.div>
 
         <motion.div

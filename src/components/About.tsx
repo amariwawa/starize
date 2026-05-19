@@ -14,7 +14,7 @@ const About = () => {
   });
 
   useEffect(() => {
-    const targetDate = new Date("May 9, 2026 10:00:00").getTime();
+    const targetDate = new Date("May 30, 2026 10:00:00").getTime();
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
