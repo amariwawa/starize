@@ -27,7 +27,7 @@ const Events = () => {
                 GRAND <span className="text-primary">FINALE</span>
               </h3>
               <p className="text-secondary font-bold tracking-widest uppercase text-sm">
-                Saturday, 30th May, 2026 • 10 AM
+                Saturday, 6th June 2026 • 10 AM
               </p>
               <p className="text-on-surface-variant text-sm mt-1">21 Contestants. Only 10 will advance.</p>
             </div>
@@ -37,9 +37,6 @@ const Events = () => {
               </span>{" "}
               Maye Hall, Adedoyin Way, Obalufe, Parakin, Ile-Ife
             </p>
-          </div>
-          <div className="text-secondary font-bold flex items-center gap-2 mt-8 inline-flex w-fit bg-secondary/10 px-6 py-3 rounded-full">
-            Free Event
           </div>
         </div>
       </motion.div>

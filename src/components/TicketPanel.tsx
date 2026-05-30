@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { usePaystackPayment } from "react-paystack";
 import { saveTicket } from "@/lib/database";
 import { contestants } from "@/lib/contestants";
+import SuccessPopup from "@/components/SuccessPopup";
 
 const DEFAULT_PAYSTACK_KEY = "pk_test_placeholder"; // Fallback for build time
 
@@ -138,6 +139,16 @@ const TicketPanel = () => {
 
   const initializePayment = usePaystackPayment(config);
 
+  const handleReset = () => {
+    setPaymentStatus("idle");
+    setSelectedTier(null);
+    setEmail("");
+    setFullName("");
+    setQuantity(1);
+    setReferral("");
+    setSaveError(false);
+  };
+
   const handlePay = () => {
     if (!fullName.trim() || fullName.length < 3) {
       alert("Please enter a valid full name");
@@ -161,52 +172,9 @@ const TicketPanel = () => {
     initializePayment(onSuccess, onClose);
   };
 
-  if (paymentStatus === "success") {
-    return (
-      <section className="max-w-7xl mx-auto px-8 py-20">
-        <div className="bg-surface-container-low p-12 rounded-2xl border border-primary/30 text-center max-w-xl mx-auto">
-          <span
-            className="material-symbols-outlined text-primary text-7xl mb-6"
-            style={{ fontVariationSettings: "'FILL' 1" }}
-          >
-            confirmation_number
-          </span>
-          <h3 className="text-3xl font-black font-headline text-on-surface mb-3">
-            Payment Successful!
-          </h3>
-          <p className="text-on-surface-variant mb-2 text-lg">
-            You have successfully purchased <strong className="text-primary">{quantity} {selectedTier && TICKET_LABELS[selectedTier]}</strong> ticket{quantity > 1 ? "s" : ""} for{" "}
-            <strong className="text-on-surface">Stage 3! Knockout Edition</strong>.
-          </p>
-          <p className="text-on-surface-variant text-sm mb-8">
-            A confirmation email will be sent to <strong>{email}</strong>.
-          </p>
-          {saveError && (
-            <p className="text-red-400 text-sm mb-4">
-              Payment was successful but there was an issue saving your ticket details. Please contact support with your payment reference.
-            </p>
-          )}
-          <button
-            onClick={() => {
-              setPaymentStatus("idle");
-              setSelectedTier(null);
-              setEmail("");
-              setFullName("");
-              setQuantity(1);
-              setReferral("");
-              setSaveError(false);
-            }}
-            className="px-8 py-3 bg-primary text-on-primary font-bold rounded-lg"
-          >
-            Buy Another Ticket
-          </button>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section id="tickets" className="max-w-7xl mx-auto px-8 py-20">
+      <SuccessPopup isOpen={paymentStatus === "success"} onClose={handleReset} />
       <div className="bg-surface-container-low rounded-xl overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-2">
         {/* Ticket Tiers Selection */}
         <div className="p-8 md:p-12 border-r border-white/5">

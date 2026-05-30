@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import { usePaystackPayment } from "react-paystack";
 import { useSearchParams } from "next/navigation";
 import SelectContestant from "@/components/SelectContestant";
+import SuccessPopup from "@/components/SuccessPopup";
 import { contestants } from "@/lib/contestants";
 import { saveVote } from "@/lib/database";
 
@@ -131,6 +132,14 @@ const VotingPanel = () => {
 
   const initializePayment = usePaystackPayment(config);
 
+  const handleReset = () => {
+    setPaymentStatus("idle");
+    setVotes(20);
+    setEmail("");
+    setFullName("");
+    setSaveError(false);
+  };
+
   const handlePay = () => {
     if (!fullName.trim() || fullName.length < 3) {
       alert("Please enter a valid full name");
@@ -152,6 +161,8 @@ const VotingPanel = () => {
 
   return (
     <section id="vote-panel" className="max-w-7xl mx-auto px-8 py-20">
+      <SuccessPopup isOpen={paymentStatus === "success"} onClose={handleReset} />
+
       <div className="text-center mb-16">
         <span className="text-primary font-bold uppercase tracking-[0.3em] text-sm">
           Vote and Support
@@ -167,38 +178,7 @@ const VotingPanel = () => {
         onSelect={handleSelectContestant}
       />
 
-      {paymentStatus === "success" ? (
-        <div className="bg-surface-container-low p-8 md:p-12 rounded-2xl border border-primary/30 text-center">
-          <span className="material-symbols-outlined text-primary text-6xl mb-4" style={{ fontVariationSettings: "'FILL' 1" }}>
-            check_circle
-          </span>
-          <h3 className="text-2xl font-bold text-on-surface mb-2">
-            Payment Successful!
-          </h3>
-          <p className="text-on-surface-variant mb-6">
-            You have successfully purchased <strong className="text-primary">{votes} votes</strong> for{" "}
-            <strong className="text-on-surface">{selectedContestant?.name}</strong>.
-          </p>
-          {saveError && (
-            <p className="text-red-400 text-sm mb-4">
-              Payment was successful but there was an issue saving your vote. Please contact support with your payment reference.
-            </p>
-          )}
-          <button
-            onClick={() => {
-              setPaymentStatus("idle");
-              setVotes(20);
-              setEmail("");
-              setFullName("");
-              setSaveError(false);
-            }}
-            className="px-8 py-3 bg-primary text-on-primary font-bold rounded-lg"
-          >
-            Vote Again
-          </button>
-        </div>
-      ) : (
-        <div className="bg-surface-container-low p-8 md:p-12 rounded-2xl border border-white/5">
+      <div className="bg-surface-container-low p-8 md:p-12 rounded-2xl border border-white/5">
           <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
             <div className="space-y-6">
               <div>
@@ -305,7 +285,6 @@ const VotingPanel = () => {
             </div>
           </div>
         </div>
-      )}
     </section>
   );
 };
