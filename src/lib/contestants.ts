@@ -21,7 +21,7 @@ const toSlug = (value: string) =>
 const baseContestants = [
   {
     name: "Rotimi-John Olufela",
-    category: "Gratitude - Anendlessocean",
+    category: "Repay You - J Moss",
     image: "/images/contestants/Contestant pictures/Rotimi Olufela.jpg",
     shortBio:
       "Rotimi-John Olufela is a music student at OAU who treats music as both lifestyle and identity.",
@@ -32,7 +32,7 @@ const baseContestants = [
 
   {
     name: "Ayomide Babalola",
-    category: "Amazing - Sunmisola Agbebi",
+    category: "Never Would Have Made It - Le'Andria Johnson",
     image: "/images/contestants/Contestant pictures/Ayomide Babalola.jpg",
     shortBio:
       "Ayomide Babalola is an Economics Education graduate whose music journey started in children choir at age 12.",
@@ -43,7 +43,7 @@ const baseContestants = [
 
   {
     name: "Precious Ikechukwu",
-    category: "Lovin' me - Jonathan McReynolds",
+    category: "Have Your Way - Fantasia",
     image: "/images/contestants/Contestant pictures/Precious Ikechukwu.jpg",
     shortBio:
       "Precious Ikechukwu, a Broadcast Journalism student, sings to help others feel Christ's warmth and love.",
@@ -55,7 +55,7 @@ const baseContestants = [
 
   {
     name: "Success Iyayi",
-    category: "My Help - Grace Charles",
+    category: "Change Me - Tamela Mann",
     image: "/images/contestants/Contestant pictures/Iyayi success.jpg",
     shortBio:
       "Iyayi Success Joy is a microbiology student, singer, songwriter, and voice-over artist with a science future in view.",
@@ -65,7 +65,7 @@ const baseContestants = [
   },
   {
     name: "Precious Chinaza Okafor",
-    category: "Mercy Said No - CeCe Winans",
+    category: "Better Days - Le'Andria Johnson",
     image: "/images/contestants/Contestant pictures/Precious Okafor.jpg",
     shortBio:
       "Precious Chinaza Okafor calls music her second language and uses it to express, connect, and inspire.",
@@ -78,7 +78,7 @@ const baseContestants = [
 
   {
     name: "Godswill Etete",
-    category: "For Your Name Is Holy - Paul Wilbur",
+    category: "Mary Did You Know - Noble G",
     image: "/images/contestants/Contestant pictures/Godswill etete.jpg",
     shortBio:
       "Etete Godswill Akaninyene is a final-year Biology Education student, vocal coach, keyboardist, and songwriter.",
@@ -88,7 +88,7 @@ const baseContestants = [
   },
   {
     name: "Layo",
-    category: "You Say - Lauren Daigle",
+    category: "Getaway - Taya Smith",
     image: "/images/contestants/Contestant pictures/Layo.jpg",
     shortBio:
       "Layo draws inspiration from early exposure to music at home and a lifelong love for art and creativity.",
@@ -98,7 +98,7 @@ const baseContestants = [
   },
   {
     name: "Adekoya Oluwanishola",
-    category: "Believe For It - CeCe Winans",
+    category: "God Provides - Tamela Mann",
     image: "/images/contestants/Contestant pictures/Oluwanishola Adekoya.jpg",
     shortBio:
       "Adekoya Oluwanishola joined to refine skill and pair anointing with excellence in ministry and artistry.",
@@ -108,7 +108,7 @@ const baseContestants = [
   },
   {
     name: "Eniola Busayo",
-    category: "Holy Place - Grace Idowu",
+    category: "I Look To You - Whitney Houston",
     image: "/images/contestants/Contestant pictures/Eniola Busayo .jpg",
     shortBio:
       "Adebajo Busayo Eniola sees music as connection, structure, and the place where she feels most at home.",
@@ -119,7 +119,7 @@ const baseContestants = [
 
   {
     name: "Deborah Olaoye",
-    category: "Alabaster Box - Kim Burrell",
+    category: "What Child Is This - Evvie McKinney",
     image: "/images/contestants/Contestant pictures/Deborah .jpg",
     shortBio:
       "Deborah Olaoye is a Business Administration student who describes music as healing and powerfully expressive.",

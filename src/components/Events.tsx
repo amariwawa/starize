@@ -29,7 +29,7 @@ const Events = () => {
               <p className="text-secondary font-bold tracking-widest uppercase text-sm">
                 Saturday, 6th June 2026 • 12 PM
               </p>
-              <p className="text-on-surface-variant text-sm mt-1">21 Contestants. Only 10 will advance.</p>
+              <p className="text-on-surface-variant text-sm mt-1">10 contestants. Only 1 will be crowned.</p>
             </div>
             <p className="text-on-surface-variant flex items-center gap-2 text-lg">
               <span className="material-symbols-outlined text-secondary">
