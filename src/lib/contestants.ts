@@ -64,26 +64,6 @@ const baseContestants = [
     isQualified: true,
   },
   {
-    name: "Gloria Adenike",
-    category: "Omo'ba - Pelumi Deborah",
-    image: "/images/contestants/Contestant pictures/Gloria.jpg",
-    shortBio:
-      "Gloria Adenike pursues music platforms that demand excellence and allow her to connect with souls.",
-    writeUp:
-      "I am Gloria Adenike, a student of Obafemi Awolowo University with a strong passion for music. I actively pursue opportunities that challenge me to grow in excellence and expand my impact. Through my sound, I aim to reach and connect with souls.",
-    isQualified: true,
-  },
-  {
-    name: "Boluwatife Waiye",
-    category: "I Almost Let Go - Kurt Carr",
-    image: "/images/contestants/Contestant pictures/Boluwatife Waiye.jpg",
-    shortBio:
-      "Waiye Boluwatife is a dedicated vocalist focused on growth, emotional expression, and performance excellence.",
-    writeUp:
-      "Waiye Boluwatife is a student of Obafemi Awolowo University and a passionate vocalist committed to growth, expression, and musical excellence. With a strong focus on vocal development and intentional performance, Boluwatife aims to connect deeply with audiences and communicate emotion through song.",
-    isQualified: true,
-  },
-  {
     name: "Precious Chinaza Okafor",
     category: "Mercy Said No - CeCe Winans",
     image: "/images/contestants/Contestant pictures/Precious Okafor.jpg",
