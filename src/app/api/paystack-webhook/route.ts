@@ -166,7 +166,7 @@ export async function POST(req: Request) {
         }
 
         const { error: emailError } = await resend.emails.send({
-          from: "Starize <tickets@starize.africa>",
+          from: "Starize <tickets@starize.site>",
           to: email,
           subject: `Your ${eventName} Ticket — ${ticketCode}`,
           react: TicketEmail({
