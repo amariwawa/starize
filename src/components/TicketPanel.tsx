@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePaystackPayment } from "react-paystack";
+import { useRouter } from "next/navigation";
 import { saveTicket } from "@/lib/database";
 import { contestants } from "@/lib/contestants";
 import SuccessPopup from "@/components/SuccessPopup";
@@ -29,6 +30,7 @@ const TICKET_DESCRIPTIONS: Record<TicketTier, string> = {
 };
 
 const TicketPanel = () => {
+  const router = useRouter();
   const PAYSTACK_PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || DEFAULT_PAYSTACK_KEY;
   const [selectedTier, setSelectedTier] = useState<TicketTier | null>(null);
   const [email, setEmail] = useState("");
@@ -59,6 +61,11 @@ const TicketPanel = () => {
     amount: totalAmount * 100, // kobo
     publicKey: PAYSTACK_PUBLIC_KEY,
     metadata: {
+      // Top-level metadata for the webhook to read easily
+      name: fullName,
+      tier: selectedTier || "",
+      eventName: "Starize S7 Grand Finale",
+      eventDate: "Saturday, 6th June 2026",
       custom_fields: [
         {
           display_name: "Full Name",
@@ -95,9 +102,6 @@ const TicketPanel = () => {
   };
 
   const onSuccess = (reference: { reference: string } | unknown) => {
-    // 1. Immediately transition to success state to satisfy the user
-    setPaymentStatus("success");
-
     const ref =
       typeof reference === "object" && reference !== null && "reference" in reference
         ? (reference as { reference: string }).reference
@@ -105,7 +109,7 @@ const TicketPanel = () => {
 
     console.log("Ticket payment successful", ref);
 
-    // 2. Perform database synchronization in the background (non-blocking for UI)
+    // Sync to database in the background
     const syncToDatabase = async () => {
       if (selectedTier) {
         try {
@@ -129,6 +133,9 @@ const TicketPanel = () => {
     };
 
     syncToDatabase();
+
+    // Redirect to payment success page
+    router.push("/payment/success");
   };
 
   const onClose = () => {
