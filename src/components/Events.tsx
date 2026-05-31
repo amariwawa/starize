@@ -15,8 +15,8 @@ const Events = () => {
       >
         <div className="md:w-1/3 w-full h-auto overflow-hidden">
           <img
-            src="/images/events/stage-3.jpg"
-            alt="Stage 3! Knockout Edition"
+            src="/images/events/finale-poster.PNG"
+            alt="Starize S7 Grand Finale Poster"
             className="w-full h-auto block"
           />
         </div>
