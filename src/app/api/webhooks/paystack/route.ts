@@ -1,11 +1,23 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
+import fs from "fs";
+import path from "path";
 import { createClient } from "@supabase/supabase-js";
+import { Resend } from "resend";
+import { generateTicketCode } from "@/lib/generateTicketCode";
+import TicketEmail from "@/emails/TicketEmail";
+
+const TICKET_IMAGE_MAP: Record<string, string> = {
+  regular: "regular-ticket.png",
+  vip: "vip-ticket.png",
+  vip_table: "table-of-4-ticket.png",
+};
 
 export async function POST(req: Request) {
   const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
   const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
+  const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY || !PAYSTACK_SECRET_KEY) {
     console.error("Webhook: Missing environment variables");
@@ -123,33 +135,103 @@ export async function POST(req: Request) {
         console.warn(`Webhook: Failed to identify contestant for vote ref: ${reference}`);
       }
     } else if (type === "ticket" || isTicketPattern) {
-      let tier = getMetaField("ticket_tier") || "unknown";
+      let tier = getMetaField("ticket_tier") || getMetaField("tier") || "unknown";
       if (tier === "unknown" && isTicketPattern) {
         const parts = reference.split("_");
         if (parts.length >= 2) tier = parts[1];
       }
 
       const qty = parseInt(getMetaField("quantity") || "1", 10);
+      const buyerName = getMetaField("full_name") || getMetaField("name") || "Valued Guest";
+      const tierLabel = getMetaField("tier_label") || (tier === "vip_table" ? "Table of 4" : tier.charAt(0).toUpperCase() + tier.slice(1));
+      const eventName = metadata.eventName || "Starize S7 Grand Finale";
+      const eventDate = metadata.eventDate || "Saturday, 6th June 2026";
+      const ticketCode = generateTicketCode();
+
       const ticketData = {
-        full_name: getMetaField("full_name") || "Unknown",
+        full_name: buyerName,
         email: email,
         tier: tier,
-        tier_label: getMetaField("tier_label") || "Unknown",
+        tier_label: tierLabel,
         quantity: qty,
         unit_price_naira: amount / qty,
         total_amount_naira: amount,
         paystack_reference: reference,
         payment_channel: data.channel,
+        // New ticket delivery columns
+        buyer_name: buyerName,
+        buyer_email: email,
+        ticket_tier: tier,
+        ticket_code: ticketCode,
+        event_name: eventName,
+        event_date: eventDate,
+        status: "active",
       };
 
       const { error: ticketError } = await supabase
         .from("tickets")
         .upsert(ticketData, { onConflict: 'paystack_reference' });
-      
+
       if (ticketError) {
         console.error(`Webhook: Failed to upsert ticket for ${reference}:`, ticketError.message);
       } else {
-        console.log(`Webhook: Successfully recorded ticket for ${reference}`);
+        console.log(`Webhook: Successfully recorded ticket for ${reference} with code ${ticketCode}`);
+      }
+
+      // Send ticket email via Resend
+      if (RESEND_API_KEY && email) {
+        try {
+          const resend = new Resend(RESEND_API_KEY);
+
+          const imageFileName = TICKET_IMAGE_MAP[tier] || "regular-ticket.png";
+          const imagePath = path.join(process.cwd(), "public", "tickets", imageFileName);
+
+          let imageBuffer: Buffer | null = null;
+          let imageBase64 = "";
+          try {
+            imageBuffer = fs.readFileSync(imagePath);
+            imageBase64 = imageBuffer.toString("base64");
+          } catch (imgErr) {
+            console.error(`Webhook: Failed to read ticket image at ${imagePath}:`, imgErr);
+          }
+
+          const attachments: any[] = [];
+          if (imageBuffer) {
+            attachments.push({
+              filename: imageFileName,
+              content: imageBase64,
+            });
+          }
+
+          const { error: emailError } = await resend.emails.send({
+            from: "Starize <tickets@starize.africa>",
+            to: email,
+            subject: `Your ${eventName} Ticket — ${ticketCode}`,
+            react: TicketEmail({
+              buyerName,
+              ticketTier: tierLabel,
+              ticketCode,
+              eventName,
+              eventDate,
+              ticketImageBase64: imageBase64,
+            }),
+            attachments: attachments.length > 0 ? attachments : undefined,
+          });
+
+          if (emailError) {
+            console.error(`Webhook: Failed to send email for ${reference}:`, emailError);
+          } else {
+            console.log(`Webhook: Email sent to ${email} for ticket ${ticketCode}`);
+            await supabase
+              .from("tickets")
+              .update({ email_sent_at: new Date().toISOString() })
+              .eq("paystack_reference", reference);
+          }
+        } catch (emailErr: any) {
+          console.error(`Webhook: Email error for ${reference}:`, emailErr.message);
+        }
+      } else {
+        console.warn(`Webhook: Skipping email — missing RESEND_API_KEY or email for ${reference}`);
       }
     }
 
