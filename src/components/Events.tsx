@@ -27,7 +27,7 @@ const Events = () => {
                 GRAND <span className="text-primary">FINALE</span>
               </h3>
               <p className="text-secondary font-bold tracking-widest uppercase text-sm">
-                Saturday, 6th June 2026 • 10 AM
+                Saturday, 6th June 2026 • 12 PM
               </p>
               <p className="text-on-surface-variant text-sm mt-1">21 Contestants. Only 10 will advance.</p>
             </div>
@@ -35,7 +35,7 @@ const Events = () => {
               <span className="material-symbols-outlined text-secondary">
                 location_on
               </span>{" "}
-              Maye Hall, Adedoyin Way, Obalufe, Parakin, Ile-Ife
+              Raph Hall, Adjacent Mayfair Hotel, Parakin, Ile-Ife
             </p>
           </div>
         </div>
