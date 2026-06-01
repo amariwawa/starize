@@ -22,8 +22,8 @@ const VotingPanel = () => {
   >("idle");
   const [saveError, setSaveError] = useState(false);
 
-  // Filter out qualified contestants from voting
-  const votingContestants = useMemo(() => contestants.filter(c => !c.isQualified), []);
+  // All contestants are available for voting
+  const votingContestants = contestants;
 
   // Use local state for contestant selection — no router navigation
   const preselectedContestant = searchParams.get("contestant");

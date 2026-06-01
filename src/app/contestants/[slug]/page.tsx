@@ -70,14 +70,12 @@ export default async function ContestantDetailPage({
               {contestant.writeUp}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              {!contestant.isQualified && (
-                <Link
-                  href={`/voting?contestant=${contestant.slug}#vote-panel`}
-                  className="gold-shimmer text-on-primary font-bold py-3 px-7 rounded-lg text-sm uppercase tracking-wider text-center"
-                >
-                  Vote Now
-                </Link>
-              )}
+              <Link
+                href={`/voting?contestant=${contestant.slug}#vote-panel`}
+                className="gold-shimmer text-on-primary font-bold py-3 px-7 rounded-lg text-sm uppercase tracking-wider text-center"
+              >
+                Vote Now
+              </Link>
               <Link
                 href="/contestants"
                 className="bg-surface-container-high border border-white/10 text-on-surface font-bold py-3 px-7 rounded-lg text-sm uppercase tracking-wider text-center"

@@ -72,21 +72,19 @@ const ContestantCard = ({ contestant, index = 0 }: ContestantCardProps) => {
             {expanded ? "Read Less" : "Read More"}
           </button>
 
-          <div className={contestant.isQualified ? "block" : "grid grid-cols-2 gap-3"}>
+          <div className="grid grid-cols-2 gap-3">
             <Link
               href={`/contestants/${contestant.slug}`}
-              className={`w-full text-center bg-surface-container-high text-on-surface font-bold py-3 rounded-lg text-sm border border-white/10 flex items-center justify-center gap-2 ${contestant.isQualified ? "py-4" : ""}`}
+              className="w-full text-center bg-surface-container-high text-on-surface font-bold py-3 rounded-lg text-sm border border-white/10 flex items-center justify-center gap-2"
             >
               Full Profile
             </Link>
-            {!contestant.isQualified && (
-              <Link
-                href={`/voting?contestant=${contestant.slug}#vote-panel`}
-                className="w-full text-center gold-shimmer text-on-primary font-bold py-3 rounded-lg text-sm"
-              >
-                Vote Now
-              </Link>
-            )}
+            <Link
+              href={`/voting?contestant=${contestant.slug}#vote-panel`}
+              className="w-full text-center gold-shimmer text-on-primary font-bold py-3 rounded-lg text-sm"
+            >
+              Vote Now
+            </Link>
           </div>
         </div>
       </article>
