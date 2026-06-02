@@ -107,17 +107,6 @@ const baseContestants = [
     isQualified: true,
   },
   {
-    name: "Eniola Busayo",
-    category: "I Look To You - Whitney Houston",
-    image: "/images/contestants/Contestant pictures/Eniola Busayo .jpg",
-    shortBio:
-      "Adebajo Busayo Eniola sees music as connection, structure, and the place where she feels most at home.",
-    writeUp:
-      "I am Adebajo Busayo Eniola, a Music student of Obafemi Awolowo University. Music has been woven into my life for as long as I can remember. To me, music is not just melody, it is connection. It shapes how I think, feel, and relate with others, and it is where I feel most at home.",
-    isQualified: true,
-  },
-
-  {
     name: "Deborah Olaoye",
     category: "What Child Is This - Evvie McKinney",
     image: "/images/contestants/Contestant pictures/Deborah .jpg",
