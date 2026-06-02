@@ -6,7 +6,6 @@ import { useSearchParams } from "next/navigation";
 import SelectContestant from "@/components/SelectContestant";
 import SuccessPopup from "@/components/SuccessPopup";
 import { contestants } from "@/lib/contestants";
-import { saveVote } from "@/lib/database";
 
 const PRICE_PER_VOTE = 50; // ₦50 per vote
 const DEFAULT_PAYSTACK_KEY = "pk_test_placeholder"; // Fallback for build time
@@ -20,8 +19,6 @@ const VotingPanel = () => {
   const [paymentStatus, setPaymentStatus] = useState<
     "idle" | "processing" | "success" | "error"
   >("idle");
-  const [saveError, setSaveError] = useState(false);
-
   // All contestants are available for voting
   const votingContestants = contestants;
 
@@ -92,36 +89,15 @@ const VotingPanel = () => {
   };
 
   const onSuccess = (reference: { reference: string } | unknown) => {
-    // 1. Immediately transition to success state to satisfy the user
     setPaymentStatus("success");
-    
+
     const ref =
       typeof reference === "object" && reference !== null && "reference" in reference
         ? (reference as { reference: string }).reference
         : config.reference;
 
     console.log("Vote payment successful", ref);
-
-    // 2. Perform database synchronization in the background (non-blocking for UI)
-    const syncToDatabase = async () => {
-      try {
-        await saveVote({
-          full_name: fullName,
-          email,
-          contestant_slug: selectedSlug,
-          contestant_name: selectedContestant?.name || "",
-          votes,
-          amount_naira: votes * PRICE_PER_VOTE,
-          paystack_reference: ref,
-        });
-        setSaveError(false);
-      } catch (err) {
-        console.error("Failed to save vote to database:", err);
-        setSaveError(true);
-      }
-    };
-
-    syncToDatabase();
+    // Vote is recorded by the Paystack webhook — no frontend DB write needed
   };
 
   const onClose = () => {
@@ -137,7 +113,6 @@ const VotingPanel = () => {
     setVotes(20);
     setEmail("");
     setFullName("");
-    setSaveError(false);
   };
 
   const handlePay = () => {
