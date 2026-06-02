@@ -70,18 +70,62 @@ export async function POST(req: Request) {
     const amount = data.amount / 100;
     const metadata = data.metadata || {};
 
-    // Determine payment type
-    const type =
-      metadata.type ||
-      getMetaField(metadata, "payment_type") ||
-      (reference.startsWith("ticket_") ? "ticket" : null);
+    // 1. Log the transaction
+    const { error: txError } = await supabase
+      .from("transactions")
+      .upsert({
+        reference,
+        email,
+        amount,
+        status: data.status,
+        paid_at: data.paid_at,
+        metadata,
+        channel: data.channel,
+        currency: data.currency,
+      }, { onConflict: "reference" });
 
-    // Only process ticket payments
-    if (type !== "ticket" && !reference.startsWith("ticket_")) {
-      return NextResponse.json({ status: "ignored" }, { status: 200 });
+    if (txError) {
+      console.error(`Webhook: Failed to upsert transaction ${reference}:`, txError.message);
     }
 
-    const buyerName =
+    // 2. Route to votes or tickets
+    const type = metadata.type || getMetaField(metadata, "payment_type");
+    const isVotePattern = reference.startsWith("vote_");
+    const isTicketPattern = reference.startsWith("ticket_");
+
+    console.log(`Webhook: Processing ${reference} (type: ${type}, votePattern: ${isVotePattern})`);
+
+    if (type === "vote" || type === "voting" || isVotePattern) {
+      let contestantSlug = getMetaField(metadata, "contestant_slug") || getMetaField(metadata, "slug");
+      if (!contestantSlug && isVotePattern) {
+        const parts = reference.split("_");
+        if (parts.length >= 2) contestantSlug = parts[1];
+      }
+
+      if (contestantSlug) {
+        const voteData = {
+          full_name: getMetaField(metadata, "full_name") || "Unknown",
+          email,
+          contestant_slug: contestantSlug,
+          contestant_name: getMetaField(metadata, "contestant") || "Unknown",
+          votes: parseInt(getMetaField(metadata, "votes") || "0", 10) || Math.floor(amount / 50),
+          amount_naira: amount,
+          paystack_reference: reference,
+          payment_channel: data.channel,
+        };
+        const { error: voteError } = await supabase
+          .from("votes")
+          .upsert(voteData, { onConflict: "paystack_reference" });
+        if (voteError) {
+          console.error(`Webhook: Failed to upsert vote ${reference}:`, voteError.message);
+        } else {
+          console.log(`Webhook: Recorded ${voteData.votes} votes for ${contestantSlug}`);
+        }
+      } else {
+        console.warn(`Webhook: Could not identify contestant for ${reference}`);
+      }
+    } else if (type === "ticket" || isTicketPattern) {
+      const buyerName =
       getMetaField(metadata, "name") ||
       getMetaField(metadata, "full_name") ||
       "Valued Guest";
@@ -195,6 +239,7 @@ export async function POST(req: Request) {
       }
     } else {
       console.warn(`Webhook: Skipping email — missing RESEND_API_KEY or email for ${reference}`);
+    }
     }
 
     return NextResponse.json({ status: "success" }, { status: 200 });
