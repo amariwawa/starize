@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
-import { getContestantVotes } from "@/lib/database";
 import { syncVotesAction } from "@/app/actions/votes";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -17,18 +15,18 @@ const LiveVoteCount = ({ contestantSlug, variant = "default" }: LiveVoteCountPro
   const [isSyncing, setIsSyncing] = useState(false);
 
   useEffect(() => {
-    // 1. Fetch initial vote count and sync from Paystack
     const refreshData = async () => {
-      // First get what we have in DB instantly
-      const dbVotes = await getContestantVotes(contestantSlug);
-      setVotes(dbVotes);
-
-      // Then trigger background sync for "Direct from Paystack" accuracy
       setIsSyncing(true);
       try {
         const result = await syncVotesAction(contestantSlug);
         if (result.success) {
-          setVotes(result.votes);
+          setVotes((prev) => {
+            if (prev !== null && result.votes > prev) {
+              setIsUpdating(true);
+              setTimeout(() => setIsUpdating(false), 1000);
+            }
+            return result.votes;
+          });
         }
       } catch (error) {
         console.error("Sync failed:", error);
@@ -39,51 +37,10 @@ const LiveVoteCount = ({ contestantSlug, variant = "default" }: LiveVoteCountPro
 
     refreshData();
 
-    // 2. Subscribe to real-time changes
-    // Layer A: Watch the votes table for direct inserts
-    const votesChannel = supabase
-      .channel(`live-votes-${contestantSlug}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "votes",
-          filter: `contestant_slug=eq.${contestantSlug}`,
-        },
-        async () => {
-          const dbVotes = await getContestantVotes(contestantSlug);
-          setVotes(dbVotes);
-          setIsUpdating(true);
-          setTimeout(() => setIsUpdating(false), 1000);
-        }
-      )
-      .subscribe();
-
-    // Layer B: Watch the transactions table for status transitions (e.g., ongoing -> success)
-    const txChannel = supabase
-       .channel(`tx-sync-${contestantSlug}`)
-       .on(
-         "postgres_changes",
-         {
-            event: "UPDATE",
-            schema: "public",
-            table: "transactions",
-         },
-         async (payload: any) => {
-            // If any transaction becomes success, trigger a sync to be safe
-            if (payload.new?.status === "success") {
-               console.log("Transaction success detected, syncing...");
-               refreshData();
-            }
-         }
-       )
-       .subscribe();
-
-    // 3. Fallback Polling every 20s (Aggressive fallback)
+    // Poll every 20s to stay current
     const pollInterval = setInterval(refreshData, 20000);
 
-    // 4. Re-sync on focus/visibility change
+    // Re-sync on focus/visibility change
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") refreshData();
     };
@@ -91,8 +48,6 @@ const LiveVoteCount = ({ contestantSlug, variant = "default" }: LiveVoteCountPro
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      supabase.removeChannel(votesChannel);
-      supabase.removeChannel(txChannel);
       clearInterval(pollInterval);
       window.removeEventListener("focus", refreshData);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
