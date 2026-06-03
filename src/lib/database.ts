@@ -1,5 +1,13 @@
 import { supabase } from "./supabase";
 
+/* ─── Constants ─── */
+
+/**
+ * Voting cutoff: only count votes paid on or after May 30, 2026 (UTC+1).
+ * Equivalent to 2026-05-29T23:00:00Z.
+ */
+const VOTE_CUTOFF_DATE = "2026-05-29T23:00:00.000Z";
+
 /* ─── Types ─── */
 
 export type VoteRecord = {
@@ -54,7 +62,8 @@ export async function getContestantVotes(contestantSlug: string) {
   const { data, error } = await supabase
     .from("votes")
     .select("votes, created_at")
-    .eq("contestant_slug", contestantSlug);
+    .eq("contestant_slug", contestantSlug)
+    .gte("created_at", VOTE_CUTOFF_DATE);
 
   if (error) {
     console.error("Failed to fetch votes:", error);
@@ -67,7 +76,8 @@ export async function getContestantVotes(contestantSlug: string) {
 export async function getAllVoteTotals() {
   const { data, error } = await supabase
     .from("votes")
-    .select("contestant_slug, contestant_name, votes, created_at");
+    .select("contestant_slug, contestant_name, votes, created_at")
+    .gte("created_at", VOTE_CUTOFF_DATE);
 
   if (error) {
     console.error("Failed to fetch vote totals:", error);

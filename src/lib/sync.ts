@@ -1,6 +1,11 @@
 import { supabaseAdmin } from "./supabase";
 
 /**
+ * Voting cutoff: only sync votes paid on or after May 30, 2026 (UTC+1).
+ */
+const VOTE_CUTOFF = new Date("2026-05-29T23:00:00.000Z").getTime();
+
+/**
  * Helper to pull a value from Paystack custom_fields
  */
 function getField(metadata: any, name: string): string {
@@ -85,9 +90,14 @@ export async function syncPaystackTransactions(limit = 50) {
         }
 
         if (isVote) {
+          // Enforce May 30 date cutoff
+          const paidAt = tx.paid_at ? new Date(tx.paid_at).getTime() : Date.now();
+          if (paidAt < VOTE_CUTOFF) {
+            console.log(`Sync: Skipping vote before cutoff: ${reference} (${tx.paid_at})`);
+          } else {
           // Identify contestant slug via metadata or reference parsing
           let contestantSlug = getField(metadata, "contestant_slug") || getField(metadata, "slug");
-          
+
           if (!contestantSlug && reference.startsWith("vote_")) {
             // Extract from vote_SLUG_TIMESTAMP
             const parts = reference.split("_");
@@ -112,6 +122,7 @@ export async function syncPaystackTransactions(limit = 50) {
             console.log(`Sync: Recorded ${voteData.votes} votes for ${contestantSlug}`);
           } else {
             console.warn(`Sync: Failed to identify contestant for vote ref: ${reference}`);
+          }
           }
         } else if (paymentType === "ticket" || reference.startsWith("ticket_")) {
           let tier = getField(metadata, "ticket_tier") || "unknown";
