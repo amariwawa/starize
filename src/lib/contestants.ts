@@ -116,6 +116,16 @@ const baseContestants = [
       "My name is Deborah Olaoye, a student of Business Administration at UoPeople. I believe music is an explosive expression of beautiful sounds, and it carries healing. Music remains one of my strongest personal languages of expression.",
     isQualified: true,
   },
+  {
+    name: "Mayowa Timilehin",
+    category: "All I Have To Give - Mali Music",
+    image: "/images/contestants/Contestant pictures/Mayowa Timilehin.jpg",
+    shortBio:
+      "Mayowa Timilehin is an OAU student from the Department of Science and Technology Education who finds singing as an opportunity to freely express himself.",
+    writeUp:
+      "I am Mayowa Timilehin, a student of Obafemi Awolowo University from the Department of Science and Technology Education. I have always loved singing and find it as an opportunity to freely express myself.",
+    isQualified: true,
+  },
 
 ];
 
