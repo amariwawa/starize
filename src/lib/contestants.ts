@@ -119,7 +119,7 @@ const baseContestants = [
   {
     name: "Mayowa Timilehin",
     category: "All I Have To Give - Mali Music",
-    image: "/images/contestants/Contestant pictures/Mayowa Timilehin.jpg",
+    image: "/images/contestants/Contestant pictures/Mayowa.jpg",
     shortBio:
       "Mayowa Timilehin is an OAU student from the Department of Science and Technology Education who finds singing as an opportunity to freely express himself.",
     writeUp:
