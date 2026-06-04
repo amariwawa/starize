@@ -56,6 +56,8 @@ const VotingPanel = () => {
     reference: `vote_${selectedSlug}_${Date.now()}`,
     email: email,
     amount: amount,
+    currency: "NGN",
+    channels: ["card", "bank", "ussd", "qr", "mobile_money", "payattitude", "eft"],
     publicKey: PAYSTACK_PUBLIC_KEY,
     metadata: {
       custom_fields: [
