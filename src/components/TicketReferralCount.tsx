@@ -36,10 +36,6 @@ const TicketReferralCount = ({ contestantSlug }: TicketReferralCountProps) => {
     );
   }
 
-  if (count === 0) {
-    return null; // Don't show anything if no tickets sold via referral
-  }
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 5 }}
@@ -50,7 +46,7 @@ const TicketReferralCount = ({ contestantSlug }: TicketReferralCountProps) => {
         confirmation_number
       </span>
       <span className="text-on-surface font-bold text-xs">
-        {count} Ticket{count !== 1 ? "s" : ""} Sold
+        {count ?? 0} Ticket{count !== 1 ? "s" : ""} Sold
       </span>
     </motion.div>
   );
