@@ -17,9 +17,12 @@ const TicketReferralCount = ({ contestantSlug }: TicketReferralCountProps) => {
         const result = await getReferralTicketCountAction(contestantSlug);
         if (result.success) {
           setCount(result.count);
+        } else {
+          setCount(0);
         }
       } catch (error) {
         console.error("Failed to fetch referral ticket count:", error);
+        setCount(0);
       }
     };
 
