@@ -59,7 +59,6 @@ const TicketPanel = () => {
     reference: `ticket_${selectedTier}_${Date.now()}`,
     email: email,
     amount: totalAmount * 100, // kobo
-    currency: "NGN",
     publicKey: PAYSTACK_PUBLIC_KEY,
     metadata: {
       // Top-level metadata for the webhook to read easily
