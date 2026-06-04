@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/lib/useScrollAnimation";
 import type { Contestant } from "@/lib/contestants";
 import LiveVoteCount from "@/components/LiveVoteCount";
+import TicketReferralCount from "@/components/TicketReferralCount";
 
 type ContestantCardProps = {
   contestant: Contestant;
@@ -55,8 +56,9 @@ const ContestantCard = ({ contestant, index = 0 }: ContestantCardProps) => {
               </h3>
               <p className="text-on-surface-variant text-sm">{contestant.category}</p>
             </div>
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 flex flex-col items-end gap-1">
                <LiveVoteCount contestantSlug={contestant.slug} variant="compact" />
+               <TicketReferralCount contestantSlug={contestant.slug} />
             </div>
           </div>
 
