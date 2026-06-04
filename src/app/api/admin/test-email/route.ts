@@ -49,7 +49,6 @@ export async function POST(req: Request) {
         ticketCode: "STR-TEST01",
         eventName: "Starize S7 Grand Finale",
         eventDate: "Saturday, 6th June 2026",
-        ticketImageBase64: imageBase64,
       }),
       attachments: attachments.length > 0 ? attachments : undefined,
     });

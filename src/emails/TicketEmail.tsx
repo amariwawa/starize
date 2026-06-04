@@ -4,7 +4,6 @@ import {
   Head,
   Heading,
   Html,
-  Img,
   Preview,
   Section,
   Text,
@@ -16,7 +15,6 @@ interface TicketEmailProps {
   ticketCode: string;
   eventName: string;
   eventDate: string;
-  ticketImageBase64: string;
 }
 
 export default function TicketEmail({
@@ -25,7 +23,6 @@ export default function TicketEmail({
   ticketCode,
   eventName,
   eventDate,
-  ticketImageBase64,
 }: TicketEmailProps) {
   return (
     <Html>
@@ -56,16 +53,9 @@ export default function TicketEmail({
             Present this ticket at the venue entrance. See you there!
           </Text>
 
-          {ticketImageBase64 && (
-            <Section style={imageSection}>
-              <Img
-                src={`data:image/png;base64,${ticketImageBase64}`}
-                alt={`${ticketTier} Ticket`}
-                width="100%"
-                style={ticketImage}
-              />
-            </Section>
-          )}
+          <Text style={bodyText}>
+            Your ticket image is attached to this email. Please save or print it for entry at the venue.
+          </Text>
 
           <Text style={footer}>
             If you have any questions, reply to this email or contact Starize support.
@@ -143,18 +133,6 @@ const detail = {
   color: "#ffffff",
   fontSize: "15px",
   fontWeight: "600",
-};
-
-const imageSection = {
-  marginTop: "24px",
-  textAlign: "center" as const,
-};
-
-const ticketImage = {
-  borderRadius: "8px",
-  display: "block",
-  margin: "0 auto",
-  maxWidth: "100%",
 };
 
 const footer = {

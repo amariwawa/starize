@@ -192,7 +192,6 @@ export async function POST(req: Request) {
                   ticketCode,
                   eventName,
                   eventDate,
-                  ticketImageBase64: imageBase64,
                 }),
                 attachments: attachments.length > 0 ? attachments : undefined,
               });
