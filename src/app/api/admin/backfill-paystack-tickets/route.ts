@@ -134,34 +134,47 @@ export async function POST() {
           });
         }
 
-        try {
-          const { error: emailError } = await resend.emails.send({
-            from: "Starize <tickets@starize.site>",
-            to: email,
-            subject: qty > 1
-              ? `Your ${eventName} Tickets — ${qty}x ${tierLabel}`
-              : `Your ${eventName} Ticket — ${ticketCodes[0]}`,
-            react: TicketEmail({
-              buyerName,
-              ticketTier: tierLabel,
-              ticketCodes,
-              quantity: qty,
-              eventName,
-              eventDate,
-            }),
-            attachments: attachments.length > 0 ? attachments : undefined,
-          });
+        const fromAddresses = [
+          "Starize <tickets@starize.site>",
+          "Starize <onboarding@resend.dev>",
+        ];
 
-          if (emailError) {
-            console.error(`Paystack backfill: Email error for ${reference}:`, emailError);
-            failures.push(`${reference}: ${JSON.stringify(emailError)}`);
-            failedCount++;
-          } else {
-            sentCount++;
+        let emailSent = false;
+        for (const fromAddr of fromAddresses) {
+          try {
+            const { error: emailError } = await resend.emails.send({
+              from: fromAddr,
+              to: email,
+              subject: qty > 1
+                ? `Your ${eventName} Tickets — ${qty}x ${tierLabel}`
+                : `Your ${eventName} Ticket — ${ticketCodes[0]}`,
+              react: TicketEmail({
+                buyerName,
+                ticketTier: tierLabel,
+                ticketCodes,
+                quantity: qty,
+                eventName,
+                eventDate,
+              }),
+              attachments: attachments.length > 0 ? attachments : undefined,
+            });
+
+            if (!emailError) {
+              console.log(`Backfill: ✅ Email sent to ${email} from ${fromAddr} for ${reference}`);
+              emailSent = true;
+              break;
+            } else {
+              console.error(`Backfill: Email failed from ${fromAddr} for ${reference}:`, emailError);
+            }
+          } catch (innerErr: any) {
+            console.error(`Backfill: Email exception from ${fromAddr} for ${reference}:`, innerErr.message);
           }
-        } catch (err: any) {
-          console.error(`Paystack backfill: Exception for ${reference}:`, err.message);
-          failures.push(`${reference}: ${err.message}`);
+        }
+
+        if (emailSent) {
+          sentCount++;
+        } else {
+          failures.push(`${reference}: All from addresses failed for ${email}`);
           failedCount++;
         }
       }
