@@ -12,6 +12,12 @@ let cachedData: {
 
 const CACHE_TTL_MS = 10000; // 10 seconds
 
+// Manual adjustments (e.g., offline sales, corrections)
+const MANUAL_VOTE_ADJUSTMENTS: Record<string, number> = {};
+const MANUAL_TICKET_ADJUSTMENTS: Record<string, number> = {
+  layo: 3,
+};
+
 function getMetaField(metadata: any, name: string): string | null {
   if (!metadata) return null;
   if (metadata[name]) return metadata[name];
@@ -137,6 +143,15 @@ async function refreshCache() {
         }
       }
     }
+  }
+
+  // Apply manual adjustments
+  for (const [slug, adjVotes] of Object.entries(MANUAL_VOTE_ADJUSTMENTS)) {
+    if (!votes[slug]) votes[slug] = { name: slug, votes: 0 };
+    votes[slug].votes += adjVotes;
+  }
+  for (const [slug, adjTickets] of Object.entries(MANUAL_TICKET_ADJUSTMENTS)) {
+    tickets[slug] = (tickets[slug] || 0) + adjTickets;
   }
 
   cachedData = { votes, tickets, fetchedAt: Date.now() };
