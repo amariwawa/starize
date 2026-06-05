@@ -9,7 +9,7 @@ type TicketReferralCountProps = {
 };
 
 const TicketReferralCount = ({ contestantSlug }: TicketReferralCountProps) => {
-  const [count, setCount] = useState<number | null>(null);
+  const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
     const fetchCount = async () => {
@@ -17,27 +17,18 @@ const TicketReferralCount = ({ contestantSlug }: TicketReferralCountProps) => {
         const result = await getReferralTicketCountAction(contestantSlug);
         if (result.success) {
           setCount(result.count);
-        } else {
-          setCount(0);
         }
       } catch (error) {
         console.error("Failed to fetch referral ticket count:", error);
-        setCount(0);
       }
     };
 
     fetchCount();
 
-    // Poll every 30s
-    const interval = setInterval(fetchCount, 30000);
+    // Poll every 5s for faster updates
+    const interval = setInterval(fetchCount, 5000);
     return () => clearInterval(interval);
   }, [contestantSlug]);
-
-  if (count === null) {
-    return (
-      <div className="h-5 w-16 bg-surface-container animate-pulse rounded-full" />
-    );
-  }
 
   return (
     <motion.div

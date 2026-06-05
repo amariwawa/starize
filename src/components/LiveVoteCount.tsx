@@ -10,18 +10,16 @@ type LiveVoteCountProps = {
 };
 
 const LiveVoteCount = ({ contestantSlug, variant = "default" }: LiveVoteCountProps) => {
-  const [votes, setVotes] = useState<number | null>(null);
+  const [votes, setVotes] = useState<number>(0);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [isSyncing, setIsSyncing] = useState(false);
 
   useEffect(() => {
     const refreshData = async () => {
-      setIsSyncing(true);
       try {
         const result = await syncVotesAction(contestantSlug);
         if (result.success) {
           setVotes((prev) => {
-            if (prev !== null && result.votes > prev) {
+            if (prev > 0 && result.votes > prev) {
               setIsUpdating(true);
               setTimeout(() => setIsUpdating(false), 1000);
             }
@@ -30,15 +28,13 @@ const LiveVoteCount = ({ contestantSlug, variant = "default" }: LiveVoteCountPro
         }
       } catch (error) {
         console.error("Sync failed:", error);
-      } finally {
-        setIsSyncing(false);
       }
     };
 
     refreshData();
 
-    // Poll every 20s to stay current
-    const pollInterval = setInterval(refreshData, 20000);
+    // Poll every 5s for faster updates
+    const pollInterval = setInterval(refreshData, 5000);
 
     // Re-sync on focus/visibility change
     const handleVisibilityChange = () => {
@@ -53,12 +49,6 @@ const LiveVoteCount = ({ contestantSlug, variant = "default" }: LiveVoteCountPro
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [contestantSlug]);
-
-  if (votes === null) {
-    return (
-      <div className="h-6 w-20 bg-primary/10 animate-pulse rounded-full" />
-    );
-  }
 
   return (
     <div className="inline-flex items-center gap-3">
@@ -76,13 +66,7 @@ const LiveVoteCount = ({ contestantSlug, variant = "default" }: LiveVoteCountPro
           {votes.toLocaleString()} {variant !== "compact" && <span className="font-normal opacity-60 ml-0.5">VOTES</span>}
         </span>
       </motion.div>
-      
-      {isSyncing && variant !== "compact" && (
-        <span className="text-[10px] text-primary/60 font-medium uppercase tracking-tighter animate-pulse">
-           Direct Syncing...
-        </span>
-      )}
-      
+
       <AnimatePresence>
         {isUpdating && (
           <motion.span
