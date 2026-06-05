@@ -179,46 +179,31 @@ export async function POST(req: Request) {
             attachments.push({ filename: imageFileName, content: imageBase64 });
           }
 
-          // Try custom domain first, fallback to Resend default
-          const fromAddresses = [
-            "Starize <tickets@starize.site>",
-            "Starize <onboarding@resend.dev>",
-          ];
+          try {
+            const { data, error: emailError } = await resend.emails.send({
+              from: "Starize <tickets@starize.site>",
+              to: email,
+              subject: qty > 1
+                ? `Your ${eventName} Tickets — ${qty}x ${tierLabel}`
+                : `Your ${eventName} Ticket — ${ticketCodes[0]}`,
+              react: TicketEmail({
+                buyerName,
+                ticketTier: tierLabel,
+                ticketCodes,
+                quantity: qty,
+                eventName,
+                eventDate,
+              }),
+              attachments: attachments.length > 0 ? attachments : undefined,
+            });
 
-          let emailSent = false;
-          for (const fromAddr of fromAddresses) {
-            try {
-              const { error: emailError } = await resend.emails.send({
-                from: fromAddr,
-                to: email,
-                subject: qty > 1
-                  ? `Your ${eventName} Tickets — ${qty}x ${tierLabel}`
-                  : `Your ${eventName} Ticket — ${ticketCodes[0]}`,
-                react: TicketEmail({
-                  buyerName,
-                  ticketTier: tierLabel,
-                  ticketCodes,
-                  quantity: qty,
-                  eventName,
-                  eventDate,
-                }),
-                attachments: attachments.length > 0 ? attachments : undefined,
-              });
-
-              if (!emailError) {
-                console.log(`Webhook: ✅ EMAIL SENT to ${email} from ${fromAddr} for ${qty} ticket(s) ${ticketCodes.join(", ")}`);
-                emailSent = true;
-                break;
-              } else {
-                console.error(`Webhook: Email failed from ${fromAddr}:`, emailError);
-              }
-            } catch (innerErr: any) {
-              console.error(`Webhook: Email exception from ${fromAddr}:`, innerErr.message);
+            if (emailError) {
+              console.error(`Webhook: ❌ Resend rejected for ${reference}:`, JSON.stringify(emailError));
+            } else {
+              console.log(`Webhook: ✅ Accepted by Resend to ${email}, msgId=${data?.id}, ref=${reference}`);
             }
-          }
-
-          if (!emailSent) {
-            console.error(`Webhook: ❌ ALL EMAIL ATTEMPTS FAILED for ${reference} to ${email}`);
+          } catch (innerErr: any) {
+            console.error(`Webhook: ❌ Email exception for ${reference}:`, innerErr.message);
           }
         } catch (emailErr: any) {
           console.error(`Webhook: ❌ EMAIL CRASH for ${reference}:`, emailErr.message);

@@ -134,47 +134,35 @@ export async function POST() {
           });
         }
 
-        const fromAddresses = [
-          "Starize <tickets@starize.site>",
-          "Starize <onboarding@resend.dev>",
-        ];
+        try {
+          const { data, error: emailError } = await resend.emails.send({
+            from: "Starize <tickets@starize.site>",
+            to: email,
+            subject: qty > 1
+              ? `Your ${eventName} Tickets — ${qty}x ${tierLabel}`
+              : `Your ${eventName} Ticket — ${ticketCodes[0]}`,
+            react: TicketEmail({
+              buyerName,
+              ticketTier: tierLabel,
+              ticketCodes,
+              quantity: qty,
+              eventName,
+              eventDate,
+            }),
+            attachments: attachments.length > 0 ? attachments : undefined,
+          });
 
-        let emailSent = false;
-        for (const fromAddr of fromAddresses) {
-          try {
-            const { error: emailError } = await resend.emails.send({
-              from: fromAddr,
-              to: email,
-              subject: qty > 1
-                ? `Your ${eventName} Tickets — ${qty}x ${tierLabel}`
-                : `Your ${eventName} Ticket — ${ticketCodes[0]}`,
-              react: TicketEmail({
-                buyerName,
-                ticketTier: tierLabel,
-                ticketCodes,
-                quantity: qty,
-                eventName,
-                eventDate,
-              }),
-              attachments: attachments.length > 0 ? attachments : undefined,
-            });
-
-            if (!emailError) {
-              console.log(`Backfill: ✅ Email sent to ${email} from ${fromAddr} for ${reference}`);
-              emailSent = true;
-              break;
-            } else {
-              console.error(`Backfill: Email failed from ${fromAddr} for ${reference}:`, emailError);
-            }
-          } catch (innerErr: any) {
-            console.error(`Backfill: Email exception from ${fromAddr} for ${reference}:`, innerErr.message);
+          if (emailError) {
+            console.error(`Backfill: ❌ Email rejected by Resend for ${reference}:`, JSON.stringify(emailError));
+            failures.push(`${reference}: ${JSON.stringify(emailError)}`);
+            failedCount++;
+          } else {
+            console.log(`Backfill: ✅ Accepted by Resend for ${email}, msgId=${data?.id}, ref=${reference}`);
+            sentCount++;
           }
-        }
-
-        if (emailSent) {
-          sentCount++;
-        } else {
-          failures.push(`${reference}: All from addresses failed for ${email}`);
+        } catch (err: any) {
+          console.error(`Backfill: ❌ Exception for ${reference}:`, err.message);
+          failures.push(`${reference}: ${err.message}`);
           failedCount++;
         }
       }

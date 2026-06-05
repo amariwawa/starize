@@ -223,54 +223,40 @@ export async function POST() {
               const imagePath = path.join(process.cwd(), "public", "tickets", imageFileName);
 
               let imageBuffer: Buffer | null = null;
-              let imageBase64 = "";
               try {
                 imageBuffer = fs.readFileSync(imagePath);
-                imageBase64 = imageBuffer.toString("base64");
               } catch (e) {
                 // ignore
               }
 
               const attachments: any[] = [];
               if (imageBuffer) {
-                attachments.push({ filename: imageFileName, content: imageBase64 });
+                attachments.push({ filename: imageFileName, content: imageBuffer.toString("base64") });
               }
 
-              const fromAddresses = [
-                "Starize <tickets@starize.site>",
-                "Starize <onboarding@resend.dev>",
-              ];
+              const { data, error: emailError } = await resend.emails.send({
+                from: "Starize <tickets@starize.site>",
+                to: email,
+                subject: qty > 1
+                  ? `Your ${eventName} Tickets — ${qty}x ${tierLabel}`
+                  : `Your ${eventName} Ticket — ${ticketCodes[0]}`,
+                react: TicketEmail({
+                  buyerName,
+                  ticketTier: tierLabel,
+                  ticketCodes,
+                  quantity: qty,
+                  eventName,
+                  eventDate,
+                }),
+                attachments: attachments.length > 0 ? attachments : undefined,
+              });
 
-              let emailSent = false;
-              for (const fromAddr of fromAddresses) {
-                try {
-                  const { error: emailError } = await resend.emails.send({
-                    from: fromAddr,
-                    to: email,
-                    subject: qty > 1
-                      ? `Your ${eventName} Tickets — ${qty}x ${tierLabel}`
-                      : `Your ${eventName} Ticket — ${ticketCodes[0]}`,
-                    react: TicketEmail({
-                      buyerName,
-                      ticketTier: tierLabel,
-                      ticketCodes,
-                      quantity: qty,
-                      eventName,
-                      eventDate,
-                    }),
-                    attachments: attachments.length > 0 ? attachments : undefined,
-                  });
-
-                  if (!emailError) {
-                    emailSent = true;
-                    break;
-                  }
-                } catch (e) {
-                  // try next
-                }
-              }
-
-              if (emailSent) {
+              if (emailError) {
+                console.error(`Sync-all: ❌ Resend rejected for ${reference}:`, JSON.stringify(emailError));
+                summary.errors.push(`Email ${reference}: ${JSON.stringify(emailError)}`);
+                summary.emailsFailed++;
+              } else {
+                console.log(`Sync-all: ✅ Accepted by Resend to ${email}, msgId=${data?.id}`);
                 summary.emailsSent++;
                 if (supabase) {
                   try {
@@ -282,8 +268,6 @@ export async function POST() {
                     // ignore
                   }
                 }
-              } else {
-                summary.emailsFailed++;
               }
             } catch (e: any) {
               summary.errors.push(`Email ${reference}: ${e.message}`);
