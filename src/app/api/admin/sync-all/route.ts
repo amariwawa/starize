@@ -164,8 +164,13 @@ export async function POST() {
           const tierLabel = getMetaField(metadata, "tier_label") || (tier === "vip_table" ? "Table of 4" : tier.charAt(0).toUpperCase() + tier.slice(1));
           const eventName = metadata.eventName || "Starize S7 Grand Finale";
           const eventDate = metadata.eventDate || "Saturday, 6th June 2026";
-          const qty = parseInt(getMetaField(metadata, "quantity") || "1", 10);
-          const ticketCode = generateTicketCode();
+          const qty = Math.max(1, parseInt(getMetaField(metadata, "quantity") || "1", 10));
+
+          // Generate quantity ticket codes
+          const ticketCodes: string[] = [];
+          for (let i = 0; i < qty; i++) {
+            ticketCodes.push(generateTicketCode());
+          }
 
           // Check if already saved (to avoid re-sending email)
           let alreadyEmailed = false;
@@ -189,7 +194,7 @@ export async function POST() {
                 buyer_name: buyerName,
                 buyer_email: email,
                 ticket_tier: tier,
-                ticket_code: ticketCode,
+                ticket_code: ticketCodes.join(", "),
                 event_name: eventName,
                 event_date: eventDate,
                 status: "active",
@@ -204,7 +209,7 @@ export async function POST() {
                 referral: getMetaField(metadata, "referral") || "Nil",
               }, { onConflict: "paystack_reference" });
               summary.ticketsUpserted++;
-              summary.ticketByTier[tier] = (summary.ticketByTier[tier] || 0) + 1;
+              summary.ticketByTier[tier] = (summary.ticketByTier[tier] || 0) + qty;
             } catch (e: any) {
               summary.errors.push(`Ticket upsert ${reference}: ${e.message}`);
             }
@@ -242,11 +247,14 @@ export async function POST() {
                   const { error: emailError } = await resend.emails.send({
                     from: fromAddr,
                     to: email,
-                    subject: `Your ${eventName} Ticket — ${ticketCode}`,
+                    subject: qty > 1
+                      ? `Your ${eventName} Tickets — ${qty}x ${tierLabel}`
+                      : `Your ${eventName} Ticket — ${ticketCodes[0]}`,
                     react: TicketEmail({
                       buyerName,
                       ticketTier: tierLabel,
-                      ticketCode,
+                      ticketCodes,
+                      quantity: qty,
                       eventName,
                       eventDate,
                     }),

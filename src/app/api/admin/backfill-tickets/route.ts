@@ -71,14 +71,21 @@ export async function POST() {
       const eventName = ticket.event_name || "Starize S7 Grand Finale";
       const eventDate = ticket.event_date || "Saturday, 6th June 2026";
       const reference = ticket.paystack_reference;
-      let ticketCode = ticket.ticket_code;
+      let ticketCodes: string[] = [];
+      if (ticket.ticket_code) {
+        // Support comma-separated codes from multi-ticket purchases
+        ticketCodes = ticket.ticket_code.split(", ").filter((c: string) => c.trim());
+      }
 
-      // Generate code if missing
-      if (!ticketCode) {
-        ticketCode = generateTicketCode();
+      // Generate code(s) if missing
+      if (ticketCodes.length === 0) {
+        const qty = Math.max(1, ticket.quantity || 1);
+        for (let i = 0; i < qty; i++) {
+          ticketCodes.push(generateTicketCode());
+        }
         await supabase
           .from("tickets")
-          .update({ ticket_code: ticketCode })
+          .update({ ticket_code: ticketCodes.join(", ") })
           .eq("paystack_reference", reference);
       }
 
@@ -117,11 +124,14 @@ export async function POST() {
         const { error: emailError } = await resend.emails.send({
           from: "Starize <tickets@starize.site>",
           to: email,
-          subject: `Your ${eventName} Ticket — ${ticketCode}`,
+          subject: ticketCodes.length > 1
+            ? `Your ${eventName} Tickets — ${ticketCodes.length}x ${tierLabel}`
+            : `Your ${eventName} Ticket — ${ticketCodes[0]}`,
           react: TicketEmail({
             buyerName,
             ticketTier: tierLabel,
-            ticketCode,
+            ticketCodes,
+            quantity: ticketCodes.length,
             eventName,
             eventDate,
           }),

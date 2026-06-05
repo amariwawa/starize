@@ -12,7 +12,8 @@ import {
 interface TicketEmailProps {
   buyerName: string;
   ticketTier: string;
-  ticketCode: string;
+  ticketCodes: string[];
+  quantity: number;
   eventName: string;
   eventDate: string;
 }
@@ -20,41 +21,52 @@ interface TicketEmailProps {
 export default function TicketEmail({
   buyerName,
   ticketTier,
-  ticketCode,
+  ticketCodes,
+  quantity,
   eventName,
   eventDate,
 }: TicketEmailProps) {
+  const isPlural = quantity > 1;
+
   return (
     <Html>
       <Head />
-      <Preview>Your {eventName} ticket is here!</Preview>
+      <Preview>
+        Your {quantity.toString()} {eventName} {isPlural ? "tickets" : "ticket"} {isPlural ? "are" : "is"} here!
+      </Preview>
       <Body style={main}>
         <Container style={container}>
-          <Heading style={heading}>Your Ticket is Ready!</Heading>
+          <Heading style={heading}>
+            {isPlural ? `Your ${quantity} Tickets are Ready!` : "Your Ticket is Ready!"}
+          </Heading>
 
           <Text style={greeting}>Hi {buyerName},</Text>
           <Text style={bodyText}>
-            Thank you for purchasing a <strong>{ticketTier}</strong> ticket for{" "}
+            Thank you for purchasing <strong>{quantity.toString()} {ticketTier}</strong> {isPlural ? "tickets" : "ticket"} for{" "}
             <strong>{eventName}</strong>.
           </Text>
 
-          <Section style={ticketSection}>
-            <Text style={label}>Ticket Code</Text>
-            <Text style={code}>{ticketCode}</Text>
-            <Text style={label}>Event</Text>
-            <Text style={detail}>{eventName}</Text>
-            <Text style={label}>Date</Text>
-            <Text style={detail}>{eventDate}</Text>
-            <Text style={label}>Tier</Text>
-            <Text style={detail}>{ticketTier}</Text>
-          </Section>
+          {ticketCodes.map((code, index) => (
+            <Section key={code} style={ticketSection}>
+              <Text style={label}>
+                {isPlural ? `Ticket ${index + 1} Code` : "Ticket Code"}
+              </Text>
+              <Text style={codeStyle}>{code}</Text>
+              <Text style={label}>Event</Text>
+              <Text style={detail}>{eventName}</Text>
+              <Text style={label}>Date</Text>
+              <Text style={detail}>{eventDate}</Text>
+              <Text style={label}>Tier</Text>
+              <Text style={detail}>{ticketTier}</Text>
+            </Section>
+          ))}
 
           <Text style={bodyText}>
-            Present this ticket at the venue entrance. See you there!
+            Present {isPlural ? "these tickets" : "this ticket"} at the venue entrance. See you there!
           </Text>
 
           <Text style={bodyText}>
-            Your ticket image is attached to this email. Please save or print it for entry at the venue.
+            Your ticket {isPlural ? "images are" : "image is"} attached to this email. Please save or print {isPlural ? "them" : "it"} for entry at the venue.
           </Text>
 
           <Text style={footer}>
@@ -121,7 +133,7 @@ const label = {
   textTransform: "uppercase" as const,
 };
 
-const code = {
+const codeStyle = {
   color: "#f2ca50",
   fontSize: "22px",
   fontWeight: "800",

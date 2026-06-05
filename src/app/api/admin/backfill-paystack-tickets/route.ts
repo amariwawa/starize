@@ -111,7 +111,13 @@ export async function POST() {
           (tier === "vip_table" ? "Table of 4" : tier.charAt(0).toUpperCase() + tier.slice(1));
         const eventName = metadata.eventName || "Starize S7 Grand Finale";
         const eventDate = metadata.eventDate || "Saturday, 6th June 2026";
-        const ticketCode = generateTicketCode();
+        const qty = Math.max(1, parseInt(getMetaField(metadata, "quantity") || "1", 10));
+
+        // Generate quantity ticket codes
+        const ticketCodes: string[] = [];
+        for (let i = 0; i < qty; i++) {
+          ticketCodes.push(generateTicketCode());
+        }
 
         const imageFileName = TICKET_IMAGE_MAP[tier] || "regular-ticket.png";
         const imagePath = path.join(
@@ -142,11 +148,14 @@ export async function POST() {
           const { error: emailError } = await resend.emails.send({
             from: "Starize <tickets@starize.site>",
             to: email,
-            subject: `Your ${eventName} Ticket — ${ticketCode}`,
+            subject: qty > 1
+              ? `Your ${eventName} Tickets — ${qty}x ${tierLabel}`
+              : `Your ${eventName} Ticket — ${ticketCodes[0]}`,
             react: TicketEmail({
               buyerName,
               ticketTier: tierLabel,
-              ticketCode,
+              ticketCodes,
+              quantity: qty,
               eventName,
               eventDate,
             }),

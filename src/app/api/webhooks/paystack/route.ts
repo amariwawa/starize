@@ -147,9 +147,15 @@ export async function POST(req: Request) {
       const tierLabel = getMetaField(metadata, "tier_label") || (tier === "vip_table" ? "Table of 4" : tier.charAt(0).toUpperCase() + tier.slice(1));
       const eventName = metadata.eventName || "Starize S7 Grand Finale";
       const eventDate = metadata.eventDate || "Saturday, 6th June 2026";
-      const ticketCode = generateTicketCode();
+      const qty = Math.max(1, parseInt(getMetaField(metadata, "quantity") || "1", 10));
 
-      console.log(`Webhook: Ticket detected — tier=${tier}, buyer=${buyerName}, email=${email}`);
+      // Generate quantity ticket codes
+      const ticketCodes: string[] = [];
+      for (let i = 0; i < qty; i++) {
+        ticketCodes.push(generateTicketCode());
+      }
+
+      console.log(`Webhook: Ticket detected — tier=${tier}, buyer=${buyerName}, email=${email}, qty=${qty}, codes=${ticketCodes.join(", ")}`);
 
       // 1. SEND EMAIL FIRST (most important)
       if (RESEND_API_KEY && email) {
@@ -185,11 +191,14 @@ export async function POST(req: Request) {
               const { error: emailError } = await resend.emails.send({
                 from: fromAddr,
                 to: email,
-                subject: `Your ${eventName} Ticket — ${ticketCode}`,
+                subject: qty > 1
+                  ? `Your ${eventName} Tickets — ${qty}x ${tierLabel}`
+                  : `Your ${eventName} Ticket — ${ticketCodes[0]}`,
                 react: TicketEmail({
                   buyerName,
                   ticketTier: tierLabel,
-                  ticketCode,
+                  ticketCodes,
+                  quantity: qty,
                   eventName,
                   eventDate,
                 }),
@@ -197,7 +206,7 @@ export async function POST(req: Request) {
               });
 
               if (!emailError) {
-                console.log(`Webhook: ✅ EMAIL SENT to ${email} from ${fromAddr} for ticket ${ticketCode}`);
+                console.log(`Webhook: ✅ EMAIL SENT to ${email} from ${fromAddr} for ${qty} ticket(s) ${ticketCodes.join(", ")}`);
                 emailSent = true;
                 break;
               } else {
@@ -226,7 +235,7 @@ export async function POST(req: Request) {
             buyer_name: buyerName,
             buyer_email: email,
             ticket_tier: tier,
-            ticket_code: ticketCode,
+            ticket_code: ticketCodes.join(", "),
             event_name: eventName,
             event_date: eventDate,
             status: "active",
@@ -234,13 +243,13 @@ export async function POST(req: Request) {
             email: email,
             tier: tier,
             tier_label: tierLabel,
-            quantity: parseInt(getMetaField(metadata, "quantity") || "1", 10),
-            unit_price_naira: amount / (parseInt(getMetaField(metadata, "quantity") || "1", 10) || 1),
+            quantity: qty,
+            unit_price_naira: amount / qty,
             total_amount_naira: amount,
             payment_channel: data.channel,
             referral: getMetaField(metadata, "referral") || "Nil",
           }, { onConflict: "paystack_reference" });
-          console.log(`Webhook: Ticket saved to Supabase for ${reference}`);
+          console.log(`Webhook: Ticket saved to Supabase for ${reference} with codes ${ticketCodes.join(", ")}`);
         } catch (e: any) {
           console.error(`Webhook: Ticket save failed for ${reference}:`, e.message);
         }

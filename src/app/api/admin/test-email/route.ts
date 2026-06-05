@@ -46,7 +46,8 @@ export async function POST(req: Request) {
       react: TicketEmail({
         buyerName: "Test Buyer",
         ticketTier: "Regular",
-        ticketCode: "STR-TEST01",
+        ticketCodes: ["STR-TEST01"],
+        quantity: 1,
         eventName: "Starize S7 Grand Finale",
         eventDate: "Saturday, 6th June 2026",
       }),
