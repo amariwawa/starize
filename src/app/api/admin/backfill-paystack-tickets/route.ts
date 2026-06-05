@@ -43,10 +43,7 @@ export async function POST() {
 
   const resend = new Resend(RESEND_API_KEY);
 
-  // Track who we've already emailed to avoid duplicates
-  const emailedReferences = new Set<string>();
   let sentCount = 0;
-  let skippedCount = 0;
   let failedCount = 0;
   const failures: string[] = [];
 
@@ -56,7 +53,7 @@ export async function POST() {
 
     while (true) {
       const response = await fetch(
-        `https://api.paystack.co/transaction?perPage=${perPage}&page=${page}`,
+        `https://api.paystack.co/transaction?perPage=${perPage}&page=${page}&from=2026-05-01T00:00:00.000Z`,
         {
           headers: { Authorization: `Bearer ${PAYSTACK_SECRET_KEY}` },
           cache: "no-store",
@@ -84,13 +81,6 @@ export async function POST() {
           paymentType === "ticket" || reference.startsWith("ticket_");
 
         if (!isTicket) continue;
-
-        // Skip if we already emailed this reference
-        if (emailedReferences.has(reference)) {
-          skippedCount++;
-          continue;
-        }
-        emailedReferences.add(reference);
 
         const email = tx.customer?.email || getMetaField(metadata, "email") || getMetaField(metadata, "buyer_email");
         if (!email) {
@@ -182,10 +172,9 @@ export async function POST() {
 
     return NextResponse.json({
       success: true,
-      message: `Processed ${sentCount + failedCount + skippedCount} ticket transactions from Paystack`,
+      message: `Sent ${sentCount} ticket emails, ${failedCount} failed`,
       sent: sentCount,
       failed: failedCount,
-      skipped: skippedCount,
       failures: failures.length > 0 ? failures : undefined,
     });
   } catch (err: any) {
