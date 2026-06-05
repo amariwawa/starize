@@ -1,14 +1,14 @@
 "use server";
 
-import { getVotesDirectFromPaystack } from "@/lib/paystackVotes";
+import { getCachedVotes } from "@/lib/paystackCache";
 
 /**
- * Server Action that reads vote counts DIRECTLY from Paystack.
- * Bypasses the Supabase votes table entirely.
+ * Server Action that reads vote counts from cached Paystack data.
+ * Instant response — no repeated API calls.
  */
 export async function syncVotesAction(contestantSlug: string) {
   try {
-    const votes = await getVotesDirectFromPaystack(contestantSlug);
+    const votes = await getCachedVotes(contestantSlug);
 
     return {
       success: true,
