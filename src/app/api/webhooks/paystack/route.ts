@@ -232,7 +232,6 @@ export async function POST(req: Request) {
             unit_price_naira: amount / qty,
             total_amount_naira: amount,
             payment_channel: data.channel,
-            referral: getMetaField(metadata, "referral") || "Nil",
           }, { onConflict: "paystack_reference" });
           console.log(`Webhook: Ticket saved to Supabase for ${reference} with codes ${ticketCodes.join(", ")}`);
         } catch (e: any) {
