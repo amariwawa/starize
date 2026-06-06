@@ -1,25 +1,17 @@
 "use server";
 
-import { getCachedVotes } from "@/lib/paystackCache";
+import { getContestantVotes } from "@/lib/database";
 
 /**
- * Server Action that reads vote counts from cached Paystack data.
- * Instant response — no repeated API calls.
+ * Server Action that reads vote counts from Supabase.
+ * Fast and persistent — data is kept current by running sync-all.
  */
 export async function syncVotesAction(contestantSlug: string) {
   try {
-    const votes = await getCachedVotes(contestantSlug);
-
-    return {
-      success: true,
-      votes: typeof votes === "number" ? votes : 0,
-    };
+    const votes = await getContestantVotes(contestantSlug);
+    return { success: true, votes };
   } catch (error: any) {
-    console.error(`SyncAction Error for ${contestantSlug}:`, error.message);
-    return {
-      success: false,
-      votes: 0,
-      error: error.message,
-    };
+    console.error(`VoteAction Error for ${contestantSlug}:`, error.message);
+    return { success: false, votes: 0, error: error.message };
   }
 }

@@ -1,15 +1,15 @@
 "use server";
 
-import { getCachedTicketReferrals } from "@/lib/paystackCache";
+import { getTicketReferralCountFromDB } from "@/lib/database";
 
 /**
- * Server Action to get ticket referral count from cached Paystack data.
- * Instant response — no repeated API calls.
+ * Server Action to get ticket referral count from Supabase.
+ * Fast and persistent — data is kept current by running sync-all.
  */
 export async function getReferralTicketCountAction(contestantSlug: string) {
   try {
-    const count = await getCachedTicketReferrals(contestantSlug);
-    return { success: true, count: typeof count === "number" ? count : 0 };
+    const count = await getTicketReferralCountFromDB(contestantSlug);
+    return { success: true, count };
   } catch (error: any) {
     console.error(`ReferralTicketAction Error for ${contestantSlug}:`, error.message);
     return { success: false, count: 0, error: error.message };

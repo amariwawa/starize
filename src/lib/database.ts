@@ -150,6 +150,35 @@ export async function saveTicket(ticket: TicketRecord) {
   }
 }
 
+/* ─── Ticket Referrals ─── */
+
+export async function getTicketReferralCountFromDB(contestantSlug: string): Promise<number> {
+  const { data, error } = await supabase
+    .from("tickets")
+    .select("quantity, referral")
+    .not("referral", "is", null)
+    .neq("referral", "Nil");
+
+  if (error) {
+    console.error("Failed to fetch ticket referrals:", error);
+    return 0;
+  }
+
+  // Match referral to slug (case-insensitive, fuzzy)
+  const targetSlug = contestantSlug.toLowerCase().replace(/[^a-z0-9]/g, "");
+  let count = 0;
+
+  for (const row of data || []) {
+    if (!row.referral) continue;
+    const refNorm = row.referral.toLowerCase().replace(/[^a-z0-9]/g, "");
+    if (refNorm === targetSlug || refNorm.includes(targetSlug) || targetSlug.includes(refNorm)) {
+      count += row.quantity || 1;
+    }
+  }
+
+  return count;
+}
+
 /* ─── Idempotency ─── */
 
 /**
