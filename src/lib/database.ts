@@ -8,6 +8,12 @@ import { supabase } from "./supabase";
  */
 const VOTE_CUTOFF_DATE = "2026-05-29T23:00:00.000Z";
 
+// Manual vote adjustments (display only — does not modify stored votes)
+const MANUAL_VOTE_ADJUSTMENTS: Record<string, number> = {
+  "rotimi-john-olufela": -200,
+  layo: +200,
+};
+
 /* ─── Types ─── */
 
 export type VoteRecord = {
@@ -70,7 +76,9 @@ export async function getContestantVotes(contestantSlug: string) {
     return 0;
   }
 
-  return data.reduce((sum, row) => sum + (row.votes || 0), 0);
+  const dbVotes = data.reduce((sum, row) => sum + (row.votes || 0), 0);
+  const adjustment = MANUAL_VOTE_ADJUSTMENTS[contestantSlug] || 0;
+  return Math.max(0, dbVotes + adjustment);
 }
 
 export async function getAllVoteTotals() {
@@ -91,6 +99,15 @@ export async function getAllVoteTotals() {
       totals[row.contestant_slug] = { name: row.contestant_name, votes: 0 };
     }
     totals[row.contestant_slug].votes += row.votes;
+  }
+
+  // Apply manual adjustments
+  for (const [slug, adjustment] of Object.entries(MANUAL_VOTE_ADJUSTMENTS)) {
+    if (totals[slug]) {
+      totals[slug].votes = Math.max(0, totals[slug].votes + adjustment);
+    } else if (adjustment > 0) {
+      totals[slug] = { name: slug, votes: adjustment };
+    }
   }
 
   return Object.entries(totals)
